@@ -4,8 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "Модель регистрирующегося пользователя")
 public class RegistrationUserDto {
-    @Schema(description = "ID пользователя")
-    private Long id;
+
     @Schema(description = "Никнейм пользователя")
     private String username;
     @Schema(description = "Имя пользователя")
@@ -16,15 +15,6 @@ public class RegistrationUserDto {
     private String password;
     @Schema(description = "Подтверждение пароля пользователя")
     private String confirmPassword;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     @Schema(description = "Электронная почта пользователя")
     private String email;
 
