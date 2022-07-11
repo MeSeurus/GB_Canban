@@ -1,0 +1,3 @@
+[submodule "GB_Planner_Frontend_Service"]
+	path = GB_Planner_Frontend_Service
+	url = https://github.com/MeSeurus/GB_Planner_Frontend_Service.git
