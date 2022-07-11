@@ -1,4 +1,5 @@
 package com.gb.planner.auth.controller;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.gb.planner.FlywayMigrationConfig;
@@ -11,6 +12,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -54,6 +56,6 @@ public class RegisterControllerTest {
                 .andDo(mvcResult -> {
                     String json = mvcResult.getResponse().getContentAsString();
                     assertTrue(json.contains("\"token\":"));
-    });
+                });
     }
 }
