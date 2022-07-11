@@ -1,2 +1,2 @@
-# GB_Planner
+# GB_Canban
 Основной репозиторий для выпускного проекта GeekBrains
