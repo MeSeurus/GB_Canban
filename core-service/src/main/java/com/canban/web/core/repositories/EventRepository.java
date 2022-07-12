@@ -18,4 +18,9 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     List<Event> findEventsByUser(String username);
 
+    @Query(
+            value = "SELECT e from Event e where e.user.nickname = :username"
+    )
+    List<Event> findEventsByUserNickname(String username);
+
 }

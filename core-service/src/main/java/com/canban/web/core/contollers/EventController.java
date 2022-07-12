@@ -25,19 +25,19 @@ public class EventController {
     private final EventService eventService;
     private final EventMapper eventMapper;
 
-    @Operation(
-            summary = "Запрос на получение всех событий",
-            responses = {
-                    @ApiResponse(
-                            description = "Успешный ответ", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = List.class))
-                    )
-            }
-    )
-    @GetMapping()
-    public List<EventDto> findAll() {
-        return eventService.findAll().stream().map(e -> eventMapper.entityToDto(e)).collect(Collectors.toList());
-    }
+//    @Operation(
+//            summary = "Запрос на получение всех событий",
+//            responses = {
+//                    @ApiResponse(
+//                            description = "Успешный ответ", responseCode = "200",
+//                            content = @Content(schema = @Schema(implementation = List.class))
+//                    )
+//            }
+//    )
+//    @GetMapping()
+//    public List<EventDto> findAll() {
+//        return eventService.findAll().stream().map(e -> eventMapper.entityToDto(e)).collect(Collectors.toList());
+//    }
 
     @Operation(
             summary = "Запрос на получение события по id дня",
@@ -57,7 +57,7 @@ public class EventController {
      * пока через PathVariable для простоты отладки через постман без фронта
      * todo переделать на RequestHeader
      */
-    @GetMapping("/username/{username}")
+    @GetMapping()
     @Operation(
             summary = "Запрос на получение всех событий по имени пользователя",
             responses = {
@@ -67,7 +67,7 @@ public class EventController {
                     )
             }
     )
-    public List<EventDto> findEventsByUsername(@PathVariable @Parameter(description = "Имя пользователя", required = true) String username) {
+    public List<EventDto> findEventsByUsername(@RequestHeader @Parameter(description = "Имя пользователя", required = true) String username) {
         return eventService.findEventsByUser(username).stream().map(e -> eventMapper.entityToDto(e)).collect(Collectors.toList());
     }
 

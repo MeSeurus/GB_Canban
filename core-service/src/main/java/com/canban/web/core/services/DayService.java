@@ -34,33 +34,33 @@ public class DayService {
         dayRepository.deleteById(id);
     }
 
-    @PostConstruct
-    private void init(){
-        fillCalendar(LocalDate.now().getYear(), LocalDate.now().getYear() + 1);
-
-    }
-
-    private void fillCalendar(int startYear, int endYear) {
-
-        List<LocalDate> targetDatesList = new ArrayList<>();
-
-        LocalDate startDate = LocalDate.of(startYear, 1, 1);
-        LocalDate endDate = LocalDate.of(endYear, 12, 31);
-        for(LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)){
-            targetDatesList.add(date);
-        }
-        List<LocalDate> dayList = dayRepository.findByDateBetween(LocalDate.of(startYear, 1, 1),
-                        LocalDate.of(endYear, 12, 31))
-                .stream()
-                .map(Day::getDate).
-                collect(Collectors.toList());
-
-        targetDatesList.removeAll(dayList);
-        List<Day> targetDaysList = targetDatesList.stream()
-                .map(Day::new)
-                .collect(Collectors.toList());
-
-        dayRepository.saveAll(targetDaysList);
-
-    }
+//    @PostConstruct
+//    private void init(){
+//        fillCalendar(LocalDate.now().getYear(), LocalDate.now().getYear() + 1);
+//
+//    }
+//
+//    private void fillCalendar(int startYear, int endYear) {
+//
+//        List<LocalDate> targetDatesList = new ArrayList<>();
+//
+//        LocalDate startDate = LocalDate.of(startYear, 1, 1);
+//        LocalDate endDate = LocalDate.of(endYear, 12, 31);
+//        for(LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)){
+//            targetDatesList.add(date);
+//        }
+//        List<LocalDate> dayList = dayRepository.findByDateBetween(LocalDate.of(startYear, 1, 1),
+//                        LocalDate.of(endYear, 12, 31))
+//                .stream()
+//                .map(Day::getDate).
+//                collect(Collectors.toList());
+//
+//        targetDatesList.removeAll(dayList);
+//        List<Day> targetDaysList = targetDatesList.stream()
+//                .map(Day::new)
+//                .collect(Collectors.toList());
+//
+//        dayRepository.saveAll(targetDaysList);
+//
+//    }
 }
