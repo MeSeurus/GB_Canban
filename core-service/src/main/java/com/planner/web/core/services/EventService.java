@@ -21,7 +21,7 @@ public class EventService {
     }
 
     public List<Event> findEventsByUser(String username) {
-        return eventRepository.findEventsByUser(username);
+        return eventRepository.findEventsByUserNickname(username);
     }
 
     public void createEvent(String username, EventDetails eventDetails) {
