@@ -3,14 +3,16 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>spring-web</artifactId>
-        <groupId>com.geekbrains</groupId>
+        <artifactId>canban</artifactId>
+        <groupId>com.canban</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.geekbrains.gb-planner</groupId>
     <artifactId>api</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>api</name>
+    <description>api-service</description>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
