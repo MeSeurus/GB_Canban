@@ -1,5 +1,6 @@
 package com.canban.web.core.entities;
 
+import com.canban.auth.entity.User;
 import lombok.*;
 
 import javax.persistence.*;

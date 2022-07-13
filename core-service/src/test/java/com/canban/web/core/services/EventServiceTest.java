@@ -1,7 +1,7 @@
 package com.canban.web.core.services;
 
+import com.canban.auth.entity.User;
 import com.canban.web.core.entities.Event;
-import com.canban.web.core.entities.User;
 import com.canban.web.core.repositories.EventRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +10,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class EventServiceTest {
     private EventRepository eventRepository;
 
     private User userJohn;
-
+/*
     @BeforeEach
     public void init() {
         userJohn = new User("John");
@@ -70,12 +71,12 @@ public class EventServiceTest {
     }
 
 
-//  @Test
-// public void findByDayIdTest() {
-//        Assertions.assertNotNull(dayIdEvents);
-//     Assertions.assertEquals(2, dayIdEvents.size());
-//        Mockito.verify(eventRepository, Mockito.times(1)).findAllByDayId(day.getId());
-//    }
+    @Test
+    public void findByDayIdTest() {
+        Assertions.assertNotNull(dayIdEvents);
+        Assertions.assertEquals(2, dayIdEvents.size());
+        Mockito.verify(eventRepository, Mockito.times(1)).findAllByDayId(day.getId());
+    }
 
-
+*/
 }
