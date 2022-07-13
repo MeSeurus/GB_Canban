@@ -11,15 +11,10 @@ import java.util.List;
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
 
-    @Query(
-            value = "SELECT e from Event e where e.day.id = :id"
-    )
-    List<Event> findAllByDayId(@Param("id") Long id);
-
-    List<Event> findEventsByUser(String username);
+    List<Event> findEventsByUserName(String username);
 
     @Query(
-            value = "SELECT e from Event e where e.user.nickname = :username"
+            value = "SELECT e from Event e where e.userName = :username"
     )
     List<Event> findEventsByUserNickname(String username);
 
