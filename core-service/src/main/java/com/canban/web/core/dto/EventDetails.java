@@ -1,6 +1,5 @@
 package com.canban.web.core.dto;
 
-import com.canban.web.core.entities.Day;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "Модель деталей события")
@@ -10,17 +9,13 @@ public class EventDetails {
     @Schema(description = "Описание события", required = true)
     private String content;
 
-    @Schema(description = "Пользователь события", required = false)
+    @Schema(description = "Пользователь события")
     private String username;
 
-    @Schema(description = "День события", required = true)
-    private Day day;
-
-    public EventDetails(String title, String content, String username, Day day) {
+    public EventDetails(String title, String content, String username) {
         this.title = title;
         this.content = content;
         this.username = username;
-        this.day = day;
     }
 
     public String getTitle() {
@@ -45,13 +40,5 @@ public class EventDetails {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public Day getDay() {
-        return day;
-    }
-
-    public void setDay(Day day) {
-        this.day = day;
     }
 }

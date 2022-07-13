@@ -29,7 +29,6 @@ public class EventService {
                 .title(eventDetails.getTitle())
                 .content(eventDetails.getContent())
                 .user(new User(username))
-                .day(eventDetails.getDay())
                 .build();
         eventRepository.save(event);
     }
