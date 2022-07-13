@@ -12,6 +12,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tasks")
 @AllArgsConstructor
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
