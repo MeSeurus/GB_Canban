@@ -12,10 +12,10 @@ public class EventDetails {
     @Schema(description = "Пользователь события")
     private String username;
 
-    public EventDetails(String title, String content, String username) {
+    public EventDetails(String title, String content, String userName) {
         this.title = title;
         this.content = content;
-        this.username = username;
+        this.username = userName;
     }
 
     public String getTitle() {
@@ -34,7 +34,7 @@ public class EventDetails {
         this.content = content;
     }
 
-    public String getUsername() {
+    public String getUserName() {
         return username;
     }
 
