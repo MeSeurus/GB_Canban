@@ -10,10 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,6 +35,20 @@ public class TaskController {
             }
     )
     public List<TaskDto> findEventsByUsername(@RequestHeader @Parameter(description = "Имя пользователя", required = true) String username) {
+        return taskService.findTaskByUser(username).stream().map(taskMapper::entityToDto).collect(Collectors.toList());
+    }
+
+    @GetMapping("/path/{username}")
+    @Operation(
+            summary = "Запрос на получение всех событий по имени пользователя",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = TaskDto.class))
+                    )
+            }
+    )
+    public List<TaskDto> findEventsByUsernamePathVar(@PathVariable String username) {
         return taskService.findTaskByUser(username).stream().map(taskMapper::entityToDto).collect(Collectors.toList());
     }
 }
