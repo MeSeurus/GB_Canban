@@ -1,7 +1,7 @@
 server:
   port: 8789
   servlet:
-    context-path: /gb-planner-auth
+    context-path: /canban-auth
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
