@@ -16,7 +16,7 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
 
-    public List<Event> findTaskByUser(String username) {
+    public List<Task> findTaskByUser(String username) {
         return taskRepository.findTasksByUserName(username);
     }
 
