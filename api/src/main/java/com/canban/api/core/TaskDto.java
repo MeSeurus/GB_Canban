@@ -1,18 +1,20 @@
 package com.canban.api.core;
+import com.canban.web.core.enums.Priority;
+import com.canban.web.core.enums.State;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Schema(description = "Модель задачи")
+@AllArgsConstructor
+@NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
 public class TaskDto {
-    /*@Schema(description = "ID задачи", required = true, example = "1")
+    @Schema(description = "ID задачи", required = true, example = "1")
     private Long id;
     @Schema(description = "Название задачи", required = true, example = "Создать программу Hello World")
     private String title;
@@ -24,30 +26,37 @@ public class TaskDto {
     @Schema(description = "Исполнитель задачи", required = true, example = "user1")
     private String username;
 
-    /**
-     * Вот тут вопрос, событие на один день или на несколько?
-     * Если на один, то смысла не имеет, можно дату создания запоминать просто
-
     @Schema(description = "Дата начала задачи", required = true)
     private LocalDateTime eventDate;
 
-    @Schema
-    private State
+    @Schema(description = "Срок выпонения задачи", required = true)
+    private LocalDateTime dueDate;
 
+    @Schema(description = "Статус задачи", required = true)
+    private State state;
 
-    public TaskDto(Long id, String title, String content, String username, LocalDateTime eventDate) {
+    @Schema(description = "Приоритет задачи", required = true)
+    private Priority priority;
+
+    @Schema(description = "Имя канбан-доски", required = true)
+    private String kanban_name;
+
+//Конструктор без исполнителя
+    public TaskDto(Long id,
+                   String title,
+                   String content,
+                   LocalDateTime eventDate,
+                   LocalDateTime dueDate,
+                   State state,
+                   Priority priority,
+                   String kanban_name) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.username = username;
         this.eventDate = eventDate;
+        this.dueDate = dueDate;
+        this.state = state;
+        this.priority = priority;
+        this.kanban_name = kanban_name;
     }
-
-    public EventDto(Long id, String title, String content) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-    }
-
-*/
 }
