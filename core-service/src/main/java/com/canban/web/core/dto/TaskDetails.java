@@ -1,12 +1,16 @@
 package com.canban.web.core.dto;
 
+import com.canban.web.core.enums.Priority;
+import com.canban.web.core.enums.State;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+
+import java.time.LocalDateTime;
+
 
 @Schema(description = "Модель деталей задачи")
-@Setter
-@Getter
+@Data
+
 public class TaskDetails {
     @Schema(description = "Название задачи", required = true)
     private String title;
@@ -16,33 +20,19 @@ public class TaskDetails {
     @Schema(description = "Исполнитель задачи")
     private String username;
 
-    public TaskDetails(String title, String content, String userName) {
-        this.title = title;
-        this.content = content;
-        this.username = userName;
-    }
+    @Schema(description = "Статус задачи")
+    private State state;
 
-    public String getTitle() {
-        return title;
-    }
+    @Schema(description = "Приоритет задачи")
+    private Priority priority;
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    @Schema(description = "Имя canban доски")
+    private String canbanName;
 
-    public String getContent() {
-        return content;
-    }
+    @Schema(description = "Начало задачи")
+    private LocalDateTime eventDate;
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+    @Schema(description = "Срок задачи")
+    private LocalDateTime dueDate;
 
-    public String getUserName() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 }

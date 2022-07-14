@@ -21,10 +21,12 @@ public class TaskService {
     }
 
     public void createTask(String username, TaskDetails taskDetails) {
-        Task task = Task.builder()
+        Task task = Task.TaskBuilder
                 .title(taskDetails.getTitle())
                 .content(taskDetails.getContent())
                 .userName(username)
+                .eventDate(taskDetails.getEventDate())
+                .canbanName(taskDetails.getCanbanName())
                 .build();
         taskRepository.save(task);
     }
