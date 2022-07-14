@@ -27,7 +27,7 @@ public class Task extends Event{
     @Column(name = "priority")
     private Priority priority;
 
-    @Column(name = "kanbanName")
+    @Column(name = "kanban_Name")
     private String kanbanName;
 
 
