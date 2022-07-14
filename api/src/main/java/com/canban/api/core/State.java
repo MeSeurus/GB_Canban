@@ -1,4 +1,4 @@
-package com.canban.web.core.enums;
+package com.canban.api.core;
 
 public enum State {
     CREATED, IN_PROGRESS, COMPLETE

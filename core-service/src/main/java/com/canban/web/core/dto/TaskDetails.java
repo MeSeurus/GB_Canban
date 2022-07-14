@@ -1,7 +1,7 @@
 package com.canban.web.core.dto;
 
-import com.canban.web.core.enums.Priority;
-import com.canban.web.core.enums.State;
+import com.canban.api.core.Priority;
+import com.canban.api.core.State;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
