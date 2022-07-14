@@ -20,8 +20,11 @@ create table if not exists tasks
     title           varchar(60) not null,
     content         varchar(300) not null,
     userName        varchar(60),
-    event_date      date
-
+    event_date      date,
+    due_date        date,
+    state           varchar(15),
+    priority        varchar(15),
+    kanbanName      varchar(15)
 );
 
 

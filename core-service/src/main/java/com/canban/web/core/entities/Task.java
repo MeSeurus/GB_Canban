@@ -27,10 +27,11 @@ public class Task extends Event{
     @Column(name = "priority")
     private Priority priority;
 
-    @Column(name = "canbanName")
-    private String canbanName;
+    @Column(name = "kanbanName")
+    private String kanbanName;
 
-    public Task(Long id, String title, String content, String userName, LocalDateTime eventDate, LocalDateTime dueDate, State state, Priority priority, String canbanName) {
+
+    public Task(Long id, String title, String content, String userName, LocalDateTime eventDate, LocalDateTime dueDate, State state, Priority priority, String kanbanName) {
     }
 
     public Task() {
@@ -50,7 +51,7 @@ public class Task extends Event{
         private LocalDateTime eventDate;
         private State state;
         private Priority priority;
-        private String canbanName;
+        private String kanbanName;
         private LocalDateTime dueDate;
 
 
@@ -95,13 +96,13 @@ public class Task extends Event{
             return this;
         }
 
-        public Task.TaskBuilder canbanName(final String canbanName) {
-            this.canbanName = canbanName;
+        public Task.TaskBuilder kanbanName(final String kanbanName) {
+            this.kanbanName = kanbanName;
             return this;
         }
 
         public Task build() {
-            return new Task(this.id, this.title, this.content, this.userName, this.eventDate, this.dueDate, this.state, this.priority, this.canbanName);
+            return new Task(this.id, this.title, this.content, this.userName, this.eventDate, this.dueDate, this.state, this.priority, this.kanbanName);
         }
 
     }

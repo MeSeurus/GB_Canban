@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 public class TaskDto {
-    @Schema(description = "ID задачи", required = true, example = "1")
+    /*@Schema(description = "ID задачи", required = true, example = "1")
     private Long id;
     @Schema(description = "Название задачи", required = true, example = "Создать программу Hello World")
     private String title;
@@ -27,7 +27,7 @@ public class TaskDto {
     /**
      * Вот тут вопрос, событие на один день или на несколько?
      * Если на один, то смысла не имеет, можно дату создания запоминать просто
-     */
+
     @Schema(description = "Дата начала задачи", required = true)
     private LocalDateTime eventDate;
 
@@ -49,5 +49,5 @@ public class TaskDto {
         this.content = content;
     }
 
-
+*/
 }
