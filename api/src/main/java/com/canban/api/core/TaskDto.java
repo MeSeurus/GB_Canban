@@ -7,9 +7,6 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Schema(description = "Модель задачи")
-@AllArgsConstructor
-@NoArgsConstructor
-@RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -53,6 +50,18 @@ public class TaskDto {
         this.id = id;
         this.title = title;
         this.content = content;
+        this.eventDate = eventDate;
+        this.dueDate = dueDate;
+        this.state = state;
+        this.priority = priority;
+        this.kanban_name = kanban_name;
+    }
+
+    public TaskDto(Long id, String title, String content, String username, LocalDateTime eventDate, LocalDateTime dueDate, State state, Priority priority, String kanban_name) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.username = username;
         this.eventDate = eventDate;
         this.dueDate = dueDate;
         this.state = state;
