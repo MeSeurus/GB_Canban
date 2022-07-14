@@ -21,7 +21,7 @@ public class TaskService {
     }
 
     public void createTask(String username, TaskDetails taskDetails) {
-        Task task = Task.TaskBuilder
+        Task task = Task.taskBuilder()
                 .title(taskDetails.getTitle())
                 .content(taskDetails.getContent())
                 .userName(username)

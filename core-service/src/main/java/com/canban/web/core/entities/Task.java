@@ -33,6 +33,13 @@ public class Task extends Event{
     public Task(Long id, String title, String content, String userName, LocalDateTime eventDate, LocalDateTime dueDate, State state, Priority priority, String canbanName) {
     }
 
+    public Task() {
+
+    }
+
+    public static TaskBuilder taskBuilder() {
+        return new TaskBuilder();
+    }
 
 
     public static class TaskBuilder {
@@ -47,35 +54,34 @@ public class Task extends Event{
         private LocalDateTime dueDate;
 
 
-
         TaskBuilder() {
         }
 
-        public Task.TaskBuilder id(final Long id) {
+        public TaskBuilder id(final Long id) {
             this.id = id;
             return this;
         }
 
-        public Task.TaskBuilder title(final String title) {
+        public TaskBuilder title(final String title) {
             this.title = title;
             return this;
         }
 
-        public Task.TaskBuilder content(final String content) {
+        public TaskBuilder content(final String content) {
             this.content = content;
             return this;
         }
 
-        public Task.TaskBuilder userName(final String userName) {
+        public TaskBuilder userName(final String userName) {
             this.userName = userName;
             return this;
         }
 
-        public Task.TaskBuilder eventDate(final LocalDateTime eventDate) {
+        public TaskBuilder eventDate(final LocalDateTime eventDate) {
             this.eventDate = eventDate;
             return this;
         }
-        public Task.TaskBuilder state(final State state) {
+        public TaskBuilder state(final State state) {
             this.state = state;
             return this;
         }
