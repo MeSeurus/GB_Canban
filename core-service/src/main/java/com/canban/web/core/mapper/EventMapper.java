@@ -13,7 +13,7 @@ public class EventMapper {
     }
 
     public EventDto entityToDto(Event event) {
-        return new EventDto(event.getId(), event.getTitle(), event.getContent(), event.getDay().getWeekday(), event.getUser().getNickname(), event.getEventStart(), event.getEventEnd());
+        return new EventDto(event.getId(), event.getTitle(), event.getContent(), event.getUserName(), event.getEventDate());
     }
 
 }

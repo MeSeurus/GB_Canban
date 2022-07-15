@@ -1,46 +1,37 @@
-create table if not exists days
-(
-    id              bigserial primary key,
-    cur_date        date not null unique,
-    weekday         int not null
-    );
-
-create table if not exists users
-(
-    id              bigserial primary key,
-    nickname        varchar(60) not null
-
-    );
-
 create table if not exists events
 (
     id              bigserial primary key,
     title           varchar(60) not null,
     content         varchar(300) not null,
-    user_id         bigint references users (id) not null,
-    day_id          bigint references days (id) not null,
-    event_start     date,
-    event_end       date
-
+    userName        varchar(60),
+    event_date      date
 );
 
 
-insert into days (id, cur_date, weekday)
-values (1, '2022-06-24', 5),
-       (2, '2022-06-25', 6);
+insert into events (id, title, content, userName, event_date)
+values (1, 'Create simple program', 'Hello World!', 'user1', '2022-06-24 01:00:00'),
+       (2, 'Create hard program', 'Hello World2!!', 'user2', '2022-06-24 01:00:00'),
+       (3, 'Create SUPER hard program', 'Hello World3!!', 'user3', '2022-06-24 01:00:00'),
+       (4, 'Create SUPER hard program', 'Hello World3!!', 'user4', '2022-06-24 01:00:00');
 
-insert into users (id, nickname)
-values (1, 'user1'),
-       (2, 'user2');
+create table if not exists tasks
+(
+    id              bigserial primary key,
+    title           varchar(60) not null,
+    content         varchar(300) not null,
+    userName        varchar(60),
+    event_date      date,
+    due_date        date,
+    state           varchar(15),
+    priority        varchar(15),
+    kanban_name      varchar(15)
+);
 
-insert into events (id, title, content, user_id, day_id, event_start, event_end)
-values (1, 'Create simple program', 'Hello World!', 1, 1, '2022-06-24 01:00:00', '2022-06-24 07:00:00'),
-       (2, 'Create hard program', 'Hello World2!!', 1, 1, '2022-06-24 01:00:00', '2022-06-24 07:00:00'),
-       (3, 'Create SUPER hard program', 'Hello World3!!', 2, 1, '2022-06-24 01:00:00', '2022-06-24 07:00:00'),
-       (4, 'Create SUPER hard program', 'Hello World3!!', 2, 2, '2022-06-24 01:00:00', '2022-06-24 07:00:00');
-
-
-
+insert into tasks (id, title, content, userName, event_date,due_date,state,priority,kanban_name)
+values  (1, 'Create simple program', 'Hello World!', 'user1', '2022-06-24 01:00:00','2022-08-24 01:00:00', 'IN_PROGRESS', 'HIGH', 'kanban1' ),
+        (2, 'Create simple program2', 'Hello World!', 'user1', '2022-06-24 01:00:00','2022-08-24 01:00:00', 'COMPLETED', 'NORMAL', 'kanban1' ),
+        (3, 'Create simple program3', 'Hello World!', 'user2', '2022-06-24 01:00:00','2022-08-24 01:00:00', 'CREATED', 'LOW', 'kanban1' ),
+        (4, 'Create simple program3', 'Hello World!', 'user2', '2022-06-24 01:00:00','2022-08-24 01:00:00', 'COMPLETED', 'LOW', 'kanban1' );
 
 
 

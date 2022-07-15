@@ -39,20 +39,6 @@ public class EventController {
 //        return eventService.findAll().stream().map(e -> eventMapper.entityToDto(e)).collect(Collectors.toList());
 //    }
 
-    @Operation(
-            summary = "Запрос на получение события по id дня",
-            responses = {
-                    @ApiResponse(
-                            description = "Успешный ответ", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = EventDto.class))
-                    )
-            }
-    )
-    @GetMapping("/day/{id}")
-    public List<EventDto> findEventsByDayId(@PathVariable @Parameter(description = "Идентификатор события", required = true) Long id) {
-        return eventService.findEventsByDayId(id).stream().map(e -> eventMapper.entityToDto(e)).collect(Collectors.toList());
-    }
-
     /**
      * пока через PathVariable для простоты отладки через постман без фронта
      * todo переделать на RequestHeader

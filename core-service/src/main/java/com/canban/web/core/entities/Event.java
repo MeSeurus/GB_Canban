@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(name = "events")
 @AllArgsConstructor
 @Builder
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 public class Event {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "id")
     private Long id;
 
@@ -25,26 +26,18 @@ public class Event {
     @Column(name = "content")
     private String content;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "userName")
+    private String userName;
 
-    @ManyToOne
-    @JoinColumn(name = "day_id")
-    private Day day;
 
-    @Column(name = "event_start")
-    private LocalDateTime eventStart;
+    @Column(name = "event_date")
+    private LocalDateTime eventDate;
 
-    @Column(name = "event_end")
-    private LocalDateTime eventEnd;
-
-    public Event(Long id, String title, String content, User user, Day day) {
+    public Event(Long id, String title, String content, String userName) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.user = user;
-        this.day = day;
+        this.userName = userName;
     }
 
 
