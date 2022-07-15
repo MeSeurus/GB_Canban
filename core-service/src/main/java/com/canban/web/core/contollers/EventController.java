@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/events")
+@CrossOrigin(origins = "http://localhost:3000/")
 @RequiredArgsConstructor
 @Tag(name = "События", description = "Методы работы с событиями")
 public class EventController {
