@@ -4,7 +4,9 @@ create table if not exists events
     title           varchar(60) not null,
     content         varchar(300) not null,
     username        varchar(60),
-    event_date      date
+    event_date      date,
+    created_at  timestamp default current_timestamp,
+    updated_at  timestamp default current_timestamp
 );
 
 
@@ -24,7 +26,9 @@ create table if not exists tasks
     due_date        date,
     state           varchar(15),
     priority        varchar(15),
-    kanban_name     varchar(15)
+    kanban_name     varchar(15),
+    created_at  timestamp default current_timestamp,
+    updated_at  timestamp default current_timestamp
 );
 
 insert into tasks (id, title, content, username, event_date,due_date,state,priority,kanban_name)

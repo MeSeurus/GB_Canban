@@ -28,7 +28,7 @@ public class Task extends Event{
 //    @Enumerated(EnumType.STRING)
     private Priority priority;
 
-    @Column(name = "kanban_Name")
+    @Column(name = "kanban_name")
     private String kanban_name;
 
 
