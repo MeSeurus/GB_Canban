@@ -10,10 +10,10 @@ import java.util.List;
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
 
-    List<Event> findEventsByUserName(String username);
+    List<Event> findEventsByUsername(String username);
 
     @Query(
-            value = "SELECT e from Event e where e.userName = :username"
+            value = "SELECT e from Event e where e.username = :username"
     )
     List<Event> findEventsByUserNickname(String username);
 

@@ -17,12 +17,12 @@ public class TaskMapper {
                 task.getId(),
                 task.getTitle(),
                 task.getContent(),
-                task.getUserName(),
+                task.getUsername(),
                 task.getEventDate(),
-                task.getDueDate(),
+                task.getDue_date(),
                 task.getState(),
                 task.getPriority(),
-                task.getKanbanName()
+                task.getKanban_name()
         );
     }
 

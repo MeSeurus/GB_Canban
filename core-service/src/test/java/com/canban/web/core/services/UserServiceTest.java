@@ -1,19 +1,6 @@
 package com.canban.web.core.services;
 
-import com.canban.auth.entity.User;
-import com.canban.auth.repository.UserRepository;
-import com.canban.auth.service.UserService;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 
 @SpringBootTest
 public class UserServiceTest {

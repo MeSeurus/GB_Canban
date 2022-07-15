@@ -1,6 +1,8 @@
 package com.canban.web.core.entities;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -26,18 +28,26 @@ public class Event {
     @Column(name = "content")
     private String content;
 
-    @Column(name = "userName")
-    private String userName;
+    @Column(name = "username")
+    private String username;
 
 
     @Column(name = "event_date")
-    private LocalDateTime eventDate;
+    private LocalDateTime eventDate; //дата назначения события
 
-    public Event(Long id, String title, String content, String userName) {
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    public Event(Long id, String title, String content, String username) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.userName = userName;
+        this.username = username;
     }
 
 

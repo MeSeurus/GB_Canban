@@ -35,7 +35,7 @@ public class TaskController {
             }
     )
     public List<TaskDto> findEventsByUsername(@RequestHeader @Parameter(description = "Имя пользователя", required = true) String username) {
-        return taskService.findTaskByUser(username).stream().map(taskMapper::entityToDto).collect(Collectors.toList());
+        return taskService.findTaskByUsername(username).stream().map(taskMapper::entityToDto).collect(Collectors.toList());
     }
 
     @GetMapping("/path/{username}")
@@ -49,6 +49,6 @@ public class TaskController {
             }
     )
     public List<TaskDto> findEventsByUsernamePathVar(@PathVariable String username) {
-        return taskService.findTaskByUser(username).stream().map(taskMapper::entityToDto).collect(Collectors.toList());
+        return taskService.findTaskByUsername(username).stream().map(taskMapper::entityToDto).collect(Collectors.toList());
     }
 }
