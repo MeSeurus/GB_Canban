@@ -8,10 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class EventMapper {
 
-    public Event dtoToEntity(EventDto eventDto) {
-        throw new UnsupportedOperationException();
-    }
-
     public EventDto entityToDto(Event event) {
         return new EventDto(event.getId(), event.getTitle(), event.getContent(), event.getUsername(), event.getEventDate());
     }

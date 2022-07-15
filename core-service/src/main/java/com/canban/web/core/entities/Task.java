@@ -1,7 +1,7 @@
 package com.canban.web.core.entities;
 
-import com.canban.api.core.Priority;
-import com.canban.api.core.State;
+import com.canban.web.core.enums.Priority;
+import com.canban.web.core.enums.State;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,21 +18,27 @@ import java.time.LocalDateTime;
 public class Task extends Event{
 
     @Column(name = "due_date")
-    private LocalDateTime due_date;
+    private LocalDateTime dueDate;
 
     @Column(name = "state")
-//    @Enumerated(EnumType.STRING)
     private State state;
 
     @Column(name = "priority")
-//    @Enumerated(EnumType.STRING)
     private Priority priority;
 
     @Column(name = "kanban_name")
-    private String kanban_name;
+    private String kanbanName;
 
-
-    public Task(Long id, String title, String content, String username, LocalDateTime event_date, LocalDateTime due_date, State state, Priority priority, String kanban_name) {
+    public Task(Long id, String title, String content, String username, LocalDateTime eventDate, LocalDateTime dueDate, State state, Priority priority, String kanbanName) {
+        this.setId(id);
+        this.setTitle(title);
+        this.setContent(content);
+        this.setUsername(username);
+        this.setEventDate(eventDate);
+        this.setDueDate(dueDate);
+        this.setState(state);
+        this.setPriority(priority);
+        this.setKanbanName(kanbanName);
     }
 
 
@@ -40,20 +46,18 @@ public class Task extends Event{
         return new TaskBuilder();
     }
 
-
     public static class TaskBuilder {
         private Long id;
         private String title;
         private String content;
         private String username;
-        private LocalDateTime event_date;
+        private LocalDateTime eventDate;
         private State state;
         private Priority priority;
-        private String kanban_name;
-        private LocalDateTime due_date;
+        private String kanbanName;
+        private LocalDateTime dueDate;
 
-
-        TaskBuilder() {
+        private TaskBuilder() {
         }
 
         public TaskBuilder id(final Long id) {
@@ -71,13 +75,13 @@ public class Task extends Event{
             return this;
         }
 
-        public TaskBuilder userName(final String username) {
+        public TaskBuilder username(final String username) {
             this.username = username;
             return this;
         }
 
-        public TaskBuilder eventDate(final LocalDateTime event_date) {
-            this.event_date = event_date;
+        public TaskBuilder eventDate(final LocalDateTime eventDate) {
+            this.eventDate = eventDate;
             return this;
         }
         public TaskBuilder state(final State state) {
@@ -89,18 +93,18 @@ public class Task extends Event{
             return this;
         }
 
-        public Task.TaskBuilder due_date(final LocalDateTime due_date) {
-            this.due_date = due_date;
+        public Task.TaskBuilder dueDate(final LocalDateTime dueDate) {
+            this.dueDate = dueDate;
             return this;
         }
 
         public Task.TaskBuilder kanbanName(final String kanbanName) {
-            this.kanban_name = kanban_name;
+            this.kanbanName = kanbanName;
             return this;
         }
 
         public Task build() {
-            return new Task(this.id, this.title, this.content, this.username, this.event_date, this.due_date, this.state, this.priority, this.kanban_name);
+            return new Task(this.id, this.title, this.content, this.username, this.eventDate, this.dueDate, this.state, this.priority, this.kanbanName);
         }
 
     }

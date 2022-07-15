@@ -26,24 +26,6 @@ public class EventController {
     private final EventService eventService;
     private final EventMapper eventMapper;
 
-//    @Operation(
-//            summary = "Запрос на получение всех событий",
-//            responses = {
-//                    @ApiResponse(
-//                            description = "Успешный ответ", responseCode = "200",
-//                            content = @Content(schema = @Schema(implementation = List.class))
-//                    )
-//            }
-//    )
-//    @GetMapping()
-//    public List<EventDto> findAll() {
-//        return eventService.findAll().stream().map(e -> eventMapper.entityToDto(e)).collect(Collectors.toList());
-//    }
-
-    /**
-     * пока через PathVariable для простоты отладки через постман без фронта
-     * todo переделать на RequestHeader
-     */
     @GetMapping()
     @Operation(
             summary = "Запрос на получение всех событий по имени пользователя",

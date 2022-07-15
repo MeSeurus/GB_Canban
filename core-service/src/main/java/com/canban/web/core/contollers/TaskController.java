@@ -27,7 +27,7 @@ public class TaskController {
 
     @GetMapping()
     @Operation(
-            summary = "Запрос на получение всех событий по имени пользователя",
+            summary = "Запрос на получение всех заданий по имени пользователя",
             responses = {
                     @ApiResponse(
                             description = "Успешный ответ", responseCode = "200",
@@ -39,17 +39,17 @@ public class TaskController {
         return taskService.findTaskByUsername(username).stream().map(taskMapper::entityToDto).collect(Collectors.toList());
     }
 
-    @GetMapping("/path/{username}")
+
+    @PostMapping()
     @Operation(
-            summary = "Запрос на получение всех событий по имени пользователя",
+            summary = "Запрос на создание нового задания",
             responses = {
                     @ApiResponse(
-                            description = "Успешный ответ", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = TaskDto.class))
+                            description = "Успешный ответ", responseCode = "200"
                     )
             }
     )
-    public List<TaskDto> findEventsByUsernamePathVar(@PathVariable String username) {
-        return taskService.findTaskByUsername(username).stream().map(taskMapper::entityToDto).collect(Collectors.toList());
+    public void addTask(@RequestBody @Parameter(description = "Task ", required = true) TaskDto taskDto){
+        taskService.save(taskMapper.dtoToEntity(taskDto));
     }
 }
