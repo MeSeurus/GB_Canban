@@ -23,7 +23,7 @@ public class TaskService {
         Task task = Task.taskBuilder()
                 .title(taskDetails.getTitle())
                 .content(taskDetails.getContent())
-                .userName(username)
+                .username(taskDetails.getUsername())
                 .eventDate(taskDetails.getEvent_date())
                 .kanbanName(taskDetails.getKanban_name())
                 .build();
@@ -36,5 +36,9 @@ public class TaskService {
 
     public void deleteById(Long id) {
         taskRepository.deleteById(id);
+    }
+
+    public void save(Task task) {
+        taskRepository.save(task);
     }
 }

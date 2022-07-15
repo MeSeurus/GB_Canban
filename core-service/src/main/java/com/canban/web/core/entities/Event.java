@@ -31,7 +31,6 @@ public class Event {
     @Column(name = "username")
     private String username;
 
-
     @Column(name = "event_date")
     private LocalDateTime eventDate; //дата назначения события
 

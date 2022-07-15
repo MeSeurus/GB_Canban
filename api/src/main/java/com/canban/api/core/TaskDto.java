@@ -28,13 +28,13 @@ public class TaskDto {
     private LocalDateTime dueDate;
 
     @Schema(description = "Статус задачи", required = true)
-    private State state;
+    private String state;
 
     @Schema(description = "Приоритет задачи", required = true)
-    private Priority priority;
+    private String priority;
 
     @Schema(description = "Имя канбан-доски", required = true)
-    private String kanban_name;
+    private String kanbanName;
 
 //Конструктор без исполнителя
     public TaskDto(Long id,
@@ -42,8 +42,8 @@ public class TaskDto {
                    String content,
                    LocalDateTime eventDate,
                    LocalDateTime dueDate,
-                   State state,
-                   Priority priority,
+                   String state,
+                   String priority,
                    String kanban_name) {
         this.id = id;
         this.title = title;
@@ -52,10 +52,10 @@ public class TaskDto {
         this.dueDate = dueDate;
         this.state = state;
         this.priority = priority;
-        this.kanban_name = kanban_name;
+        this.kanbanName = kanban_name;
     }
 
-    public TaskDto(Long id, String title, String content, String username, LocalDateTime eventDate, LocalDateTime dueDate, State state, Priority priority, String kanban_name) {
+    public TaskDto(Long id, String title, String content, String username, LocalDateTime eventDate, LocalDateTime dueDate, String state, String priority, String kanbanName) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -64,6 +64,6 @@ public class TaskDto {
         this.dueDate = dueDate;
         this.state = state;
         this.priority = priority;
-        this.kanban_name = kanban_name;
+        this.kanbanName = kanbanName;
     }
 }
