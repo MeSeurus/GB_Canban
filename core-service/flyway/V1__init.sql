@@ -30,8 +30,8 @@ create table if not exists tasks
 insert into tasks (id, title, content, username, event_date,due_date,state,priority,kanban_name)
 values  (1, 'Create simple program', 'Hello World!', 'user1', '2022-06-24 01:00:00','2022-08-24 01:00:00', '1', '1', 'kanban1' ),
         (2, 'Create simple program2', 'Hello World!', 'user1', '2022-06-24 01:00:00','2022-08-24 01:00:00', '2', '2', 'kanban1' ),
-        (3, 'Create simple program3', 'Hello World!', 'user2', '2022-06-24 01:00:00','2022-08-24 01:00:00', '2', '3', 'kanban1' ),
-        (4, 'Create simple program3', 'Hello World!', 'user2', '2022-06-24 01:00:00','2022-08-24 01:00:00', '3', '4', 'kanban1' );
+        (3, 'Create simple program3', 'Hello World!', 'user2', '2022-06-24 01:00:00','2022-08-24 01:00:00', '0', '0', 'kanban1' ),
+        (4, 'Create simple program3', 'Hello World!', 'user2', '2022-06-24 01:00:00','2022-08-24 01:00:00', '2', '0', 'kanban1' );
 
 
 

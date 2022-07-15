@@ -4,9 +4,7 @@ import com.canban.api.core.Priority;
 import com.canban.api.core.State;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 
@@ -23,9 +21,11 @@ public class Task extends Event{
     private LocalDateTime due_date;
 
     @Column(name = "state")
+//    @Enumerated(EnumType.STRING)
     private State state;
 
     @Column(name = "priority")
+//    @Enumerated(EnumType.STRING)
     private Priority priority;
 
     @Column(name = "kanban_Name")
