@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/tasks")
+@CrossOrigin(origins = "http://localhost:3000/")
 @RequiredArgsConstructor
 @Tag(name = "Задачи", description = "Методы работы с задачами")
 public class TaskController {
