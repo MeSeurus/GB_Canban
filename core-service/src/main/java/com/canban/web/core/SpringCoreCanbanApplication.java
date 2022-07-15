@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringCorePlannerApplication {
+public class SpringCoreCanbanApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringCorePlannerApplication.class, args);
+        SpringApplication.run(SpringCoreCanbanApplication.class, args);
     }
 
 }

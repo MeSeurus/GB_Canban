@@ -2,7 +2,7 @@ package com.canban.auth.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.canban.FlywayMigrationConfig;
+import com.canban.FlywayCleanBaseForTestsConfig;
 import com.canban.api.auth.RegistrationUserDto;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
-@Import(FlywayMigrationConfig.class)
+@Import(FlywayCleanBaseForTestsConfig.class)
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 public class RegisterControllerTest {
@@ -41,7 +41,6 @@ public class RegisterControllerTest {
     static ObjectMapper mapper = JsonMapper.builder()
             .findAndAddModules()
             .build();
-
 
     @Test
     public void registrationTest() throws Exception {
