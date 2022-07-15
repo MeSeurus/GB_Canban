@@ -49,7 +49,7 @@ public class TaskController {
                     )
             }
     )
-    public void addTask(@RequestBody @Parameter(description = "Task ", required = true) TaskDto taskDto){
+    public void addTask(@RequestBody @Parameter(description = "Task DTO", required = true) TaskDto taskDto){
         taskService.save(taskMapper.dtoToEntity(taskDto));
     }
 }
