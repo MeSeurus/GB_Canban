@@ -26,18 +26,18 @@ public class Event {
     @Column(name = "content")
     private String content;
 
-    @Column(name = "userName")
-    private String userName;
+    @Column(name = "username")
+    private String username;
 
 
     @Column(name = "event_date")
     private LocalDateTime eventDate;
 
-    public Event(Long id, String title, String content, String userName) {
+    public Event(Long id, String title, String content, String username) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.userName = userName;
+        this.username = username;
     }
 
 

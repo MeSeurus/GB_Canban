@@ -24,7 +24,7 @@ public class TaskDto {
     @Schema(description = "Дата начала задачи", required = true)
     private LocalDateTime eventDate;
 
-    @Schema(description = "Срок выпонения задачи", required = true)
+    @Schema(description = "Срок выполнения задачи", required = true)
     private LocalDateTime dueDate;
 
     @Schema(description = "Статус задачи", required = true)

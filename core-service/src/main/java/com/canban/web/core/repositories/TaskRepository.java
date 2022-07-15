@@ -12,7 +12,7 @@ import java.util.List;
 public interface TaskRepository extends JpaRepository<Event, Long> {
 
     @Query(
-            value = "SELECT e from Task e where e.userName = :username"
+            value = "SELECT e from Task e where e.username = :username"
     )
     List<Task> findTasksByUserName(String username);
 }
