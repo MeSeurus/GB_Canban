@@ -24,8 +24,8 @@ public class TaskService {
                 .title(taskDetails.getTitle())
                 .content(taskDetails.getContent())
                 .username(taskDetails.getUsername())
-                .eventDate(taskDetails.getEvent_date())
-                .kanbanName(taskDetails.getKanban_name())
+                .eventDate(taskDetails.getEventDate())
+                .kanbanName(taskDetails.getKanbanName())
                 .build();
         taskRepository.save(task);
     }

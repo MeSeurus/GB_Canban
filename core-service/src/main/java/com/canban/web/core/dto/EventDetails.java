@@ -1,8 +1,12 @@
 package com.canban.web.core.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Schema(description = "Модель деталей события")
+@Data
 public class EventDetails {
     @Schema(description = "Название события", required = true)
     private String title;
@@ -16,29 +20,5 @@ public class EventDetails {
         this.title = title;
         this.content = content;
         this.username = userName;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getUserName() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 }
