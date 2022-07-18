@@ -21,9 +21,11 @@ public class Task extends Event{
     private LocalDateTime dueDate;
 
     @Column(name = "state")
+    @Enumerated(value = EnumType.STRING)
     private State state;
 
     @Column(name = "priority")
+    @Enumerated(value = EnumType.STRING)
     private Priority priority;
 
     @Column(name = "kanban_name")

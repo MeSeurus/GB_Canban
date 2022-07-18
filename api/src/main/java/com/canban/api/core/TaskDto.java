@@ -44,7 +44,7 @@ public class TaskDto {
                    LocalDateTime dueDate,
                    String state,
                    String priority,
-                   String kanban_name) {
+                   String kanbanName) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -52,7 +52,7 @@ public class TaskDto {
         this.dueDate = dueDate;
         this.state = state;
         this.priority = priority;
-        this.kanbanName = kanban_name;
+        this.kanbanName = kanbanName;
     }
 
     public TaskDto(Long id, String title, String content, String username, LocalDateTime eventDate, LocalDateTime dueDate, String state, String priority, String kanbanName) {
