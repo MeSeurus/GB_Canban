@@ -1,6 +1,6 @@
 package com.canban.web.core.services;
 
-import com.canban.web.core.dto.EventDetails;
+import com.canban.web.core.dto.EventDetailsRq;
 import com.canban.web.core.entities.Event;
 import com.canban.web.core.repositories.EventRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,10 +18,10 @@ public class EventService {
         return eventRepository.findEventsByUsername(username);
     }
 
-    public void createEvent(String username, EventDetails eventDetails) {
+    public void createEvent(String username, EventDetailsRq eventDetailsRq) {
         Event event = Event.builder()
-                .title(eventDetails.getTitle())
-                .content(eventDetails.getContent())
+                .title(eventDetailsRq.getTitle())
+                .content(eventDetailsRq.getContent())
                 .username(username)
                 .beginDate(eventDetails.getBeginDate())
                 .build();
