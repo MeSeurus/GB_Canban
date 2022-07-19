@@ -2,7 +2,6 @@ package com.canban.auth.validator;
 
 import com.canban.api.auth.RegistrationUserDto;
 import com.canban.api.exceptions.ValidationException;
-import com.canban.api.exceptions.FieldsValidationError;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +14,7 @@ import java.util.regex.Pattern;
 public class UserValidator {
 
     public static boolean patternMatches(String emailAddress) {
-        String regexPattern ="^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+(?:\\.[a-zA-Z0-9_!#$%&'* +/=?`{|}~^-]+)*@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$";
+        String regexPattern = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+(?:\\.[a-zA-Z0-9_!#$%&'* +/=?`{|}~^-]+)*@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$";
         return Pattern.compile(regexPattern)
                 .matcher(emailAddress)
                 .matches();
