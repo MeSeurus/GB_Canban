@@ -1,10 +1,8 @@
 package com.canban.auth.validator;
-
 import com.canban.api.auth.RegistrationUserDto;
 import com.canban.api.exceptions.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
