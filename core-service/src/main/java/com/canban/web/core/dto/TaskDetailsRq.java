@@ -10,8 +10,7 @@ import java.time.LocalDateTime;
 
 @Schema(description = "Модель деталей задачи")
 @Data
-
-public class TaskDetails {
+public class TaskDetailsRq {
     @Schema(description = "Название задачи", required = true)
     private String title;
     @Schema(description = "Описание задачи", required = true)
@@ -21,18 +20,18 @@ public class TaskDetails {
     private String username;
 
     @Schema(description = "Статус задачи")
-    private State state;
+    private String state;
 
     @Schema(description = "Приоритет задачи")
-    private Priority priority;
+    private String priority;
 
     @Schema(description = "Имя canban доски")
-    private String kanban_name;
+    private String kanbanName;
 
     @Schema(description = "Начало задачи")
-    private LocalDateTime event_date;
+    private LocalDateTime eventDate;
 
     @Schema(description = "Срок задачи")
-    private LocalDateTime due_date;
+    private LocalDateTime dueDate;
 
 }
