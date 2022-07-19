@@ -24,13 +24,14 @@ public class TaskService {
                 .title(taskDetails.getTitle())
                 .content(taskDetails.getContent())
                 .username(taskDetails.getUsername())
-                .eventDate(taskDetails.getEventDate())
+                .beginDate(taskDetails.getEventDate())
                 .kanbanName(taskDetails.getKanbanName())
                 .build();
         taskRepository.save(task);
     }
 
-    public List<Event> findAll() {
+
+    public List<Task> findAll() {
         return taskRepository.findAll();
     }
 
@@ -38,7 +39,5 @@ public class TaskService {
         taskRepository.deleteById(id);
     }
 
-    public void save(Task task) {
-        taskRepository.save(task);
-    }
+
 }

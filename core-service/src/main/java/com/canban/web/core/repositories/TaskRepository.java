@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TaskRepository extends JpaRepository<Event, Long> {
+public interface TaskRepository extends JpaRepository<Task, Long> {
 
     @Query(
             value = "SELECT e from Task e where e.username = :username"
