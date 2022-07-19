@@ -4,13 +4,13 @@ create table if not exists events
     title           varchar(60) not null,
     content         varchar(300) not null,
     username        varchar(60),
-    event_date      date,
+    begin_date      date,
     created_at  timestamp default current_timestamp,
     updated_at  timestamp default current_timestamp
 );
 
 
-insert into events (id, title, content, username, event_date)
+insert into events (id, title, content, username, begin_date)
 values (1, 'Create simple program', 'Hello World!', 'user1', '2022-06-24 01:00:00'),
        (2, 'Create hard program', 'Hello World2!!', 'user2', '2022-06-24 01:00:00'),
        (3, 'Create SUPER hard program', 'Hello World3!!', 'user3', '2022-06-24 01:00:00'),
@@ -22,7 +22,7 @@ create table if not exists tasks
     title           varchar(60) not null,
     content         varchar(300) not null,
     username        varchar(60),
-    event_date      date,
+    begin_date      date,
     due_date        date,
     state           varchar(15),
     priority        varchar(15),
@@ -31,7 +31,7 @@ create table if not exists tasks
     updated_at  timestamp default current_timestamp
 );
 
-insert into tasks (id, title, content, username, event_date,due_date,state,priority,kanban_name)
+insert into tasks (id, title, content, username, begin_date,due_date,state,priority,kanban_name)
 values  (1, 'Create simple program', 'Hello World!', 'user1', '2022-06-24 01:00:00','2022-08-24 01:00:00', 'COMPLETE', 'HIGH', 'kanban1' ),
         (2, 'Create simple program2', 'Hello World!', 'user1', '2022-06-24 01:00:00','2022-08-24 01:00:00', 'CREATED', 'HIGH', 'kanban1' ),
         (3, 'Create simple program3', 'Hello World!', 'user2', '2022-06-24 01:00:00','2022-08-24 01:00:00', 'CREATED', 'NORMAL', 'kanban1' ),
