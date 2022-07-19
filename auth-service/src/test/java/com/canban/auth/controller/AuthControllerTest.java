@@ -25,7 +25,7 @@ public class AuthControllerTest {
     static JwtRequest buildJwtRequest() {
         JwtRequest jwtRequest = new JwtRequest();
         jwtRequest.setUsername("testuser11");
-        jwtRequest.setPassword("testpass2");
+        jwtRequest.setPassword("testpass12");
         return jwtRequest;
     }
 
