@@ -2,8 +2,9 @@ package com.canban.auth.controller;
 
 import com.canban.api.auth.JwtResponse;
 import com.canban.api.auth.RegistrationUserDto;
-import com.canban.auth.entity.User;
 import com.canban.auth.exceptions.InvalidRegistrationException;
+import com.canban.auth.mapper.UserMapper;
+import com.canban.auth.service.RoleService;
 import com.canban.auth.service.UserService;
 import com.canban.auth.util.JwtTokenUtil;
 import com.canban.auth.validator.UserValidator;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000/")
@@ -29,6 +32,8 @@ public class RegisterController {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenUtil jwtTokenUtil;
     private final UserValidator userValidator;
+    private final UserMapper userMapper;
+    private final RoleService roleService;
 
     @PostMapping("/registration")
     @Operation(
@@ -46,13 +51,8 @@ public class RegisterController {
             throw new InvalidRegistrationException("Пользователь с таким именем уже существует");
         }
         userValidator.validate(registrationUserDto);
-        User user = new User();
-        user.setFirstName(registrationUserDto.getFirstName());
-        user.setLastName(registrationUserDto.getLastName());
-        user.setEmail(registrationUserDto.getEmail());
-        user.setUsername(registrationUserDto.getUsername());
-        user.setPassword(passwordEncoder.encode(registrationUserDto.getPassword()));
-        userService.createUser(user);
+        registrationUserDto.setPassword(passwordEncoder.encode(registrationUserDto.getPassword()));
+        userService.createUser(userMapper.dtoToEntity(registrationUserDto,List.of(roleService.getUserRole())));
 
         UserDetails userDetails = userService.loadUserByUsername(registrationUserDto.getUsername());
         String token = jwtTokenUtil.generateToken(userDetails);
