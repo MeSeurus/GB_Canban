@@ -6,6 +6,7 @@ import com.canban.auth.entity.User;
 import com.canban.auth.exceptions.InvalidRegistrationException;
 import com.canban.auth.service.UserService;
 import com.canban.auth.util.JwtTokenUtil;
+import com.canban.auth.validator.UserValidator;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,6 +28,7 @@ public class RegisterController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenUtil jwtTokenUtil;
+    private final UserValidator userValidator;
 
     @PostMapping("/registration")
     @Operation(
@@ -36,13 +38,14 @@ public class RegisterController {
                     @ApiResponse(description = "Успешный ответ", responseCode = "200")
             }
     )
-    public ResponseEntity<?> createAuthToken(@RequestBody RegistrationUserDto registrationUserDto) {
+    public ResponseEntity<?> registerNewUser(@RequestBody RegistrationUserDto registrationUserDto) {
         if (!registrationUserDto.getPassword().equals(registrationUserDto.getConfirmPassword())) {
             throw new InvalidRegistrationException("Пароли не совпадают");
         }
         if (userService.findByUsername(registrationUserDto.getUsername()).isPresent()) {
             throw new InvalidRegistrationException("Пользователь с таким именем уже существует");
         }
+        userValidator.validate(registrationUserDto);
         User user = new User();
         user.setFirstName(registrationUserDto.getFirstName());
         user.setLastName(registrationUserDto.getLastName());

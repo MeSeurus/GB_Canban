@@ -30,8 +30,8 @@ public class RegisterControllerTest {
     static RegistrationUserDto buildRegistrationUserDto() {
         RegistrationUserDto registrationUserDto = new RegistrationUserDto();
         registrationUserDto.setUsername("testuser11");
-        registrationUserDto.setPassword("testpass2");
-        registrationUserDto.setConfirmPassword("testpass2");
+        registrationUserDto.setPassword("testpass12");
+        registrationUserDto.setConfirmPassword("testpass12");
         registrationUserDto.setFirstName("Bob7");
         registrationUserDto.setLastName("Dilan3");
         registrationUserDto.setEmail("bobdilan11@yandex.ru");
