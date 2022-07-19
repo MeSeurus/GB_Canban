@@ -2,7 +2,6 @@ package com.canban.web.core.validators;
 
 import com.canban.api.core.TaskDto;
 import com.canban.api.exceptions.ValidationException;
-import com.canban.web.core.dto.EventDetailsRq;
 import com.canban.web.core.dto.TaskDetailsRq;
 
 import java.util.ArrayList;
@@ -50,7 +49,7 @@ public class TaskValidator {
      * Заметки для Алексея
      * Второй валидатор, т.к. в методе addTask на вход приходит TaskDto, хотя я предполагала,
      * что нам на вход нужна другая дто (TaskDetailsRq именно как входящая дто из которой мы соберем сущность).
-     * Удалить лишнюю
+     * Удалить лишний метод, решив что нам приходит на вход
      */
     public void validate(TaskDto taskDto) {
         List<String> errors = new ArrayList<>();
