@@ -3,7 +3,6 @@ package com.canban.auth.service;
 import com.canban.auth.entity.Role;
 import com.canban.auth.entity.User;
 import com.canban.auth.repository.UserRepository;
-import com.canban.auth.validator.UserValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
