@@ -50,6 +50,6 @@ public class TaskController {
             }
     )
     public void addTask(@RequestBody @Parameter(description = "Task DTO", required = true) TaskDto taskDto){
-        taskService.save(taskMapper.dtoToEntity(taskDto));
+        taskService.createTask(taskMapper.dtoToEntity(taskDto));
     }
 }

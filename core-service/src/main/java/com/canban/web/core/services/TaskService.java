@@ -19,13 +19,14 @@ public class TaskService {
         return taskRepository.findTasksByUserName(username);
     }
 
-    public void createTask(String username, TaskDetails taskDetails) {
+    public void createTask(Task taskDetails) {
         Task task = Task.taskBuilder()
                 .title(taskDetails.getTitle())
                 .content(taskDetails.getContent())
                 .username(taskDetails.getUsername())
-                .beginDate(taskDetails.getEventDate())
+                .beginDate(taskDetails.getBeginDate())
                 .kanbanName(taskDetails.getKanbanName())
+                .username(taskDetails.getUsername())
                 .build();
         taskRepository.save(task);
     }

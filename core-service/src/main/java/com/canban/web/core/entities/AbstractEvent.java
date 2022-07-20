@@ -7,7 +7,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-@Entity
+
 @MappedSuperclass
 @AllArgsConstructor
 @RequiredArgsConstructor

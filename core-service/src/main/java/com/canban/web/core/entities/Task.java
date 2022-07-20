@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
-@RequiredArgsConstructor
 @NoArgsConstructor
 @ToString
 public class Task extends AbstractEvent{

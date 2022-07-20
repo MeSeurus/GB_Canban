@@ -10,8 +10,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
-@RequiredArgsConstructor
-@NoArgsConstructor
 public class Event extends AbstractEvent{
 
 

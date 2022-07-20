@@ -35,7 +35,9 @@ insert into tasks (id, title, content, username, begin_date,due_date,state,prior
 values  (1, 'Create simple program', 'Hello World!', 'user1', '2022-06-24 01:00:00','2022-08-24 01:00:00', 'COMPLETE', 'HIGH', 'kanban1' ),
         (2, 'Create simple program2', 'Hello World!', 'user1', '2022-06-24 01:00:00','2022-08-24 01:00:00', 'CREATED', 'HIGH', 'kanban1' ),
         (3, 'Create simple program3', 'Hello World!', 'user2', '2022-06-24 01:00:00','2022-08-24 01:00:00', 'CREATED', 'NORMAL', 'kanban1' ),
-        (4, 'Create simple program3', 'Hello World!', 'user2', '2022-06-24 01:00:00','2022-08-24 01:00:00', 'IN_PROGRESS', 'LOW', 'kanban1' );
+        (4, 'Create simple program3', 'Hello World!', 'user2', '2022-06-24 01:00:00','2022-08-24 01:00:00', 'IN_PROGRESS', 'LOW', 'kanban1' ),
+        (5, 'Create simple program3', 'Hello World!', 'user3', '2022-06-24 01:00:00','2022-08-24 01:00:00', 'IN_PROGRESS', 'LOW', 'kanban1' ),
+        (6, 'Create simple program3', 'Hello World!', 'user3', '2022-06-24 01:00:00','2022-08-24 01:00:00', 'IN_PROGRESS', 'LOW', 'kanban1' );
 
 
 
