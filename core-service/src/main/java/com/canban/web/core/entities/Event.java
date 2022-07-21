@@ -57,7 +57,7 @@ public class Event extends AbstractEvent{
             return this;
         }
 
-        public Event.EventBuilder eventDate(final LocalDateTime beginDate) {
+        public Event.EventBuilder beginDate(final LocalDateTime beginDate) {
             this.beginDate = beginDate;
             return this;
         }
