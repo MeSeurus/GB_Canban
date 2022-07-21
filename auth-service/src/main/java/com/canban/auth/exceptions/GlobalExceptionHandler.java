@@ -15,18 +15,20 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<AppError> catchInvalidAuthorizationException(InvalidAuthorizationException ex) {
+        log.error(ex.getMessage(), ex);
         return new ResponseEntity<>(new AppError(HttpStatus.UNAUTHORIZED.value(), ex.getMessage()), HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler
     public ResponseEntity<AppError> catchInvalidRegistrationException(InvalidRegistrationException ex) {
+        log.error(ex.getMessage(), ex);
         return new ResponseEntity<>(new AppError(HttpStatus.BAD_REQUEST.value(), ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
-    public ResponseEntity<FieldsValidationError> catchResourceNotFoundException(ValidationException e) {
-        log.error(e.getMessage(), e);
-        return new ResponseEntity<>(new FieldsValidationError(e.getErrorFieldsMessages()), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<FieldsValidationError> catchResourceNotFoundException(ValidationException ex) {
+        log.error(ex.getMessage(), ex);
+        return new ResponseEntity<>(new FieldsValidationError(ex.getErrorFieldsMessages()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
