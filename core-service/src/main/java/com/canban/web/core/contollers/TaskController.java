@@ -50,7 +50,7 @@ public class TaskController {
                     )
             }
     )
-    public void addTask(@RequestHeader String username, @RequestBody @Parameter(description = "Task DTO", required = true) TaskDetails taskDetails){
-//        taskService.createTask(username, taskDetails);
+    public void createTask(@RequestHeader @Parameter(description = "Список пользователей", required = true) String username, @RequestBody TaskDetails taskDetails){
+         taskService.createTask(username, taskDetails);
     }
 }

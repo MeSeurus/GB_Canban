@@ -14,11 +14,12 @@ import java.time.LocalDateTime;
 public class TaskDetails {
     @Schema(description = "Название задачи", required = true)
     private String title;
+
     @Schema(description = "Описание задачи", required = true)
     private String content;
 
-    @Schema(description = "Исполнитель задачи")
-    private String username;
+    @Schema(description = "Дата начала задачи")
+    LocalDateTime beginDate;
 
     @Schema(description = "Статус задачи")
     private State state;
@@ -32,7 +33,7 @@ public class TaskDetails {
     @Schema(description = "Начало задачи")
     private LocalDateTime eventDate;
 
-    @Schema(description = "Срок задачи")
+    @Schema(description = "Срок выполнения задачи")
     private LocalDateTime dueDate;
 
 }

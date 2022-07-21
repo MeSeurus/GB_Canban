@@ -1,7 +1,6 @@
 package com.canban.web.core.services;
 
 import com.canban.web.core.dto.TaskDetails;
-import com.canban.web.core.entities.Event;
 import com.canban.web.core.entities.Task;
 import com.canban.web.core.repositories.TaskRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,14 +18,16 @@ public class TaskService {
         return taskRepository.findTasksByUserName(username);
     }
 
-    public void createTask(Task taskDetails) {
+    public void createTask(String username, TaskDetails taskDetails) {
         Task task = Task.taskBuilder()
                 .title(taskDetails.getTitle())
                 .content(taskDetails.getContent())
-                .username(taskDetails.getUsername())
+                .username(username)
                 .beginDate(taskDetails.getBeginDate())
+                .dueDate(taskDetails.getDueDate())
                 .kanbanName(taskDetails.getKanbanName())
-                .username(taskDetails.getUsername())
+                .state(taskDetails.getState())
+                .priority(taskDetails.getPriority())
                 .build();
         taskRepository.save(task);
     }
