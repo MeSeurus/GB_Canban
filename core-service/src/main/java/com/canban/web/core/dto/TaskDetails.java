@@ -27,12 +27,12 @@ public class TaskDetails {
     private Priority priority;
 
     @Schema(description = "Имя canban доски")
-    private String kanban_name;
+    private String kanbanName;
 
     @Schema(description = "Начало задачи")
-    private LocalDateTime event_date;
+    private LocalDateTime eventDate;
 
     @Schema(description = "Срок задачи")
-    private LocalDateTime due_date;
+    private LocalDateTime dueDate;
 
 }
