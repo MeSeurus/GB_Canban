@@ -3,10 +3,12 @@ package com.canban.web.core.validators;
 import com.canban.api.core.TaskDto;
 import com.canban.api.exceptions.ValidationException;
 import com.canban.web.core.dto.TaskDetailsRq;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class TaskValidator {
 
     /**
