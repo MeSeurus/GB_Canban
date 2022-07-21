@@ -8,6 +8,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
@@ -17,10 +18,10 @@ import java.time.LocalDateTime;
 @Getter
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 
-public abstract class AbstractEvent {
+public abstract class AbstractEvent implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) /// ???
+    @GeneratedValue(strategy = GenerationType.SEQUENCE) /// ???
     @Column(name = "id")
     Long id;
 
