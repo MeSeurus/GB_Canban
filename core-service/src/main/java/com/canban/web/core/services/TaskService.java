@@ -1,6 +1,6 @@
 package com.canban.web.core.services;
 
-import com.canban.web.core.dto.TaskDetails;
+import com.canban.web.core.dto.TaskDetailsRq;
 import com.canban.web.core.entities.Event;
 import com.canban.web.core.entities.Task;
 import com.canban.web.core.repositories.TaskRepository;
@@ -19,13 +19,13 @@ public class TaskService {
         return taskRepository.findTasksByUserName(username);
     }
 
-    public void createTask(String username, TaskDetails taskDetails) {
+    public void createTask(String username, TaskDetailsRq taskDetailsRq) {
         Task task = Task.taskBuilder()
-                .title(taskDetails.getTitle())
-                .content(taskDetails.getContent())
-                .username(taskDetails.getUsername())
-                .eventDate(taskDetails.getEvent_date())
-                .kanbanName(taskDetails.getKanban_name())
+                .title(taskDetailsRq.getTitle())
+                .content(taskDetailsRq.getContent())
+                .username(taskDetailsRq.getUsername())
+                .eventDate(taskDetailsRq.getEventDate())
+                .kanbanName(taskDetailsRq.getKanbanName())
                 .build();
         taskRepository.save(task);
     }
