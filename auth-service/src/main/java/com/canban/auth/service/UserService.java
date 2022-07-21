@@ -4,6 +4,7 @@ import com.canban.auth.entity.Role;
 import com.canban.auth.entity.User;
 import com.canban.auth.entity.security.UserAwaitActivation;
 import com.canban.auth.entity.security.UserStatus;
+import com.canban.auth.exceptions.UserNotActiveException;
 import com.canban.auth.repository.ActivationRepository;
 import com.canban.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Random;
@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final ActivationRepository activationRepository;
-    private final RoleService roleService;
     private final MailSenderService mailSenderService;
 
     public Optional<User> findByUsername(String username) {
@@ -36,7 +35,8 @@ public class UserService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", username)));
+        User user = findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("Пользователь '%s' не найден", username)));
+        if (user.getUserStatus() == UserStatus.NOT_ACTIVE) throw new UserNotActiveException(String.format("Пользователь '%s' не активирован", username));
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
     }
 
