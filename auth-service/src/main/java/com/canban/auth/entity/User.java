@@ -1,5 +1,6 @@
 package com.canban.auth.entity;
 
+import com.canban.auth.entity.security.UserStatus;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -31,6 +32,10 @@ public class User {
 
     @Column(name = "email")
     private String email;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name="status")
+    private UserStatus userStatus;
 
     @ManyToMany
     @JoinTable(name = "users_roles",

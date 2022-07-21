@@ -12,13 +12,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -57,5 +55,17 @@ public class RegisterController {
         UserDetails userDetails = userService.loadUserByUsername(registrationUserDto.getUsername());
         String token = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new JwtResponse(token));
+    }
+    @GetMapping("/activation")
+    @Operation(
+            summary = "Активация пользователя",
+            description = "Позволяет активировать нового пользователя",
+            responses = {
+                    @ApiResponse(description = "Успешный ответ", responseCode = "200")
+            }
+    )
+    public ResponseEntity<?> activation(@RequestParam (name = "username") String username, @RequestParam (name = "code") String code){
+        userService.checkActivateKey(username, code);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
