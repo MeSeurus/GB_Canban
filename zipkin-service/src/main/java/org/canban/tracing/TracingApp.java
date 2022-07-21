@@ -1,13 +1,13 @@
-package com.canban.auth;
+package org.canban.tracing;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import zipkin.server.EnableZipkinServer;
 
 @SpringBootApplication
-@EnableEurekaClient
-public class AuthApp {
+@EnableZipkinServer
+public class TracingApp {
     public static void main(String[] args) {
-        SpringApplication.run(AuthApp.class, args);
+        SpringApplication.run(TracingApp.class, args);
     }
 }
