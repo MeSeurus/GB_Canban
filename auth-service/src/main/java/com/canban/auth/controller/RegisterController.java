@@ -61,4 +61,6 @@ public class RegisterController {
         userService.checkActivateKey(username, code);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
 }
