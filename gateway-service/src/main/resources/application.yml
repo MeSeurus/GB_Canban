@@ -1,6 +1,12 @@
 server:
   port: 5555
-
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8181/eureka}
+      fetchRegistry: true
 spring:
   application:
     name: gateway-service
@@ -16,7 +22,7 @@ spring:
             allowedHeaders: "*"
       routes:
         - id: auth-service
-          uri: http://localhost:8789
+          uri: lb://auth-service
           predicates:
             - Path=/auth/**
           filters:
@@ -24,7 +30,7 @@ spring:
             - PrefixPath=/canban-auth
             - JwtAuthFilter
         - id: core-service
-          uri: http://localhost:8189/
+          uri: lb://core-service
           predicates:
             - Path=/core/**
           filters:
