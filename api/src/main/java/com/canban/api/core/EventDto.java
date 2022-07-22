@@ -1,6 +1,5 @@
 package com.canban.api.core;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -24,20 +23,16 @@ public class EventDto {
     @Schema(description = "Пользователь ответственный за событие", required = true, example = "user1")
     private String username;
 
-    /**
-     * Вот тут вопрос, событие на один день или на несколько?
-     * Если на один, то смысла не имеет, можно дату создания запоминать просто
-     */
     @Schema(description = "Дата начала события", required = true)
-    private LocalDateTime eventDate;
+    private LocalDateTime beginDate;
 
 
-    public EventDto(Long id, String title, String content, String username, LocalDateTime eventDate) {
+    public EventDto(Long id, String title, String content, String username, LocalDateTime beginDate) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.username = username;
-        this.eventDate = eventDate;
+        this.beginDate = beginDate;
     }
 
     public EventDto(Long id, String title, String content) {

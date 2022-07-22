@@ -23,6 +23,7 @@ public class EventService {
                 .title(eventDetails.getTitle())
                 .content(eventDetails.getContent())
                 .username(username)
+                .beginDate(eventDetails.getBeginDate())
                 .build();
         eventRepository.save(event);
     }

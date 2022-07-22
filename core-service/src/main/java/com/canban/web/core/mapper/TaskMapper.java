@@ -1,6 +1,5 @@
 package com.canban.web.core.mapper;
 
-import com.canban.api.core.EventDto;
 import com.canban.api.core.TaskDto;
 import com.canban.web.core.entities.Task;
 import com.canban.web.core.enums.Priority;
@@ -16,7 +15,7 @@ public class TaskMapper {
                 task.getTitle(),
                 task.getContent(),
                 task.getUsername(),
-                task.getEventDate(),
+                task.getBeginDate(),
                 task.getDueDate(),
                 task.getState().toString(),
                 task.getPriority().toString(),
@@ -29,7 +28,7 @@ public class TaskMapper {
         return Task.taskBuilder().title(taskDto.getTitle())
                 .content(taskDto.getContent())
                 .username(taskDto.getUsername())
-                .eventDate(taskDto.getEventDate())
+                .beginDate(taskDto.getEventDate())
                 .dueDate(taskDto.getDueDate())
                 .state(State.valueOf(taskDto.getState()))
                 .priority(Priority.valueOf(taskDto.getPriority()))
