@@ -40,7 +40,6 @@ public class UserService implements UserDetailsService {
     }
 
     public void createUser(User user) {
-        user.setRoles(List.of(roleService.getUserRole()));
         userRepository.save(user);
     }
 }

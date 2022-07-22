@@ -2,8 +2,10 @@ package com.canban.web.core.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.time.LocalDateTime;
+
 @Schema(description = "Модель деталей события")
-public class EventDetails {
+public class EventDetailsRq {
     @Schema(description = "Название события", required = true)
     private String title;
     @Schema(description = "Описание события", required = true)
@@ -12,10 +14,14 @@ public class EventDetails {
     @Schema(description = "Пользователь события")
     private String username;
 
-    public EventDetails(String title, String content, String userName) {
+    @Schema(description = "Дата назначения события")
+    private LocalDateTime eventDate;
+
+    public EventDetailsRq(String title, String content, String username, LocalDateTime eventDate) {
         this.title = title;
         this.content = content;
-        this.username = userName;
+        this.username = username;
+        this.eventDate = eventDate;
     }
 
     public String getTitle() {
@@ -34,11 +40,19 @@ public class EventDetails {
         this.content = content;
     }
 
-    public String getUserName() {
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public LocalDateTime getEventDate() {
+        return eventDate;
+    }
+
+    public void setEventDate(LocalDateTime eventDate) {
+        this.eventDate = eventDate;
     }
 }
