@@ -7,7 +7,6 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 @SpringBootApplication
 @EnableEurekaClient
-@Slf4j
 public class SpringCoreCanbanApplication {
 
     public static void main(String[] args) {
