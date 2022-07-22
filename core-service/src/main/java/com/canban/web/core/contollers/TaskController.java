@@ -1,7 +1,6 @@
 package com.canban.web.core.contollers;
 
 import com.canban.api.core.TaskDto;
-import com.canban.web.core.dto.TaskDetails;
 import com.canban.web.core.mapper.TaskMapper;
 import com.canban.web.core.services.TaskService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -50,7 +49,7 @@ public class TaskController {
                     )
             }
     )
-    public void createTask(@RequestHeader @Parameter(description = "Список пользователей", required = true) String username, @RequestBody TaskDetails taskDetails){
-         taskService.createTask(username, taskDetails);
+    public void addTask(@RequestBody @Parameter(description = "Task DTO", required = true) TaskDto taskDto){
+        taskService.save(taskMapper.dtoToEntity(taskDto));
     }
 }
