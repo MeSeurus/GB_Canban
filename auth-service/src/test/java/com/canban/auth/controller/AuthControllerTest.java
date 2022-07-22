@@ -35,13 +35,13 @@ public class AuthControllerTest {
             .build();
 
     @Test
-    public void authTest() throws Exception {
+    public void isUnauthorizedTest() throws Exception {
         this.mvc
                 .perform(post("/auth")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(buildJwtRequest()))
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isUnauthorized());
     }
 }
