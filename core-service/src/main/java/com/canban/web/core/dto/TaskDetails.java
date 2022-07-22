@@ -30,8 +30,6 @@ public class TaskDetails {
     @Schema(description = "Имя canban доски")
     private String kanbanName;
 
-    @Schema(description = "Начало задачи")
-    private LocalDateTime eventDate;
 
     @Schema(description = "Срок выполнения задачи")
     private LocalDateTime dueDate;
