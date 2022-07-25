@@ -1,6 +1,8 @@
 package com.canban.auth.entity;
 
+import com.canban.auth.entity.security.UserStatus;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -10,6 +12,7 @@ import java.util.Collection;
 
 @Entity
 @Data
+@NoArgsConstructor
 @Table(name = "users")
 public class User {
     @Id
@@ -32,6 +35,10 @@ public class User {
     @Column(name = "email")
     private String email;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name="status")
+    private UserStatus userStatus;
+
     @ManyToMany
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -45,4 +52,11 @@ public class User {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @Transient
+    private int mistakeNum;
+
+    public User(String username) {
+        this.username = username;
+    }
 }

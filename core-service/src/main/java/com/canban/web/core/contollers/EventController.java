@@ -1,9 +1,10 @@
 package com.canban.web.core.contollers;
 
 import com.canban.web.core.mapper.EventMapper;
-import com.canban.web.core.dto.EventDetails;
+import com.canban.web.core.dto.EventDetailsRq;
 import com.canban.api.core.EventDto;
 import com.canban.web.core.services.EventService;
+import com.canban.web.core.validators.EventValidator;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 @Tag(name = "События", description = "Методы работы с событиями")
 public class EventController {
 
+    private final EventValidator eventValidator;
     private final EventService eventService;
     private final EventMapper eventMapper;
 
@@ -49,8 +51,9 @@ public class EventController {
                     )
             }
     )
-    public void createEvent(@RequestHeader @Parameter(description = "Список пользователей", required = true) String username, @RequestBody EventDetails eventDetails) {
-        eventService.createEvent(username, eventDetails);
+    public void createEvent(@RequestHeader @Parameter(description = "Список пользователей", required = true) String username, @RequestBody EventDetailsRq eventDetailsRq) {
+        eventValidator.validate(eventDetailsRq);
+        eventService.createEvent(username, eventDetailsRq);
     }
 
     @DeleteMapping("/{id}")
