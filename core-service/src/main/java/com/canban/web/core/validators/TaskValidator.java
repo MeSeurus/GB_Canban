@@ -24,9 +24,7 @@ public class TaskValidator {
         if (taskDetailsRq.getContent() != null && taskDetailsRq.getContent().isBlank()) {
             errors.add("Описание задачи должно быть указано.");
         }
-        if (taskDetailsRq.getUsername() != null && taskDetailsRq.getUsername().isBlank()) {
-            errors.add("Имя пользователя должно быть указано.");
-        }
+
         if (taskDetailsRq.getState() != null) {
             errors.add("Статус задачи должен быть указан.");
         }
@@ -36,7 +34,7 @@ public class TaskValidator {
         if (taskDetailsRq.getKanbanName() != null && taskDetailsRq.getKanbanName().isBlank()) {
             errors.add("Рабочее пространство задачи должно быть указан.");
         }
-        if (taskDetailsRq.getEventDate() != null) {
+        if (taskDetailsRq.getBeginDate() != null) {
             errors.add("Дата начала события должна быть указана.");
         }
         if (taskDetailsRq.getDueDate() != null) {
