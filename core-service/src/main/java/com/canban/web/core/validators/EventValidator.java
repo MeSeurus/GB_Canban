@@ -23,10 +23,8 @@ public class EventValidator {
         if (eventDetailsRq.getContent() != null && eventDetailsRq.getContent().isBlank()) {
             errors.add("Описание события должно быть указано.");
         }
-        if (eventDetailsRq.getUsername() != null && eventDetailsRq.getUsername().isBlank()) {
-            errors.add("Имя пользователя должно быть указано.");
-        }
-        if (eventDetailsRq.getEventDate() != null) {
+
+        if (eventDetailsRq.getBeginDate() != null) {
             errors.add("Дата проведения события должна быть указана.");
         }
         if (!errors.isEmpty()) {
