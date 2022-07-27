@@ -29,6 +29,10 @@ public class EventValidator {
             errors.add("Дата окончания события должна быть указана.");
         }
 
+        if (eventDetailsRq.getBeginDate().compareTo(eventDetailsRq.getEndDate()) >= 0 ){
+            errors.add("Дата начала события должна быть раньше даты окончания.");
+        }
+
         if (!errors.isEmpty()) {
             throw new ValidationException(errors);
         }
