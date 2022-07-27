@@ -54,5 +54,9 @@ public class UserAccessManagementService {
         return false;
     }
 
+    public void stopGuessingPassword(String username){
+        userRepository.findByUsername(username).ifPresent(user -> user.setUserStatus(UserStatus.SUSPICIOUS));
+    }
+
 
 }
