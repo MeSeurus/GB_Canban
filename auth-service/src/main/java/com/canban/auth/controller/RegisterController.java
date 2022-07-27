@@ -4,6 +4,7 @@ import com.canban.api.auth.RegistrationUserDto;
 import com.canban.auth.exceptions.InvalidRegistrationException;
 import com.canban.auth.mapper.UserMapper;
 import com.canban.auth.service.RoleService;
+import com.canban.auth.service.UserAccessManagementService;
 import com.canban.auth.service.UserService;
 import com.canban.auth.validator.UserValidator;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,6 +28,7 @@ public class RegisterController {
     private final UserValidator userValidator;
     private final UserMapper userMapper;
     private final RoleService roleService;
+    private final UserAccessManagementService userAccessManagementService;
 
     @PostMapping("/registration")
     @Operation(
@@ -58,7 +60,7 @@ public class RegisterController {
             }
     )
     public ResponseEntity<?> activation(@RequestParam (name = "username") String username, @RequestParam (name = "code") String code){
-        userService.checkActivateKey(username, code);
+        userAccessManagementService.checkActivateKey(username, code);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

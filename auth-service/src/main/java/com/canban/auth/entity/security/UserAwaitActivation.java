@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-@Table(name = "users_await_activation")
+@Table(name = "users_activation_codes")
 public class UserAwaitActivation {
 
     @Id

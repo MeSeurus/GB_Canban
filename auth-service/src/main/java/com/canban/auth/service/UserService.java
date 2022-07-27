@@ -55,20 +55,10 @@ public class UserService implements UserDetailsService {
         mailSenderService.sendMail(user.getEmail(),"Canban activation link","http://localhost:5555/auth/activation/?username=" + userAwaitActivation.getUsername() + "&code=" + userAwaitActivation.getSecretCode());
     }
 
-    @Transactional
-    public boolean checkActivateKey(String username, String secretCode) {
-        if (secretCode.equals(activationRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", username))).getSecretCode())) {
-            User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", username)));
-            user.setUserStatus(UserStatus.ACTIVE);
-            userRepository.save(user);
-            activationRepository.deleteById(username);
-            return true;
-        } return false;
-    }
-
     private String getRandomNumberString (){
         Random random = new Random();
         int number = random.nextInt(999999);
         return String.format("%06d", number);
     }
+
 }

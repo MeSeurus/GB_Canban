@@ -26,7 +26,7 @@ CREATE TABLE users_roles
     primary key (user_id, role_id)
 );
 
-CREATE TABLE users_await_activation
+CREATE TABLE users_activation_codes
 (
     username varchar(30) not null references users (username),
     secret_code varchar(255) not null,
