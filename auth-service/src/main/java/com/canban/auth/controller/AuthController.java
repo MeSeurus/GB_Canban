@@ -34,7 +34,7 @@ public class AuthController {
     private final JwtTokenUtil jwtTokenUtil;
     private final AuthenticationManager authenticationManager;
 
-    private List<User> users = new CopyOnWriteArrayList<>();
+    private List<User> users = Collections.synchronizedList(new ArrayList<>());
 
     @PostMapping("/auth")
     @Operation(
