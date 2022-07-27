@@ -26,6 +26,7 @@ public class TaskService {
                 .username(username)
                 .beginDate(taskDetailsRq.getBeginDate())
                 .endDate(taskDetailsRq.getEndDate())
+                .actualEndDate(taskDetailsRq.getActualEndDate())
                 .kanbanName(taskDetailsRq.getKanbanName())
                 .state(taskDetailsRq.getState())
                 .priority(taskDetailsRq.getPriority())

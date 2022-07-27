@@ -4,6 +4,7 @@ import com.canban.api.core.TaskDto;
 import com.canban.web.core.dto.TaskDetailsRq;
 import com.canban.web.core.mapper.TaskMapper;
 import com.canban.web.core.services.TaskService;
+import com.canban.web.core.validators.TaskValidator;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -25,6 +26,7 @@ public class TaskController {
 
     private final TaskService taskService;
     private final TaskMapper taskMapper;
+    private final TaskValidator taskValidator;
 
     @GetMapping()
     @Operation(

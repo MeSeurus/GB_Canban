@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@RequiredArgsConstructor
+
 @ToString
 
 public class Task extends AbstractEvent{

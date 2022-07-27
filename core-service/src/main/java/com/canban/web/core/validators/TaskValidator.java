@@ -24,9 +24,7 @@ public class TaskValidator {
         if (taskDetailsRq.getContent() != null && taskDetailsRq.getContent().isBlank()) {
             errors.add("Описание задачи должно быть указано.");
         }
-        if (taskDetailsRq.getUsername() != null && taskDetailsRq.getUsername().isBlank()) {
-            errors.add("Имя пользователя должно быть указано.");
-        }
+
         if (taskDetailsRq.getState() != null) {
             errors.add("Статус задачи должен быть указан.");
         }
@@ -36,10 +34,10 @@ public class TaskValidator {
         if (taskDetailsRq.getKanbanName() != null && taskDetailsRq.getKanbanName().isBlank()) {
             errors.add("Рабочее пространство задачи должно быть указан.");
         }
-        if (taskDetailsRq.getEventDate() != null) {
+        if (taskDetailsRq.getBeginDate() != null) {
             errors.add("Дата начала события должна быть указана.");
         }
-        if (taskDetailsRq.getDueDate() != null) {
+        if (taskDetailsRq.getEndDate() != null) {
             errors.add("Дата завершения события должна быть указана.");
         }
         if (!errors.isEmpty()) {
@@ -58,24 +56,16 @@ public class TaskValidator {
         if (taskDto.getTitle() != null && taskDto.getTitle().isBlank()) {
             errors.add("Название задачи должно быть указано.");
         }
-        if (taskDto.getContent() != null && taskDto.getContent().isBlank()) {
-            errors.add("Описание задачи должно быть указано.");
-        }
-        if (taskDto.getUsername() != null && taskDto.getUsername().isBlank()) {
-            errors.add("Имя пользователя должно быть указано.");
-        }
-        if (taskDto.getState() != null) {
-            errors.add("Статус задачи должен быть указан.");
-        }
-        if (taskDto.getPriority() != null) {
-            errors.add("Приоритет задачи должен быть указан.");
-        }
+
+
         if (taskDto.getKanbanName() != null && taskDto.getKanbanName().isBlank()) {
             errors.add("Рабочее пространство задачи должно быть указано.");
         }
-        if (taskDto.getEventDate() != null) {
+
+        if (taskDto.getBeginDate() != null) {
             errors.add("Дата начала события должна быть указана.");
         }
+
         if (taskDto.getDueDate() != null) {
             errors.add("Дата завершения события должна быть указана.");
         }
