@@ -22,10 +22,13 @@ public class TaskDto {
     private String username;
 
     @Schema(description = "Дата начала задачи", required = true)
-    private LocalDateTime eventDate;
+    private LocalDateTime beginDate;
 
     @Schema(description = "Срок выполнения задачи", required = true)
-    private LocalDateTime dueDate;
+    private LocalDateTime endDate;
+
+    @Schema(description = "Срок выполнения задачи", required = true)
+    private LocalDateTime actualEndDate;
 
     @Schema(description = "Статус задачи", required = true)
     private String state;
@@ -40,28 +43,40 @@ public class TaskDto {
     public TaskDto(Long id,
                    String title,
                    String content,
-                   LocalDateTime eventDate,
-                   LocalDateTime dueDate,
+                   LocalDateTime beginDate,
+                   LocalDateTime endDate,
+                   LocalDateTime actualEndDate,
                    String state,
                    String priority,
                    String kanbanName) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.eventDate = eventDate;
-        this.dueDate = dueDate;
+        this.beginDate = beginDate;
+        this.endDate = endDate;
+        this.actualEndDate = actualEndDate;
         this.state = state;
         this.priority = priority;
         this.kanbanName = kanbanName;
     }
 
-    public TaskDto(Long id, String title, String content, String username, LocalDateTime eventDate, LocalDateTime dueDate, String state, String priority, String kanbanName) {
+    public TaskDto(Long id,
+                   String title,
+                   String content,
+                   String username,
+                   LocalDateTime beginDate,
+                   LocalDateTime endDate,
+                   LocalDateTime actualEndDate,
+                   String state,
+                   String priority,
+                   String kanbanName) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.username = username;
-        this.eventDate = eventDate;
-        this.dueDate = dueDate;
+        this.beginDate = beginDate;
+        this.endDate = endDate;
+        this.actualEndDate = actualEndDate;
         this.state = state;
         this.priority = priority;
         this.kanbanName = kanbanName;

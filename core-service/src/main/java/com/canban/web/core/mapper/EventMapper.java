@@ -9,7 +9,14 @@ import org.springframework.stereotype.Component;
 public class EventMapper {
 
     public EventDto entityToDto(Event event) {
-        return new EventDto(event.getId(), event.getTitle(), event.getContent(), event.getUsername(), event.getBeginDate());
+        return new EventDto(
+                event.getId(),
+                event.getTitle(),
+                event.getContent(),
+                event.getUsername(),
+                event.getBeginDate(),
+                event.getEndDate()
+        );
     }
 
 }

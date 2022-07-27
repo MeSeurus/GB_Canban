@@ -17,6 +17,7 @@ public class TaskMapper {
                 task.getUsername(),
                 task.getBeginDate(),
                 task.getEndDate(),
+                task.getActualEndDate(),
                 task.getState().toString(),
                 task.getPriority().toString(),
                 task.getKanbanName()
@@ -28,8 +29,9 @@ public class TaskMapper {
         return Task.taskBuilder().title(taskDto.getTitle())
                 .content(taskDto.getContent())
                 .username(taskDto.getUsername())
-                .beginDate(taskDto.getEventDate())
-                .endDate(taskDto.getDueDate())
+                .beginDate(taskDto.getBeginDate())
+                .endDate(taskDto.getEndDate())
+                .actualEndDate(taskDto.getActualEndDate())
                 .state(State.valueOf(taskDto.getState()))
                 .priority(Priority.valueOf(taskDto.getPriority()))
                 .kanbanName(taskDto.getKanbanName()).build();

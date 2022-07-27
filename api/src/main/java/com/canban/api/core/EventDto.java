@@ -25,14 +25,22 @@ public class EventDto {
 
     @Schema(description = "Дата начала события", required = true)
     private LocalDateTime beginDate;
+    @Schema(description = "Дата начала события", required = true)
+    private LocalDateTime endDate;
 
-
-    public EventDto(Long id, String title, String content, String username, LocalDateTime beginDate) {
+    public EventDto(Long id,
+                    String title,
+                    String content,
+                    String username,
+                    LocalDateTime beginDate,
+                    LocalDateTime endDate
+    ) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.username = username;
         this.beginDate = beginDate;
+        this.endDate = endDate;
     }
 
     public EventDto(Long id, String title, String content) {
