@@ -33,8 +33,8 @@ create table if not exists tasks
     begin_date      date not null,
     end_date        date not null,
     actual_end_date        date,
-    state           varchar(15) ,
-    priority        varchar(15),
+    state           varchar(15) not null default 'REGISTERED',
+    priority        varchar(15) not null default 'NORMAL',
     kanban_name     varchar(50) not null ,
     created_at  timestamp default current_timestamp,
     updated_at  timestamp default current_timestamp
