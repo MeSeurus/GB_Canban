@@ -11,6 +11,7 @@
         <module>auth-service</module>
         <module>discovery-service</module>
         <module>zipkin-service</module>
+        <module>chat-service</module>
     </modules>
 
     <parent>
