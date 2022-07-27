@@ -5,6 +5,8 @@ import com.canban.web.core.enums.State;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.DefaultValue;
 import java.time.LocalDateTime;
 
 
@@ -28,17 +30,20 @@ public class Task extends AbstractEvent{
     )
 
     @Enumerated(EnumType.STRING)
+    @DefaultValue("CREATED")
     private State state;
     @Column(
             name = "priority"
     )
 
     @Enumerated(EnumType.STRING)
+    @DefaultValue("NORMAL")
     private Priority priority;
 
     @Column(
             name = "kanban_name"
     )
+    @NotNull
     private String kanbanName;
 
     public Task(Long id,

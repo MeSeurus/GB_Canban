@@ -9,7 +9,7 @@ create table if not exists events
 (
     id              bigserial primary key,
     title           varchar(60) not null,
-    content         varchar(300) not null,
+    content         varchar(300),
     username        varchar(60),
     begin_date      date not null,
     end_date        date not null,
@@ -28,14 +28,14 @@ create table if not exists tasks
 (
     id              bigserial primary key,
     title           varchar(60) not null,
-    content         varchar(300) not null,
+    content         varchar(300),
     username        varchar(60),
     begin_date      date not null,
     end_date        date not null,
     actual_end_date        date,
     state           varchar(15) ,
     priority        varchar(15),
-    kanban_name     varchar(50),
+    kanban_name     varchar(50) not null ,
     created_at  timestamp default current_timestamp,
     updated_at  timestamp default current_timestamp
 );
