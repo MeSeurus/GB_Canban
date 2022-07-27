@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Schema(description = "Модель деталей события")
 @Data
 @AllArgsConstructor
-public class EventDetails {
+public class EventDetailsRq {
 
     @Schema(description = "Название события", required = true)
     private String title;
@@ -19,5 +19,9 @@ public class EventDetails {
 
     @Schema(description = "Дата назначения события")
     LocalDateTime beginDate; //дата назначения события
+
+    @Schema(description = "Дата окончания события")
+    LocalDateTime endDate; //дата окончания события
+
 
 }

@@ -37,6 +37,9 @@ public abstract class AbstractEvent implements Serializable {
     @Column(name = "begin_date")
     LocalDateTime beginDate; //дата назначения события
 
+    @Column(name = "end_date")
+    LocalDateTime endDate; //дата назначения события
+
     @CreationTimestamp
     @Column(name = "created_at")
     LocalDateTime createdAt;

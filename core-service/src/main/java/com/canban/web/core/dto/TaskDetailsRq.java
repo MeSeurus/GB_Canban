@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Schema(description = "Модель деталей задачи")
 @Data
 
-public class TaskDetails {
+public class TaskDetailsRq {
     @Schema(description = "Название задачи", required = true)
     private String title;
 
@@ -20,6 +20,12 @@ public class TaskDetails {
 
     @Schema(description = "Дата начала задачи")
     LocalDateTime beginDate;
+
+    @Schema(description = "Срок выполнения задачи")
+    private LocalDateTime endDate;
+
+    @Schema(description = "Срок выполнения задачи")
+    private LocalDateTime actualEndDate;
 
     @Schema(description = "Статус задачи")
     private State state;
@@ -31,7 +37,6 @@ public class TaskDetails {
     private String kanbanName;
 
 
-    @Schema(description = "Срок выполнения задачи")
-    private LocalDateTime dueDate;
+
 
 }

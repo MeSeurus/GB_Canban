@@ -23,7 +23,8 @@ public class EventService {
                 .title(eventDetailsRq.getTitle())
                 .content(eventDetailsRq.getContent())
                 .username(username)
-                .beginDate(eventDetails.getBeginDate())
+                .beginDate(eventDetailsRq.getBeginDate())
+                .endDate(eventDetailsRq.getEndDate())
                 .build();
         eventRepository.save(event);
     }
