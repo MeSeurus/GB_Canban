@@ -1,8 +1,8 @@
 package com.canban.web.core.contollers;
 
-import com.canban.web.core.mapper.EventMapper;
-import com.canban.web.core.dto.EventDetailsRq;
 import com.canban.api.core.EventDto;
+import com.canban.web.core.dto.EventDetailsRq;
+import com.canban.web.core.mapper.EventMapper;
 import com.canban.web.core.services.EventService;
 import com.canban.web.core.validators.EventValidator;
 import io.swagger.v3.oas.annotations.Operation;

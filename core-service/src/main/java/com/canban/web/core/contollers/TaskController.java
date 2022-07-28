@@ -1,10 +1,8 @@
 package com.canban.web.core.contollers;
 
 import com.canban.api.core.TaskDto;
-import com.canban.web.core.dto.TaskDetailsRq;
 import com.canban.web.core.mapper.TaskMapper;
 import com.canban.web.core.services.TaskService;
-import com.canban.web.core.validators.EventValidator;
 import com.canban.web.core.validators.TaskValidator;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
