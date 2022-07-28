@@ -2,6 +2,7 @@ package com.canban.api.core;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Schema(description = "Модель задачи")
@@ -27,6 +28,9 @@ public class TaskDto {
     @Schema(description = "Срок выполнения задачи", required = true)
     private LocalDateTime beginDate;
 
+    @Schema(description = "Срок выполнения задачи", required = true)
+    private LocalDateTime actualEndDate;
+
     @Schema(description = "Статус задачи", required = true)
     private String state;
 
@@ -38,9 +42,9 @@ public class TaskDto {
 
 //Конструктор без исполнителя
     public TaskDto(Long id,
-                   String title,
+                   @NotNull String taskTitle, String title,
                    String content,
-                   LocalDateTime eventDate,
+                   @NotNull LocalDateTime beginDate, LocalDateTime eventDate,
                    LocalDateTime dueDate,
                    String state,
                    String priority,
