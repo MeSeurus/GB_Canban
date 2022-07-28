@@ -69,5 +69,15 @@ public class EventController {
         eventService.deleteById(id);
     }
 
+    @PostMapping("/{id}/{username}")
+    public void addUserToEvent(@RequestHeader String username, @PathVariable("id") Long id, @PathVariable("username") String usernameToAdd) {
+        eventService.addUserToEvent(usernameToAdd, id);
+    }
+
+    @DeleteMapping("/{id}/{username}")
+    public void removeUserFromEvent(@RequestHeader String username, @PathVariable("id") Long id, @PathVariable("username") String usernameToRemove) {
+        eventService.removeUserFromEvent(usernameToRemove, id);
+    }
+
 
 }

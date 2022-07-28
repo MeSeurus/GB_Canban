@@ -6,6 +6,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -33,6 +34,14 @@ public class Event {
 
     @Column(name = "event_date")
     private LocalDateTime eventDate; //дата назначения события
+
+    @ElementCollection
+    @CollectionTable(
+            name = "event_users",
+            joinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id")
+    )
+    @Column(name = "username")
+    private Set<String> users;
 
     @CreationTimestamp
     @Column(name = "created_at")
