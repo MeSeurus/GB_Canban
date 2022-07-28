@@ -40,6 +40,10 @@ public class TaskValidator {
         if (taskDetailsRq.getEndDate() != null) {
             errors.add("Дата завершения события должна быть указана.");
         }
+        if (taskDetailsRq.getBeginDate().compareTo(taskDetailsRq.getEndDate()) >= 0 ){
+            errors.add("Дата начала задачи должна быть раньше даты окончания.");
+        }
+
         if (!errors.isEmpty()) {
             throw new ValidationException(errors);
         }
@@ -69,6 +73,10 @@ public class TaskValidator {
         if (taskDto.getEndDate() != null) {
             errors.add("Дата завершения события должна быть указана.");
         }
+        if (taskDto.getBeginDate().compareTo(taskDto.getEndDate()) >= 0 ){
+            errors.add("Дата начала события должна быть раньше даты окончания.");
+        }
+
         if (!errors.isEmpty()) {
             throw new ValidationException(errors);
         }
