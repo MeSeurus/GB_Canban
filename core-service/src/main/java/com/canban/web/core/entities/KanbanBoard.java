@@ -1,8 +1,11 @@
 package com.canban.web.core.entities;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "kanban_boards")
@@ -24,37 +27,12 @@ public class KanbanBoard {
     @Column(name = "creator")
     private String creator;
 
-    /*public static Builder builder() {
-        return new Builder();
-    }
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-    public static class Builder {
-        private Long id;
-        private String name;
-        private String creator
-
-        private Builder() {
-        }
-
-        public Builder id(final Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder name(final String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder creator(final String creator) {
-            this.creator = creator;
-            return this;
-        }
-
-        public KanbanBoard build() {
-            return new KanbanBoard(this.id, this.name, this.creator);
-        }
-
-    }*/
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
 }

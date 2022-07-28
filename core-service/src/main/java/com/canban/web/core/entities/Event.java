@@ -37,7 +37,7 @@ public class Event {
 
     @ElementCollection
     @CollectionTable(
-            name = "event_users",
+            name = "events_users",
             joinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id")
     )
     @Column(name = "username")
