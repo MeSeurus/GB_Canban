@@ -18,14 +18,14 @@ public class EventValidator {
     public void validate(EventDetailsRq eventDetailsRq) {
         List<String> errors = new ArrayList<>();
 
-        if (eventDetailsRq.getTitle() != null && eventDetailsRq.getTitle().isBlank()) {
+        if (eventDetailsRq.getTitle() == null || eventDetailsRq.getTitle().isBlank()) {
             errors.add("Название события должно быть указано.");
         }
 
-        if (eventDetailsRq.getBeginDate() != null) {
+        if (eventDetailsRq.getBeginDate() == null) {
             errors.add("Дата проведения события должна быть указана.");
         }
-        if (eventDetailsRq.getEndDate() != null) {
+        if (eventDetailsRq.getEndDate() == null) {
             errors.add("Дата окончания события должна быть указана.");
         }
 

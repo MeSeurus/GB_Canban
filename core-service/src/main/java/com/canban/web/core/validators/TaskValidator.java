@@ -62,15 +62,15 @@ public class TaskValidator {
         }
 
 
-        if (taskDto.getKanbanName() != null && taskDto.getKanbanName().isBlank()) {
+        if (taskDto.getKanbanName() == null || taskDto.getKanbanName().isBlank()) {
             errors.add("Рабочее пространство задачи должно быть указано.");
         }
 
-        if (taskDto.getBeginDate() != null) {
+        if (taskDto.getBeginDate() == null) {
             errors.add("Дата начала события должна быть указана.");
         }
 
-        if (taskDto.getEndDate() != null) {
+        if (taskDto.getEndDate() == null) {
             errors.add("Дата завершения события должна быть указана.");
         }
         if (taskDto.getBeginDate().compareTo(taskDto.getEndDate()) >= 0 ){
