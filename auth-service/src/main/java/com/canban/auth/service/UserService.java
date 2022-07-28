@@ -61,4 +61,9 @@ public class UserService implements UserDetailsService {
         return String.format("%06d", number);
     }
 
+    @Transactional
+    public void updateStatus (String username, UserStatus userStatus){
+        userRepository.updateStatus(username, userStatus);
+    }
+
 }

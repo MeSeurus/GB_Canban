@@ -1,10 +1,12 @@
 package com.canban.auth.service;
 
+import com.canban.auth.activemqevents.ChangeStatusEvent;
+import com.canban.auth.config.JmsConfig;
 import com.canban.auth.entity.User;
 import com.canban.auth.entity.security.UserStatus;
 import com.canban.auth.repository.ActivationRepository;
-import com.canban.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +18,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Service
 @RequiredArgsConstructor
 public class UserAccessManagementService {
-    private final UserRepository userRepository;
+    private final UserService userService;
+    private final JmsTemplate jmsTemplate;
     private final ActivationRepository activationRepository;
 
     private List<User> users = new CopyOnWriteArrayList<>();
@@ -24,9 +27,7 @@ public class UserAccessManagementService {
     @Transactional
     public boolean checkActivateKey(String username, String secretCode) {
         if (secretCode.equals(activationRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", username))).getSecretCode())) {
-            User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", username)));
-            user.setUserStatus(UserStatus.ACTIVE);
-            userRepository.save(user);
+            userService.updateStatus(username,UserStatus.ACTIVE);
             activationRepository.deleteById(username);
             return true;
         } return false;
@@ -39,8 +40,9 @@ public class UserAccessManagementService {
 
         boolean isFinded = false;
         User user = users.stream().filter(us -> us.getUsername().equals(username)).findFirst().orElse(null);
-        if (user == null)  {
+        if (user == null) {
             user = new User(username);
+        } else {
             isFinded = true;
         }
         user.setMistakeNum(user.getMistakeNum() + 1);
@@ -48,14 +50,17 @@ public class UserAccessManagementService {
             users.add(user);
         }
         if (user.getMistakeNum() >= 3) {
-            user.setMistakeNum(0);
+            stopGuessingPassword(user.getUsername());
+            users.remove(user);
             return true;
         }
         return false;
     }
 
     public void stopGuessingPassword(String username){
-        userRepository.findByUsername(username).ifPresent(user -> user.setUserStatus(UserStatus.SUSPICIOUS));
+        userService.updateStatus(username,UserStatus.SUSPICIOUS);
+        jmsTemplate.setDeliveryDelay(60000L);
+        jmsTemplate.convertAndSend(JmsConfig.STATUS_CHANGE, new ChangeStatusEvent(username));
     }
 
 

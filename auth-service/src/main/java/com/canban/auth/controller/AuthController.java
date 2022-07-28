@@ -2,7 +2,9 @@ package com.canban.auth.controller;
 
 import com.canban.api.auth.JwtRequest;
 import com.canban.api.auth.JwtResponse;
-import com.canban.auth.entity.User;
+import com.canban.api.auth.RegistrationUserDto;
+import com.canban.auth.config.JmsConfig;
+import com.canban.auth.activemqevents.ChangeStatusEvent;
 import com.canban.auth.exceptions.InvalidAuthorizationException;
 import com.canban.auth.service.UserAccessManagementService;
 import com.canban.auth.service.UserService;
@@ -12,15 +14,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @Slf4j
@@ -33,6 +34,7 @@ public class AuthController {
     private final JwtTokenUtil jwtTokenUtil;
     private final AuthenticationManager authenticationManager;
     private final UserAccessManagementService userAccessManagementService;
+
 
     @PostMapping("/auth")
     @Operation(
@@ -47,6 +49,7 @@ public class AuthController {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
         } catch (BadCredentialsException e) {
             if (userAccessManagementService.passwordGuessingProtection(authRequest.getUsername())) {
+                userAccessManagementService.stopGuessingPassword(authRequest.getUsername());
                 log.warn("Пользователь " + authRequest.getUsername() + " пытается подобрать пароль");
             }
             throw new InvalidAuthorizationException("Incorrect username or password");
@@ -56,4 +59,20 @@ public class AuthController {
         String token = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new JwtResponse(token));
     }
+
+//    @GetMapping("/auth")
+//    public ResponseEntity<?> createMessage (){
+//        RegistrationUserDto registrationUserDto = new RegistrationUserDto();
+//        registrationUserDto.setUsername("testuser15");
+//        registrationUserDto.setPassword("testpass16");
+//        registrationUserDto.setConfirmPassword("testpass16");
+//        registrationUserDto.setFirstName("Bob7");
+//        registrationUserDto.setLastName("Dilan3");
+//        registrationUserDto.setEmail("novitskynick@gmail.com");
+//        jmsTemplate.setDeliveryDelay(60000L);
+//        jmsTemplate.convertAndSend(JmsConfig.STATUS_CHANGE, new ChangeStatusEvent(registrationUserDto));
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
+
+
 }

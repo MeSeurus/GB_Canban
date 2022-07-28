@@ -15,6 +15,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+  artemis:
+    user: 'artemis'
+    password: 'simetraehcapa'
   mail:
     host: 'smtp.gmail.com'
     port: 587
