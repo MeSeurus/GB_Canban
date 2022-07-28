@@ -66,7 +66,7 @@ public class TaskValidator {
             errors.add("Дата начала события должна быть указана.");
         }
 
-        if (taskDto.getDueDate() != null) {
+        if (taskDto.getEndDate() != null) {
             errors.add("Дата завершения события должна быть указана.");
         }
         if (!errors.isEmpty()) {

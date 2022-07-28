@@ -22,10 +22,10 @@ public class TaskDto {
     private String username;
 
     @Schema(description = "Дата начала задачи", required = true)
-    private LocalDateTime eventDate;
+    private LocalDateTime endDate;
 
     @Schema(description = "Срок выполнения задачи", required = true)
-    private LocalDateTime dueDate;
+    private LocalDateTime beginDate;
 
     @Schema(description = "Статус задачи", required = true)
     private String state;
@@ -48,8 +48,8 @@ public class TaskDto {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.eventDate = eventDate;
-        this.dueDate = dueDate;
+        this.endDate = eventDate;
+        this.beginDate = dueDate;
         this.state = state;
         this.priority = priority;
         this.kanbanName = kanbanName;
@@ -60,8 +60,8 @@ public class TaskDto {
         this.title = title;
         this.content = content;
         this.username = username;
-        this.eventDate = eventDate;
-        this.dueDate = dueDate;
+        this.endDate = eventDate;
+        this.beginDate = dueDate;
         this.state = state;
         this.priority = priority;
         this.kanbanName = kanbanName;
