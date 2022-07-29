@@ -1,4 +1,5 @@
 package com.canban.web.core.services;
+
 import com.canban.web.core.dto.EventDetailsRq;
 import com.canban.web.core.entities.Event;
 import com.canban.web.core.repositories.EventRepository;
@@ -12,12 +13,17 @@ public class EventService {
     public List<Event> findEventsByUser(String username) {
         return eventRepository.findEventsByUsername(username);
     }
-    public void createEvent(String username, EventDetailsRq eventDetails) {
+
+
+    public void createEvent(String username, EventDetailsRq eventDetailsRq) {
+
         Event event = Event.builder()
-                .title(eventDetails.getTitle())
-                .content(eventDetails.getContent())
+                .title(eventDetailsRq.getTitle())
+                .content(eventDetailsRq.getContent())
                 .username(username)
-                .beginDate(eventDetails.getBeginDate())
+                .beginDate(eventDetailsRq.getBeginDate())
+                .endDate(eventDetailsRq.getEndDate())
+
                 .build();
         eventRepository.save(event);
     }

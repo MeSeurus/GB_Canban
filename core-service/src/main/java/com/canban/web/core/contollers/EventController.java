@@ -51,9 +51,11 @@ public class EventController {
                     )
             }
     )
-    public void createEvent(@RequestHeader @Parameter(description = "Список пользователей", required = true) String username, @RequestBody EventDetailsRq eventDetails) {
-        eventValidator.validate(eventDetails);
-        eventService.createEvent(username, eventDetails);
+
+    public void createEvent(@RequestHeader @Parameter(description = "Список пользователей", required = true) String username, @RequestBody EventDetailsRq eventDetailsRq) {
+        eventValidator.validate(eventDetailsRq);
+        eventService.createEvent(username, eventDetailsRq);
+
     }
 
     @DeleteMapping("/{id}")

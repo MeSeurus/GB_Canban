@@ -8,6 +8,10 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.DefaultValue;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -26,6 +30,9 @@ public abstract class AbstractEvent implements Serializable {
     Long id;
 
     @Column(name = "title")
+
+    @NotNull
+
     String title;
 
     @Column(name = "content")
@@ -35,7 +42,14 @@ public abstract class AbstractEvent implements Serializable {
     String username;
 
     @Column(name = "begin_date")
+
+    @NotNull
     LocalDateTime beginDate; //дата назначения события
+
+    @Column(name = "end_date")
+    @NotNull
+    LocalDateTime endDate; //дата назначения события
+
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -45,4 +59,6 @@ public abstract class AbstractEvent implements Serializable {
     @UpdateTimestamp
     @Column(name = "updated_at")
     LocalDateTime updatedAt;
+
 }
+

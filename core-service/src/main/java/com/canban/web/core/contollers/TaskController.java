@@ -4,6 +4,7 @@ import com.canban.api.core.TaskDto;
 import com.canban.web.core.dto.TaskDetailsRq;
 import com.canban.web.core.mapper.TaskMapper;
 import com.canban.web.core.services.TaskService;
+import com.canban.web.core.validators.TaskValidator;
 import io.swagger.v3.oas.annotations.Operation;
 
 
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 public class TaskController {
     private final TaskService taskService;
     private final TaskMapper taskMapper;
+    private final TaskValidator taskValidator;
 
     @GetMapping()
     @Operation(
@@ -50,7 +52,9 @@ public class TaskController {
                     )
             }
     )
-    public void createTask(@RequestHeader @Parameter(description = "Список пользователей", required = true) String username, @RequestBody TaskDetailsRq taskDetails) {
-        taskService.createTask(username, taskDetails);
+
+    public void createTask(@RequestHeader @Parameter(description = "Список пользователей", required = true) String username, @RequestBody TaskDetailsRq taskDetailsRq){
+         taskService.createTask(username, taskDetailsRq);
+
     }
 }

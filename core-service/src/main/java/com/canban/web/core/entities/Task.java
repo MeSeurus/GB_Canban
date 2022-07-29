@@ -3,6 +3,8 @@ import com.canban.web.core.enums.Priority;
 import com.canban.web.core.enums.State;
 import lombok.*;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.DefaultValue;
 import java.time.LocalDateTime;
 @Entity
 @Table(name = "tasks")
@@ -10,34 +12,59 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
+
+
 @ToString
+
 public class Task extends AbstractEvent{
     @Column(
-            name = "due_date"
+            name = "actual_end_date"
     )
-    private LocalDateTime dueDate;
+    private LocalDateTime actualEndDate;
+
     @Column(
             name = "state"
     )
+
     @Enumerated(EnumType.STRING)
+    @DefaultValue("CREATED")
+
     private State state;
     @Column(
             name = "priority"
     )
+
+
     @Enumerated(EnumType.STRING)
+    @DefaultValue("NORMAL")
     private Priority priority;
+
     @Column(
             name = "kanban_name"
     )
+    @NotNull
     private String kanbanName;
 
-    public Task(Long id, String title, String content, String username, LocalDateTime beginDate, LocalDateTime dueDate, State state, Priority priority, String kanbanName ) {
+    public Task(Long id,
+                String title,
+                String content,
+                String username,
+                LocalDateTime beginDate,
+                LocalDateTime dueDate,
+                LocalDateTime actualEndDate,
+                State state,
+                Priority priority,
+                String kanbanName ) {
+
         this.id = id;
         this.title = title;
         this.content = content;
         this.username = username;
         this.beginDate = beginDate;
-        this.dueDate = dueDate;
+
+        this.endDate = dueDate;
+        this.actualEndDate = actualEndDate;
+
         this.state = state;
         this.priority = priority;
         this.kanbanName = kanbanName;
@@ -54,10 +81,15 @@ public class Task extends AbstractEvent{
         private String content;
         private String username;
         private LocalDateTime beginDate;
+
+        private LocalDateTime endDate;
+        private LocalDateTime actualEndDate;
         private State state;
         private Priority priority;
         private String kanbanName;
-        private LocalDateTime dueDate;
+
+
+
         private TaskBuilder() {
         }
         public TaskBuilder id(final Long id) {
@@ -81,6 +113,17 @@ public class Task extends AbstractEvent{
             this.beginDate = eventDate;
             return this;
         }
+
+        public Task.TaskBuilder endDate(final LocalDateTime endDate) {
+            this.endDate = endDate;
+            return this;
+        }
+
+        public Task.TaskBuilder actualEndDate(final LocalDateTime actualEndDate) {
+            this.actualEndDate = actualEndDate;
+            return this;
+        }
+
         public TaskBuilder state(final State state) {
             this.state = state;
             return this;
@@ -89,17 +132,26 @@ public class Task extends AbstractEvent{
             this.priority = priority;
             return this;
         }
-        public Task.TaskBuilder dueDate(final LocalDateTime dueDate) {
-            this.dueDate = dueDate;
-            return this;
-        }
+
         public Task.TaskBuilder kanbanName(final String kanbanName) {
             this.kanbanName = kanbanName;
             return this;
         }
 
         public Task build() {
-            return new Task(this.id, this.title, this.content, this.username, this.beginDate, this.dueDate, this.state, this.priority, this.kanbanName);
+
+            return new Task(
+                    this.id,
+                    this.title,
+                    this.content,
+                    this.username,
+                    this.beginDate,
+                    this.endDate,
+                    this.actualEndDate,
+                    this.state,
+                    this.priority,
+                    this.kanbanName);
+
         }
 
     }

@@ -17,16 +17,23 @@ public class EventValidator {
      */
     public void validate(EventDetailsRq eventDetailsRq) {
         List<String> errors = new ArrayList<>();
-        if (eventDetailsRq.getTitle() != null && eventDetailsRq.getTitle().isBlank()) {
+
+
+        if (eventDetailsRq.getTitle() == null || eventDetailsRq.getTitle().isBlank()) {
             errors.add("Название события должно быть указано.");
         }
-        if (eventDetailsRq.getContent() != null && eventDetailsRq.getContent().isBlank()) {
-            errors.add("Описание события должно быть указано.");
-        }
 
-        if (eventDetailsRq.getBeginDate() != null) {
+        if (eventDetailsRq.getBeginDate() == null) {
             errors.add("Дата проведения события должна быть указана.");
         }
+        if (eventDetailsRq.getEndDate() == null) {
+            errors.add("Дата окончания события должна быть указана.");
+        }
+
+        if (eventDetailsRq.getBeginDate().compareTo(eventDetailsRq.getEndDate()) >= 0 ){
+            errors.add("Дата начала события должна быть раньше даты окончания.");
+        }
+
         if (!errors.isEmpty()) {
             throw new ValidationException(errors);
         }

@@ -37,9 +37,14 @@ public class TaskValidator {
         if (taskDetailsRq.getBeginDate() != null) {
             errors.add("Дата начала события должна быть указана.");
         }
-        if (taskDetailsRq.getDueDate() != null) {
+
+        if (taskDetailsRq.getEndDate() != null) {
             errors.add("Дата завершения события должна быть указана.");
         }
+        if (taskDetailsRq.getBeginDate().compareTo(taskDetailsRq.getEndDate()) >= 0 ){
+            errors.add("Дата начала задачи должна быть раньше даты окончания.");
+        }
+
         if (!errors.isEmpty()) {
             throw new ValidationException(errors);
         }
@@ -56,27 +61,25 @@ public class TaskValidator {
         if (taskDto.getTitle() != null && taskDto.getTitle().isBlank()) {
             errors.add("Название задачи должно быть указано.");
         }
-        if (taskDto.getContent() != null && taskDto.getContent().isBlank()) {
-            errors.add("Описание задачи должно быть указано.");
-        }
-        if (taskDto.getUsername() != null && taskDto.getUsername().isBlank()) {
-            errors.add("Имя пользователя должно быть указано.");
-        }
-        if (taskDto.getState() != null) {
-            errors.add("Статус задачи должен быть указан.");
-        }
-        if (taskDto.getPriority() != null) {
-            errors.add("Приоритет задачи должен быть указан.");
-        }
-        if (taskDto.getKanbanName() != null && taskDto.getKanbanName().isBlank()) {
+
+
+
+        if (taskDto.getKanbanName() == null || taskDto.getKanbanName().isBlank()) {
             errors.add("Рабочее пространство задачи должно быть указано.");
         }
-        if (taskDto.getEventDate() != null) {
+
+        if (taskDto.getBeginDate() == null) {
             errors.add("Дата начала события должна быть указана.");
         }
-        if (taskDto.getDueDate() != null) {
+
+        if (taskDto.getEndDate() == null) {
             errors.add("Дата завершения события должна быть указана.");
         }
+        if (taskDto.getBeginDate().compareTo(taskDto.getEndDate()) >= 0 ){
+            errors.add("Дата начала события должна быть раньше даты окончания.");
+        }
+
+
         if (!errors.isEmpty()) {
             throw new ValidationException(errors);
         }

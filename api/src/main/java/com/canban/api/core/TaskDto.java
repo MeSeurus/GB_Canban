@@ -1,6 +1,10 @@
 package com.canban.api.core;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
+
+
+import javax.validation.constraints.NotNull;
+
 import java.time.LocalDateTime;
 @Schema(description = "Модель задачи")
 @Getter
@@ -16,9 +20,16 @@ public class TaskDto {
     @Schema(description = "Исполнитель задачи", required = true, example = "user1")
     private String username;
     @Schema(description = "Дата начала задачи", required = true)
-    private LocalDateTime eventDate;
+
+    private LocalDateTime endDate;
+
     @Schema(description = "Срок выполнения задачи", required = true)
-    private LocalDateTime dueDate;
+    private LocalDateTime beginDate;
+
+    @Schema(description = "Срок выполнения задачи", required = true)
+    private LocalDateTime actualEndDate;
+
+
     @Schema(description = "Статус задачи", required = true)
     private String state;
     @Schema(description = "Приоритет задачи", required = true)
@@ -27,9 +38,9 @@ public class TaskDto {
     private String kanbanName;
     //Конструктор без исполнителя
     public TaskDto(Long id,
-                   String title,
+                   @NotNull String taskTitle, String title,
                    String content,
-                   LocalDateTime eventDate,
+                   @NotNull LocalDateTime beginDate, LocalDateTime eventDate,
                    LocalDateTime dueDate,
                    String state,
                    String priority,
@@ -37,8 +48,8 @@ public class TaskDto {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.eventDate = eventDate;
-        this.dueDate = dueDate;
+        this.endDate = eventDate;
+        this.beginDate = dueDate;
         this.state = state;
         this.priority = priority;
         this.kanbanName = kanbanName;
@@ -49,8 +60,8 @@ public class TaskDto {
         this.title = title;
         this.content = content;
         this.username = username;
-        this.eventDate = eventDate;
-        this.dueDate = dueDate;
+        this.endDate = eventDate;
+        this.beginDate = dueDate;
         this.state = state;
         this.priority = priority;
         this.kanbanName = kanbanName;
