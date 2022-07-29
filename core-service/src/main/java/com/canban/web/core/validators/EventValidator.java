@@ -10,11 +10,6 @@ import java.util.List;
 @Component
 public class EventValidator {
 
-    /**
-     * Заметки для Алексея.
-     * Нужно удалить лишние проверки и подкорректировать бд в соотвествии с тем, что у нас обязательно, а что нет.
-     * Написала валидацию на все входящие поля, лишнее УДАЛИТЬ. (например, мне кажется, контент можно и пустым оставлять)
-     */
     public void validate(EventDetailsRq eventDetailsRq) {
         List<String> errors = new ArrayList<>();
 

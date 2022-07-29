@@ -30,9 +30,7 @@ public abstract class AbstractEvent implements Serializable {
     Long id;
 
     @Column(name = "title")
-
     @NotNull
-
     String title;
 
     @Column(name = "content")
@@ -42,7 +40,6 @@ public abstract class AbstractEvent implements Serializable {
     String username;
 
     @Column(name = "begin_date")
-
     @NotNull
     LocalDateTime beginDate; //дата назначения события
 

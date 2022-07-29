@@ -15,42 +15,8 @@ import java.util.Set;
 @Builder
 @Getter
 @Setter
-
+@NoArgsConstructor
 public class Event extends AbstractEvent {
-
-
-
-    public static EventBuilder builder() {
-        return new Event.EventBuilder();
-    }
-
-
-    public Event(Long id,
-                 String title,
-                 String content,
-                 String username,
-                 LocalDateTime beginDate,
-                 LocalDateTime endDate
-    ) {
-
-        this.id = id;
-        this.title = title;
-        this.content = content;
-        this.username = username;
-        this.beginDate = beginDate;
-
-        this.endDate = endDate;
-
-    }
-
-    public static class EventBuilder {
-        private Long id;
-        private String title;
-        private String content;
-        private String username;
-        private LocalDateTime beginDate;
-
-        private LocalDateTime endDate;
 
     @ElementCollection
     @CollectionTable(
@@ -63,6 +29,34 @@ public class Event extends AbstractEvent {
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    public static EventBuilder builder() {
+        return new Event.EventBuilder();
+    }
+
+    public Event(Long id,
+                 String title,
+                 String content,
+                 String username,
+                 LocalDateTime beginDate,
+                 LocalDateTime endDate
+    ) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.username = username;
+        this.beginDate = beginDate;
+        this.endDate = endDate;
+
+    }
+
+    public static class EventBuilder {
+        private Long id;
+        private String title;
+        private String content;
+        private String username;
+        private LocalDateTime beginDate;
+        private LocalDateTime endDate;
 
         EventBuilder() {
 
