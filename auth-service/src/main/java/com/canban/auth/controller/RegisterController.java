@@ -49,18 +49,7 @@ public class RegisterController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/activation")
-    @Operation(
-            summary = "Активация пользователя",
-            description = "Позволяет активировать нового пользователя",
-            responses = {
-                    @ApiResponse(description = "Успешный ответ", responseCode = "200")
-            }
-    )
-    public ResponseEntity<?> activation(@RequestParam (name = "username") String username, @RequestParam (name = "code") String code){
-        userService.checkActivateKey(username, code);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+
 
 
 }
