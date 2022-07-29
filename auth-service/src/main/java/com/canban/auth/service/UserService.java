@@ -32,6 +32,10 @@ public class UserService implements UserDetailsService {
     private final MailSenderService mailSenderService;
     private final UserAccessManagementService userAccessManagementService;
 
+    /**
+     * Это нужно для устранения Circular Dependency Exception
+     */
+
     @PostConstruct
     private void init(){
         userAccessManagementService.setUserService(this);

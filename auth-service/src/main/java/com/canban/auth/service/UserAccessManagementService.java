@@ -21,6 +21,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Service
 @RequiredArgsConstructor
 public class UserAccessManagementService {
+
+    /**
+     * Это нужно для устранения Circular Dependency Exception
+     */
+
     private UserService userService;
 
     public void setUserService(UserService userService) {
