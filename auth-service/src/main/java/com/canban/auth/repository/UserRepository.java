@@ -16,8 +16,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUsername(String username);
 
     /**
-    Пришлось поставить тут @Transactional, почему-то несмотря на то, что в методах стоит эта аннотация -
-     без нее выдает TransactionRequiredException
+    * Пришлось поставить тут @Transactional, почему-то несмотря на то, что в методах стоит эта аннотация - без нее выдает TransactionRequiredException
     */
 
     @Transactional
