@@ -1,6 +1,6 @@
 package com.canban.web.chat.services;
 
-import com.canban.web.chat.models.ChatRoom;
+import com.canban.web.chat.entity.ChatRoom;
 import com.canban.web.chat.repositories.ChatRoomRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

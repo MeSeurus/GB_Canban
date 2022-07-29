@@ -1,6 +1,6 @@
 package com.canban.web.chat.repositories;
 
-import com.canban.web.chat.models.ChatRoom;
+import com.canban.web.chat.entity.ChatRoom;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
