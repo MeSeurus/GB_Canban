@@ -20,4 +20,5 @@ public class FieldsValidationError {
     public void setErrorFieldsMassages(List<String> errorFieldsMassages) {
         this.errorFieldsMassages = errorFieldsMassages;
     }
+
 }

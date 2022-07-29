@@ -38,3 +38,4 @@ build/
 .vscode/
 /gateway-service/target/
 /.idea/
+/chat-service/

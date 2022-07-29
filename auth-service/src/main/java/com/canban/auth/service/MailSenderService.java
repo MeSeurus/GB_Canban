@@ -12,7 +12,7 @@ public class MailSenderService {
 
     public void sendMail(String to, String subject, String text){
         SimpleMailMessage mail = new SimpleMailMessage();
-        mail.setFrom("canban.mail.service@gmail.com");
+        mail.setFrom("canban.service@gmail.com");
         mail.setTo(to);
         mail.setSubject(subject);
         mail.setText(text);
