@@ -21,7 +21,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Service
 @RequiredArgsConstructor
 public class UserAccessManagementService {
-    private final UserService userService;
+    private UserService userService;
+
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
     private final JmsTemplate jmsTemplate;
     private final ActivationRepository activationRepository;
     private final MailSenderService mailSenderService;
