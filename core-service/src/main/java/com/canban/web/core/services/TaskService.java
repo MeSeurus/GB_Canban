@@ -11,6 +11,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TaskService {
     private final TaskRepository taskRepository;
+
     public List<Task> findTaskByUsername(String username) {
         return taskRepository.findTasksByUserName(username);
     }
@@ -41,4 +42,4 @@ public class TaskService {
         taskRepository.deleteById(id);
     }
 
-]
+}
