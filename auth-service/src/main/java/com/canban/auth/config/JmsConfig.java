@@ -10,7 +10,6 @@ import org.springframework.jms.support.converter.MessageType;
 public class JmsConfig {
     public static final String STATUS_CHANGE = "status-change";
 
-
     @Bean
     public MessageConverter messageConverter() {
         MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();

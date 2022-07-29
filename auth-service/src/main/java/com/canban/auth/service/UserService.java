@@ -5,6 +5,7 @@ import com.canban.auth.entity.User;
 import com.canban.auth.entity.security.CodeType;
 import com.canban.auth.entity.security.UserAwaitActivation;
 import com.canban.auth.entity.security.UserStatus;
+import com.canban.auth.exceptions.InvalidAuthorizationException;
 import com.canban.auth.exceptions.UserNotActiveException;
 import com.canban.auth.repository.ActivationRepository;
 import com.canban.auth.repository.UserRepository;
@@ -45,6 +46,7 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("Пользователь '%s' не найден", username)));
         if (user.getUserStatus() == UserStatus.NOT_ACTIVE) throw new UserNotActiveException(String.format("Пользователь '%s' не активирован", username));
+        if (user.getUserStatus() == UserStatus.SUSPICIOUS) throw new InvalidAuthorizationException(String.format("Пользователь '%s' превысил количество попыток ввода пароля", username));
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
     }
 

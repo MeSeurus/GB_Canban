@@ -3,7 +3,6 @@ package com.canban.auth.controller;
 import com.canban.api.auth.JwtRequest;
 import com.canban.api.auth.JwtResponse;
 import com.canban.auth.exceptions.InvalidAuthorizationException;
-import com.canban.auth.exceptions.InvalidRegistrationException;
 import com.canban.auth.service.UserAccessManagementService;
 import com.canban.auth.service.UserService;
 import com.canban.auth.util.JwtTokenUtil;
@@ -12,13 +11,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 
