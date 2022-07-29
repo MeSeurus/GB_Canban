@@ -3,9 +3,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
 import java.time.LocalDateTime;
-
 @Schema(description = "Модель события")
 @Getter
 @Setter
@@ -15,16 +13,14 @@ public class EventDto {
     private Long id;
     @Schema(description = "Название события", required = true, example = "Создать программу Hello World")
     private String title;
-
     @Schema(description = "Описание события", required = true)
     private String content;
-
-
     @Schema(description = "Пользователь ответственный за событие", required = true, example = "user1")
     private String username;
 
     @Schema(description = "Дата начала события", required = true)
     private LocalDateTime beginDate;
+
     @Schema(description = "Дата начала события", required = true)
     private LocalDateTime endDate;
 
@@ -35,12 +31,13 @@ public class EventDto {
                     LocalDateTime beginDate,
                     LocalDateTime endDate
     ) {
+
         this.id = id;
         this.title = title;
         this.content = content;
         this.username = username;
         this.beginDate = beginDate;
-        this.endDate = endDate;
+
     }
 
     public EventDto(Long id, String title, String content) {
@@ -48,6 +45,4 @@ public class EventDto {
         this.title = title;
         this.content = content;
     }
-
-
 }

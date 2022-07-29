@@ -37,6 +37,7 @@ public class TaskValidator {
         if (taskDetailsRq.getBeginDate() != null) {
             errors.add("Дата начала события должна быть указана.");
         }
+
         if (taskDetailsRq.getEndDate() != null) {
             errors.add("Дата завершения события должна быть указана.");
         }
@@ -62,6 +63,7 @@ public class TaskValidator {
         }
 
 
+
         if (taskDto.getKanbanName() == null || taskDto.getKanbanName().isBlank()) {
             errors.add("Рабочее пространство задачи должно быть указано.");
         }
@@ -76,6 +78,7 @@ public class TaskValidator {
         if (taskDto.getBeginDate().compareTo(taskDto.getEndDate()) >= 0 ){
             errors.add("Дата начала события должна быть раньше даты окончания.");
         }
+
 
         if (!errors.isEmpty()) {
             throw new ValidationException(errors);

@@ -5,10 +5,8 @@ import com.canban.web.core.entities.Task;
 import com.canban.web.core.enums.Priority;
 import com.canban.web.core.enums.State;
 import org.springframework.stereotype.Component;
-
 @Component
 public class TaskMapper {
-
     public TaskDto entityToDto(Task task) {
         return new TaskDto(
                 task.getId(),
@@ -16,6 +14,7 @@ public class TaskMapper {
                 task.getContent(),
                 task.getUsername(),
                 task.getBeginDate(),
+
                 task.getEndDate(),
                 task.getActualEndDate(),
                 task.getState().toString(),
@@ -23,8 +22,6 @@ public class TaskMapper {
                 task.getKanbanName()
         );
     }
-
-
     public Task dtoToEntity(TaskDto taskDto) {
         return Task.taskBuilder().title(taskDto.getTitle())
                 .content(taskDto.getContent())

@@ -6,6 +6,8 @@ import com.canban.web.core.mapper.TaskMapper;
 import com.canban.web.core.services.TaskService;
 import com.canban.web.core.validators.TaskValidator;
 import io.swagger.v3.oas.annotations.Operation;
+
+
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -23,7 +25,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Tag(name = "Задачи", description = "Методы работы с задачами")
 public class TaskController {
-
     private final TaskService taskService;
     private final TaskMapper taskMapper;
     private final TaskValidator taskValidator;
@@ -42,7 +43,6 @@ public class TaskController {
         return taskService.findTaskByUsername(username).stream().map(taskMapper::entityToDto).collect(Collectors.toList());
     }
 
-
     @PostMapping()
     @Operation(
             summary = "Запрос на создание нового задания",
@@ -52,7 +52,9 @@ public class TaskController {
                     )
             }
     )
+
     public void createTask(@RequestHeader @Parameter(description = "Список пользователей", required = true) String username, @RequestBody TaskDetailsRq taskDetailsRq){
          taskService.createTask(username, taskDetailsRq);
+
     }
 }

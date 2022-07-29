@@ -1,5 +1,4 @@
 package com.canban.web.core.repositories;
-
 import com.canban.web.core.entities.Event;
 import com.canban.web.core.entities.Task;
 import org.springframework.data.jpa.repository.JpaRepository;

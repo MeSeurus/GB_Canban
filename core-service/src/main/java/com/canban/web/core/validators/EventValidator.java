@@ -18,6 +18,7 @@ public class EventValidator {
     public void validate(EventDetailsRq eventDetailsRq) {
         List<String> errors = new ArrayList<>();
 
+
         if (eventDetailsRq.getTitle() == null || eventDetailsRq.getTitle().isBlank()) {
             errors.add("Название события должно быть указано.");
         }

@@ -11,4 +11,5 @@ public enum State {
         this.value = value;
     }
     public String getValue(){ return value;}
+
 }

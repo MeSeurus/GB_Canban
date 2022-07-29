@@ -2,9 +2,10 @@ package com.canban.api.core;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
-import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 
+import javax.validation.constraints.NotNull;
+
+import java.time.LocalDateTime;
 @Schema(description = "Модель задачи")
 @Getter
 @Setter
@@ -14,15 +15,12 @@ public class TaskDto {
     private Long id;
     @Schema(description = "Название задачи", required = true, example = "Создать программу Hello World")
     private String title;
-
     @Schema(description = "Описание задачи", required = true)
     private String content;
-
-
     @Schema(description = "Исполнитель задачи", required = true, example = "user1")
     private String username;
-
     @Schema(description = "Дата начала задачи", required = true)
+
     private LocalDateTime endDate;
 
     @Schema(description = "Срок выполнения задачи", required = true)
@@ -31,16 +29,14 @@ public class TaskDto {
     @Schema(description = "Срок выполнения задачи", required = true)
     private LocalDateTime actualEndDate;
 
+
     @Schema(description = "Статус задачи", required = true)
     private String state;
-
     @Schema(description = "Приоритет задачи", required = true)
     private String priority;
-
     @Schema(description = "Имя канбан-доски", required = true)
     private String kanbanName;
-
-//Конструктор без исполнителя
+    //Конструктор без исполнителя
     public TaskDto(Long id,
                    @NotNull String taskTitle, String title,
                    String content,

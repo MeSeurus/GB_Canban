@@ -6,18 +6,15 @@ import com.canban.web.core.entities.Task;
 import com.canban.web.core.repositories.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class TaskService {
-
     private final TaskRepository taskRepository;
-
     public List<Task> findTaskByUsername(String username) {
         return taskRepository.findTasksByUserName(username);
     }
+
 
     public void createTask(String username, TaskDetailsRq taskDetailsRq) {
         Task task = Task.taskBuilder()
@@ -44,5 +41,4 @@ public class TaskService {
         taskRepository.deleteById(id);
     }
 
-
-}
+]

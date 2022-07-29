@@ -1,21 +1,18 @@
 package com.canban.web.core.entities;
-
 import com.canban.web.core.enums.Priority;
 import com.canban.web.core.enums.State;
 import lombok.*;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.DefaultValue;
 import java.time.LocalDateTime;
-
-
 @Entity
 @Table(name = "tasks")
 @AllArgsConstructor
 @Getter
 @Setter
 @NoArgsConstructor
+
 
 @ToString
 
@@ -31,10 +28,12 @@ public class Task extends AbstractEvent{
 
     @Enumerated(EnumType.STRING)
     @DefaultValue("CREATED")
+
     private State state;
     @Column(
             name = "priority"
     )
+
 
     @Enumerated(EnumType.STRING)
     @DefaultValue("NORMAL")
@@ -56,13 +55,16 @@ public class Task extends AbstractEvent{
                 State state,
                 Priority priority,
                 String kanbanName ) {
+
         this.id = id;
         this.title = title;
         this.content = content;
         this.username = username;
         this.beginDate = beginDate;
+
         this.endDate = dueDate;
         this.actualEndDate = actualEndDate;
+
         this.state = state;
         this.priority = priority;
         this.kanbanName = kanbanName;
@@ -79,6 +81,7 @@ public class Task extends AbstractEvent{
         private String content;
         private String username;
         private LocalDateTime beginDate;
+
         private LocalDateTime endDate;
         private LocalDateTime actualEndDate;
         private State state;
@@ -86,24 +89,21 @@ public class Task extends AbstractEvent{
         private String kanbanName;
 
 
+
         private TaskBuilder() {
         }
-
         public TaskBuilder id(final Long id) {
             this.id = id;
             return this;
         }
-
         public TaskBuilder title(final String title) {
             this.title = title;
             return this;
         }
-
         public TaskBuilder content(final String content) {
             this.content = content;
             return this;
         }
-
         public TaskBuilder username(final String username) {
             this.username = username;
             return this;
@@ -133,14 +133,13 @@ public class Task extends AbstractEvent{
             return this;
         }
 
-
-
         public Task.TaskBuilder kanbanName(final String kanbanName) {
             this.kanbanName = kanbanName;
             return this;
         }
 
         public Task build() {
+
             return new Task(
                     this.id,
                     this.title,
@@ -152,6 +151,7 @@ public class Task extends AbstractEvent{
                     this.state,
                     this.priority,
                     this.kanbanName);
+
         }
 
     }

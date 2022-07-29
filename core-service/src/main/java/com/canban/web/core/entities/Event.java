@@ -10,12 +10,15 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
+
 public class Event extends AbstractEvent {
+
 
 
     public static EventBuilder builder() {
         return new Event.EventBuilder();
     }
+
 
     public Event(Long id,
                  String title,
@@ -24,12 +27,15 @@ public class Event extends AbstractEvent {
                  LocalDateTime beginDate,
                  LocalDateTime endDate
     ) {
+
         this.id = id;
         this.title = title;
         this.content = content;
         this.username = username;
         this.beginDate = beginDate;
+
         this.endDate = endDate;
+
     }
 
     public static class EventBuilder {
@@ -38,7 +44,9 @@ public class Event extends AbstractEvent {
         private String content;
         private String username;
         private LocalDateTime beginDate;
+
         private LocalDateTime endDate;
+
 
         EventBuilder() {
 
@@ -68,6 +76,7 @@ public class Event extends AbstractEvent {
             this.beginDate = beginDate;
             return this;
         }
+
         public Event.EventBuilder endDate(final LocalDateTime endDate) {
             this.endDate = endDate;
             return this;
@@ -79,3 +88,4 @@ public class Event extends AbstractEvent {
 
     }
 }
+
