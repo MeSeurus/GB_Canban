@@ -1,6 +1,5 @@
 package com.canban.auth.activemqevents;
 
-import com.canban.api.auth.RegistrationUserDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

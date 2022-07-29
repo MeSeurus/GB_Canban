@@ -2,6 +2,7 @@ package com.canban.auth.service;
 
 import com.canban.auth.entity.Role;
 import com.canban.auth.entity.User;
+import com.canban.auth.entity.security.CodeType;
 import com.canban.auth.entity.security.UserAwaitActivation;
 import com.canban.auth.entity.security.UserStatus;
 import com.canban.auth.exceptions.UserNotActiveException;
@@ -25,8 +26,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
-    private final ActivationRepository activationRepository;
     private final MailSenderService mailSenderService;
+    private final UserAccessManagementService userAccessManagementService;
 
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
@@ -51,7 +52,8 @@ public class UserService implements UserDetailsService {
         UserAwaitActivation userAwaitActivation = new UserAwaitActivation();
         userAwaitActivation.setUsername(user.getUsername());
         userAwaitActivation.setSecretCode(getRandomNumberString());
-        activationRepository.save(userAwaitActivation);
+        userAwaitActivation.setCodeType(CodeType.ACTIVATION_CODE);
+        userAccessManagementService.createUser(userAwaitActivation);
         mailSenderService.sendMail(user.getEmail(),"Canban activation link","http://localhost:5555/auth/activation/?username=" + userAwaitActivation.getUsername() + "&code=" + userAwaitActivation.getSecretCode());
     }
 
@@ -66,4 +68,13 @@ public class UserService implements UserDetailsService {
         userRepository.updateStatus(username, userStatus);
     }
 
+    public Optional<String> getEmailByUsername (String username){
+        return userRepository.getEmailByUsername(username);
+
+    }
+
+    @Transactional
+    public void updatePassword (String username, String password){
+        userRepository.updatePassword(username, password);
+    }
 }

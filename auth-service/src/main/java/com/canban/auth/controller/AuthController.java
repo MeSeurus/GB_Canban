@@ -2,10 +2,8 @@ package com.canban.auth.controller;
 
 import com.canban.api.auth.JwtRequest;
 import com.canban.api.auth.JwtResponse;
-import com.canban.api.auth.RegistrationUserDto;
-import com.canban.auth.config.JmsConfig;
-import com.canban.auth.activemqevents.ChangeStatusEvent;
 import com.canban.auth.exceptions.InvalidAuthorizationException;
+import com.canban.auth.exceptions.InvalidRegistrationException;
 import com.canban.auth.service.UserAccessManagementService;
 import com.canban.auth.service.UserService;
 import com.canban.auth.util.JwtTokenUtil;
@@ -16,11 +14,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jms.core.JmsTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -34,6 +32,7 @@ public class AuthController {
     private final JwtTokenUtil jwtTokenUtil;
     private final AuthenticationManager authenticationManager;
     private final UserAccessManagementService userAccessManagementService;
+    private final PasswordEncoder passwordEncoder;
 
 
     @PostMapping("/auth")
@@ -59,20 +58,5 @@ public class AuthController {
         String token = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new JwtResponse(token));
     }
-
-//    @GetMapping("/auth")
-//    public ResponseEntity<?> createMessage (){
-//        RegistrationUserDto registrationUserDto = new RegistrationUserDto();
-//        registrationUserDto.setUsername("testuser15");
-//        registrationUserDto.setPassword("testpass16");
-//        registrationUserDto.setConfirmPassword("testpass16");
-//        registrationUserDto.setFirstName("Bob7");
-//        registrationUserDto.setLastName("Dilan3");
-//        registrationUserDto.setEmail("novitskynick@gmail.com");
-//        jmsTemplate.setDeliveryDelay(60000L);
-//        jmsTemplate.convertAndSend(JmsConfig.STATUS_CHANGE, new ChangeStatusEvent(registrationUserDto));
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
-
 
 }
