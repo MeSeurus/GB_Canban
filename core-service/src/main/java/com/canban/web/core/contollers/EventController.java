@@ -1,8 +1,8 @@
 package com.canban.web.core.contollers;
 
-import com.canban.web.core.mapper.EventMapper;
-import com.canban.web.core.dto.EventDetailsRq;
 import com.canban.api.core.EventDto;
+import com.canban.web.core.dto.EventDetailsRq;
+import com.canban.web.core.mapper.EventMapper;
 import com.canban.web.core.services.EventService;
 import com.canban.web.core.validators.EventValidator;
 import io.swagger.v3.oas.annotations.Operation;
@@ -69,6 +69,16 @@ public class EventController {
     )
     public void deleteDyId(@PathVariable @Parameter(description = "Идентификатор события", required = true) Long id) {
         eventService.deleteById(id);
+    }
+
+    @PostMapping("/{id}/{username}")
+    public void addUserToEvent(@RequestHeader String username, @PathVariable("id") Long id, @PathVariable("username") String usernameToAdd) {
+        eventService.addUserToEvent(usernameToAdd, id);
+    }
+
+    @DeleteMapping("/{id}/{username}")
+    public void removeUserFromEvent(@RequestHeader String username, @PathVariable("id") Long id, @PathVariable("username") String usernameToRemove) {
+        eventService.removeUserFromEvent(usernameToRemove, id);
     }
 
 

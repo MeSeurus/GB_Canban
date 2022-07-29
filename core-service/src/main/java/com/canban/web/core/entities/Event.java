@@ -1,13 +1,18 @@
 package com.canban.web.core.entities;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(name = "events")
 @AllArgsConstructor
+@Builder
 @Getter
 @Setter
 
@@ -47,6 +52,17 @@ public class Event extends AbstractEvent {
 
         private LocalDateTime endDate;
 
+    @ElementCollection
+    @CollectionTable(
+            name = "events_users",
+            joinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id")
+    )
+    @Column(name = "username")
+    private Set<String> users;
+
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
         EventBuilder() {
 
