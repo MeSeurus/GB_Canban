@@ -42,8 +42,7 @@ public class UserAccessManagementController {
             responses = {
                     @ApiResponse(description = "Успешный ответ", responseCode = "200")
             })
-    public ResponseEntity<?> recoverPassword (String username){
-        System.out.println(username);
+    public ResponseEntity<?> recoverPassword (@RequestBody String username){
         userAccessManagementService.sendRecoverPasswordLink(username);
         return new ResponseEntity<>(HttpStatus.OK);
     }
