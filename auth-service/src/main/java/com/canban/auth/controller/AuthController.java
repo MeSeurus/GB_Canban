@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Slf4j
 @RestController
@@ -33,7 +34,7 @@ public class AuthController {
     private final JwtTokenUtil jwtTokenUtil;
     private final AuthenticationManager authenticationManager;
 
-    private List<User> users = new ArrayList<>();
+    private List<User> users = Collections.synchronizedList(new ArrayList<>());
 
     @PostMapping("/auth")
     @Operation(
