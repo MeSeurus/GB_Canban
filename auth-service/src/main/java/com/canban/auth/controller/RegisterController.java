@@ -4,7 +4,6 @@ import com.canban.api.auth.RegistrationUserDto;
 import com.canban.auth.exceptions.InvalidRegistrationException;
 import com.canban.auth.mapper.UserMapper;
 import com.canban.auth.service.RoleService;
-import com.canban.auth.service.UserAccessManagementService;
 import com.canban.auth.service.UserService;
 import com.canban.auth.validator.UserValidator;
 import io.swagger.v3.oas.annotations.Operation;

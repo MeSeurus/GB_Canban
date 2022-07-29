@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@RequestMapping("/api/v1/userAccessManagement")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000/")
 @Tag(name = "Контроллер, отвечающий за управлением доступом пользователей", description = "Позволяет восстановить пароль, активировать пользователя ")
