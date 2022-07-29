@@ -19,12 +19,12 @@ public class KanbanController {
     private final KanbanService kanbanService;
     private final KanbanBoardMapper kanbanBoardMapper;
 
-    @GetMapping("/boards/{id}")
+    @GetMapping("/{id}")
     public KanbanBoardDetailsRs getBoard(@RequestHeader String username, @PathVariable("id") Long id) {
         return kanbanBoardMapper.entityToDto(kanbanService.getBoard(id));
     }
 
-    @GetMapping("/boards")
+    @GetMapping()
     public List<KanbanBoardDetailsRs> getBoards(@RequestHeader String username) {
         return kanbanService.getBoards(username)
                 .stream()
@@ -33,7 +33,7 @@ public class KanbanController {
 
     }
 
-    @PostMapping("/boards")
+    @PostMapping()
     public void createBoard(@RequestHeader String username, @RequestBody KanbanBoardDetailsRq kanbanBoardDetailsRq) {
         kanbanService.createBoard(username, kanbanBoardMapper.dtoToEntity(kanbanBoardDetailsRq));
     }
