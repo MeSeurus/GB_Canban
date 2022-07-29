@@ -28,7 +28,6 @@ public class RegisterController {
     private final UserValidator userValidator;
     private final UserMapper userMapper;
     private final RoleService roleService;
-    private final UserAccessManagementService userAccessManagementService;
 
     @PostMapping("/registration")
     @Operation(

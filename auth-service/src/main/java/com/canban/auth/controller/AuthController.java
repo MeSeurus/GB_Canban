@@ -32,7 +32,6 @@ public class AuthController {
     private final JwtTokenUtil jwtTokenUtil;
     private final AuthenticationManager authenticationManager;
     private final UserAccessManagementService userAccessManagementService;
-    private final PasswordEncoder passwordEncoder;
 
 
     @PostMapping("/auth")
