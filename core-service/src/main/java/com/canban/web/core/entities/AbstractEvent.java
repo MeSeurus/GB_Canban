@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @Getter
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 
-public abstract class AbstractEvent implements Serializable {
+public abstract class AbstractEvent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE) /// ???
