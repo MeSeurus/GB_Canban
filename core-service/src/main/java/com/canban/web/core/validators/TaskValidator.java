@@ -5,6 +5,7 @@ import com.canban.api.exceptions.ValidationException;
 import com.canban.web.core.dto.TaskDetailsRq;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,14 +21,19 @@ public class TaskValidator {
             errors.add("Рабочее пространство задачи должно быть указано.");
         }
         if (taskDetailsRq.getBeginDate() == null) {
-            errors.add("Дата начала события должна быть указана.");
+            errors.add("Дата начала задачи должна быть указана.");
         }
         if (taskDetailsRq.getEndDate() == null) {
-            errors.add("Дата завершения события должна быть указана.");
+            errors.add("Дата завершения задачи должна быть указана.");
         }
         if (taskDetailsRq.getBeginDate().compareTo(taskDetailsRq.getEndDate()) >= 0 ){
-            errors.add("Дата начала события должна быть раньше даты окончания.");
+            errors.add("Дата начала задачи должна быть раньше даты окончания.");
         }
+        LocalDateTime now = LocalDateTime.now();
+        if(now.compareTo(taskDetailsRq.getEndDate()) >= 0 ){
+            errors.add("Дата завершения задачи должна быть позже текущего времени.");
+        }
+
         if (!errors.isEmpty()) {
             throw new ValidationException(errors);
         }

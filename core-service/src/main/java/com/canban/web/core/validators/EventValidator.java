@@ -4,6 +4,7 @@ import com.canban.api.exceptions.ValidationException;
 import com.canban.web.core.dto.EventDetailsRq;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,10 @@ public class EventValidator {
         if (eventDetailsRq.getBeginDate().compareTo(eventDetailsRq.getEndDate()) >= 0 ){
             errors.add("Дата начала события должна быть раньше даты окончания.");
         }
-
+        LocalDateTime now = LocalDateTime.now();
+        if(now.compareTo(eventDetailsRq.getEndDate()) >= 0 ){
+            errors.add("Дата завершения задачи должна быть позже текущего времени.");
+        }
         if (!errors.isEmpty()) {
             throw new ValidationException(errors);
         }

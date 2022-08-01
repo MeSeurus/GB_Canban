@@ -14,7 +14,6 @@ public class TaskMapper {
                 task.getContent(),
                 task.getUsername(),
                 task.getBeginDate(),
-
                 task.getEndDate(),
                 task.getActualEndDate(),
                 task.getState().toString(),

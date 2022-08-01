@@ -41,11 +41,11 @@ public abstract class AbstractEvent implements Serializable {
 
     @Column(name = "begin_date")
     @NotNull
-    LocalDateTime beginDate; //дата назначения события
+    LocalDateTime beginDate; //дата начала события
 
     @Column(name = "end_date")
     @NotNull
-    LocalDateTime endDate; //дата назначения события
+    LocalDateTime endDate; //дата окончания события
 
 
     @CreationTimestamp

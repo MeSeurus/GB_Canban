@@ -23,11 +23,10 @@ public class TaskDetailsRq {
     @Schema(description = "Дата начала задачи")
     LocalDateTime beginDate;
 
-
     @Schema(description = "Срок выполнения задачи")
     private LocalDateTime endDate;
 
-    @Schema(description = "Срок выполнения задачи")
+    @Schema(description = "Дата фактического выполнения задачи")
     private LocalDateTime actualEndDate;
 
     @Schema(description = "Статус задачи")
@@ -36,7 +35,7 @@ public class TaskDetailsRq {
     @Schema(description = "Приоритет задачи")
     private Priority priority;
 
-    @Schema(description = "Имя canban доски")
+    @Schema(description = "Имя kanban доски")
     private String kanbanName;
 
 
