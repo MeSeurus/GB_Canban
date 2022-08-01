@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 public abstract class AbstractEvent {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE) /// ???
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     Long id;
 
