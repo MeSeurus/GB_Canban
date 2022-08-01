@@ -67,7 +67,7 @@ public class UserService implements UserDetailsService {
         userAwaitActivation.setSecretCode(getRandomNumberString());
         userAwaitActivation.setCodeType(CodeType.ACTIVATION_CODE);
         userAccessManagementService.createUser(userAwaitActivation);
-        mailSenderService.sendMail(user.getEmail(),"Canban activation link","http://localhost:5555/auth/activation/?username=" + userAwaitActivation.getUsername() + "&code=" + userAwaitActivation.getSecretCode());
+        mailSenderService.sendMail(user.getEmail(),"Canban activation link","http://localhost:5555/auth/api/v1/user/access/management/activation/?username=" + userAwaitActivation.getUsername() + "&code=" + userAwaitActivation.getSecretCode());
     }
 
     private String getRandomNumberString (){

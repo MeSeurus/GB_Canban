@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/api/v1/userAccessManagement")
+@RequestMapping("/api/v1/user/access/management")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000/")
 @Tag(name = "Контроллер, отвечающий за управлением доступом пользователей", description = "Позволяет восстановить пароль, активировать пользователя ")
@@ -36,7 +36,7 @@ public class UserAccessManagementController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/recoverypassword")
+    @PostMapping("/recovery/password")
     @Operation(
             summary = "Запрос ссылки для восстановления пароля",
             description = "Позволяет пользователю выслать на email, указанный при регистрации, ссылку для восстановления пароля",
@@ -48,7 +48,7 @@ public class UserAccessManagementController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/setnewpassword")
+    @PostMapping("/set/password")
     @Operation(
             summary = "Установка нового пароля",
             description = "Позволяет пользователю установить себе новый пароль",

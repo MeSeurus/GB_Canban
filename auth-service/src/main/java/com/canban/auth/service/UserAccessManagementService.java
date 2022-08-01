@@ -90,7 +90,7 @@ public class UserAccessManagementService {
            String userEmail = userService.getEmailByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", username)));
            String passcode = getRandomNumberString();
            activationRepository.save(new UserAwaitActivation(username,passcode,CodeType.PASSWORD_REMIND_CODE));
-           mailSenderService.sendMail(userEmail,"Canban password recovery link","http://localhost:5555/auth/setnewpassword/?username=" + username + "&passcode=" + passcode);
+           mailSenderService.sendMail(userEmail,"Canban password recovery link","http://localhost:5555/auth/set/password/?username=" + username + "&passcode=" + passcode);
     }
 
     private String getRandomNumberString (){
