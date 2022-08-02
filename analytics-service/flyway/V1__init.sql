@@ -10,7 +10,7 @@ create table if not exists events_analytics (
     updated_at          timestamp default current_timestamp
 );
 
-create table if not exists tasks
+create table if not exists tasks_analytics
 (
     id                      bigserial primary key,
     task_id                 bigint not null,
@@ -30,7 +30,7 @@ insert into events_analytics (event_id, event_title, event_username, event_begin
 values (1, 'Create simple program', 'user3', '2022-06-24 01:00:00', '2022-06-24 03:00:00'),
        (2, 'Create hard program', 'user3', '2022-06-24 01:00:00', '2022-06-24 07:00:00', 'user1');
 
-insert into tasks (task_id, task_title, task_username, task_begin_date, task_end_date,task_actual_end_date, task_state, task_priority, task_kanban_name)
+insert into tasks_analytics (task_id, task_title, task_username, task_begin_date, task_end_date,task_actual_end_date, task_state, task_priority, task_kanban_name)
 values  (1, 'Create simple program', 'user3', '2022-06-24 01:00:00','2022-06-30 01:00:00', '2022-08-26 01:00:00', 'COMPLETE', 'HIGH', 'kanban1' ),
         (2, 'Create simple program2', 'user1', '2022-06-24 01:00:00', '2022-06-30 01:00:00', '', 'CREATED', 'HIGH', 'kanban1' );
 

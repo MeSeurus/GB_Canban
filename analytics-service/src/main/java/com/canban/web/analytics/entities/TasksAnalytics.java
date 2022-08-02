@@ -75,4 +75,5 @@ public class TasksAnalytics {
         this.taskPriority = taskPriority;
         this.taskKanbanName = taskKanbanName;
     }
+
 }
