@@ -39,13 +39,6 @@ public class UserService implements UserDetailsService {
         this.userAccessManagementService = userAccessManagementService;
     }
 
-//
-//    @PostConstruct
-//    private void init(){
-//        userAccessManagementService.setUserService(this);
-//    }
-//
-    
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }

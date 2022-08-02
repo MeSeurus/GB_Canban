@@ -59,6 +59,9 @@ public class UserAccessManagementController {
             }
     )
     public ResponseEntity<?> setNewPassword(@RequestBody NewPasswordDto newPasswordDto){
+        if (userAccessManagementService.findByUsername(newPasswordDto.getUsername()).isEmpty()) {
+            throw new InvalidRegistrationException("Пользователь с таким никнеймом не найден");
+        }
         if (!newPasswordDto.getNewPassword().equals(newPasswordDto.getConfirmNewPassword())){
             throw new InvalidRegistrationException("Пароли не совпадают");
         }
