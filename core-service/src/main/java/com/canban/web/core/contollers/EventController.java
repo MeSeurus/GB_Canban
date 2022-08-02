@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -81,5 +82,25 @@ public class EventController {
         eventService.removeUserFromEvent(usernameToRemove, id);
     }
 
+    @PatchMapping("change/title")
+    public void changeTitle(@RequestParam Long id, @RequestParam String title){
+        eventService.changeTitle(id, title);
+    }
+
+    @PatchMapping("change/content")
+    public void changeContent(@RequestParam Long id, @RequestParam String content){
+        eventService.changeContent(id, content);
+    }
+
+    @PatchMapping("change/begin_date")
+    public void changeBeginDate(@RequestParam Long id, @RequestParam LocalDateTime beginDate){
+        eventService.changeBeginDate(id, beginDate);
+    }
+
+    @PatchMapping("change/end_date")
+    public void changeEndDate(@RequestParam Long id, @RequestParam LocalDateTime endDate){
+        eventService.changeEndDate(id, endDate);
+    }
 
 }
+

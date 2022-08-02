@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Column;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -56,8 +59,34 @@ public class EventService {
         Set<String> users = event.getUsers();
         if(!users.remove(username)){
             return;
-        };
+        }
         event.setUsers(users);
         eventRepository.save(event);
     }
+
+    @Transactional
+    public void changeTitle(Long id, String title){
+        Event event = eventRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Unable to change Event's title. Event not found"));
+        event.setTitle(title);
+    }
+
+    @Transactional
+    public void changeContent(Long id, String content){
+        Event event = eventRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Unable to change Event's content. Event not found"));
+        event.setContent(content);
+    }
+
+
+    @Transactional
+    public void changeBeginDate(Long id, LocalDateTime beginDate){
+        Event event = eventRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Unable to change Event's begin date. Event not found"));
+        event.setBeginDate(beginDate);
+    }
+
+    @Transactional
+    public void changeEndDate(Long id, LocalDateTime endDate){
+        Event event = eventRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Unable to change Event's end date. Event not found"));
+        event.setBeginDate(endDate);
+    }
+
 }
