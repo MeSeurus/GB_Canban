@@ -14,4 +14,6 @@ public interface KanbanBoardRepository extends JpaRepository<KanbanBoard, Long> 
 
     public List<KanbanBoard> findAllByCreator(String creator);
 
+    @Query("select distinct k from KanbanBoard k join fetch k.users u where k.id in (select k.id from KanbanBoard k join k.users u where :username in u)")
+    List<KanbanBoard> findAllByUser(String username);
 }

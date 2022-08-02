@@ -26,6 +26,7 @@ public class KanbanBoardMapper {
                 .id(kanbanBoard.getId())
                 .name(kanbanBoard.getName())
                 .creator(kanbanBoard.getCreator())
+                .users(kanbanBoard.getUsers())
                 .build();
     }
 

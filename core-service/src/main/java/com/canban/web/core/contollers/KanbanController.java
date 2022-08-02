@@ -38,6 +38,12 @@ public class KanbanController {
         kanbanService.createBoard(username, kanbanBoardMapper.dtoToEntity(kanbanBoardDetailsRq));
     }
 
+    @PostMapping("/{id}/{username}")
+    public void addUserToKanbanBoard(@RequestHeader String username, @PathVariable("id") Long id, @PathVariable("username") String usernameToAdd) {
+       kanbanService.addUserToKanbanBoard(id, usernameToAdd);
+
+    }
+
 
 
 
