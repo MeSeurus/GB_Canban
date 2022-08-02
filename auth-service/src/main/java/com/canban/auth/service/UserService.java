@@ -11,6 +11,7 @@ import com.canban.auth.repository.ActivationRepository;
 import com.canban.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,17 +31,22 @@ import java.util.stream.Collectors;
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final MailSenderService mailSenderService;
-    private final UserAccessManagementService userAccessManagementService;
-
+    private UserAccessManagementService userAccessManagementService;
     /**
      * Это нужно для устранения Circular Dependency Exception
      */
-
-    @PostConstruct
-    private void init(){
-        userAccessManagementService.setUserService(this);
+    @Autowired
+    public void setUserAccessManagementService(@Lazy UserAccessManagementService userAccessManagementService) {
+        this.userAccessManagementService = userAccessManagementService;
     }
 
+//
+//    @PostConstruct
+//    private void init(){
+//        userAccessManagementService.setUserService(this);
+//    }
+//
+    
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
