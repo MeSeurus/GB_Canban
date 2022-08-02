@@ -25,17 +25,17 @@ public class Task extends AbstractEvent{
     @Column(
             name = "state"
     )
-
     @Enumerated(EnumType.STRING)
     @DefaultValue("CREATED")
-
+    @NotNull
     private State state;
+
+
     @Column(
             name = "priority"
     )
-
-
     @Enumerated(EnumType.STRING)
+    @NotNull
     @DefaultValue("NORMAL")
     private Priority priority;
 

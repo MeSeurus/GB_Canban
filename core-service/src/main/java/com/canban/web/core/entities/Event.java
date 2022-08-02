@@ -26,10 +26,6 @@ public class Event extends AbstractEvent {
     @Column(name = "username")
     private Set<String> users;
 
-    @CreationTimestamp
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
     public static EventBuilder builder() {
         return new Event.EventBuilder();
     }
