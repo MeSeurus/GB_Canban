@@ -1,17 +1,20 @@
 package com.canban.web.analytics.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
+@Builder
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "events_analytics")
 public class EventsAnalytics {
@@ -21,29 +24,21 @@ public class EventsAnalytics {
     private Long id;
 
     @Column(name = "event_id")
-    @NotNull
     private Long eventId;
 
     @Column(name = "event_title")
-    @NotNull
     private String eventTitle;
 
     @Column(name = "event_username")
     private String eventUsername;
 
     @Column(name = "event_begin_date")
-    @NotNull
     private LocalDateTime eventBeginDate;
 
     @Column(name = "event_end_date")
-    @NotNull
     private LocalDateTime eventEndDate;
 
     @ElementCollection
-    @CollectionTable(
-            name = "events_users",
-            joinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id")
-    )
     @Column(name = "added_usernames")
     private Set<String> users;
 
@@ -51,9 +46,16 @@ public class EventsAnalytics {
     @Column(name = "created_at")
     LocalDateTime createdAt;
 
-
     @UpdateTimestamp
     @Column(name = "updated_at")
     LocalDateTime updatedAt;
 
+    public EventsAnalytics(Long eventId, String eventTitle, String eventUsername, LocalDateTime eventBeginDate, LocalDateTime eventEndDate, Set<String> users) {
+        this.eventId = eventId;
+        this.eventTitle = eventTitle;
+        this.eventUsername = eventUsername;
+        this.eventBeginDate = eventBeginDate;
+        this.eventEndDate = eventEndDate;
+        this.users = users;
+    }
 }

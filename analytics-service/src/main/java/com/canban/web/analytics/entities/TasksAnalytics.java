@@ -2,19 +2,22 @@ package com.canban.web.analytics.entities;
 
 import com.canban.api.core.Priority;
 import com.canban.api.core.State;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.ws.rs.DefaultValue;
 import java.time.LocalDateTime;
 
 @Entity
+@Builder
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "tasks_analytics")
 public class TasksAnalytics {
     @Id
@@ -23,7 +26,7 @@ public class TasksAnalytics {
     private Long id;
 
     @Column(name = "task_id")
-    private String taskId;
+    private Long taskId;
 
     @Column(name = "task_title")
     private String taskTitle;
@@ -60,4 +63,16 @@ public class TasksAnalytics {
     @UpdateTimestamp
     @Column(name = "updated_at")
     LocalDateTime updatedAt;
+
+    public TasksAnalytics(Long taskId, String taskTitle, String taskUsername, LocalDateTime taskBeginDate, LocalDateTime taskEndDate, LocalDateTime taskActualEndDate, State taskState, Priority taskPriority, String taskKanbanName) {
+        this.taskId = taskId;
+        this.taskTitle = taskTitle;
+        this.taskUsername = taskUsername;
+        this.taskBeginDate = taskBeginDate;
+        this.taskEndDate = taskEndDate;
+        this.taskActualEndDate = taskActualEndDate;
+        this.taskState = taskState;
+        this.taskPriority = taskPriority;
+        this.taskKanbanName = taskKanbanName;
+    }
 }
