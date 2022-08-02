@@ -8,6 +8,8 @@ import com.canban.auth.entity.security.UserAwaitActivation;
 import com.canban.auth.entity.security.UserStatus;
 import com.canban.auth.repository.ActivationRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -22,15 +24,17 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @RequiredArgsConstructor
 public class UserAccessManagementService {
 
-    /**
-     * Это нужно для устранения Circular Dependency Exception
-     */
+//    /**
+//     * Это нужно для устранения Circular Dependency Exception
+//     */
+//    @Lazy
 
-    private UserService userService;
+    private final UserService userService;
 
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
+//    @Autowired
+//    public void setUserService(@Lazy UserService userService) {
+//        this.userService = userService;
+//    }
 
     private final JmsTemplate jmsTemplate;
     private final ActivationRepository activationRepository;
