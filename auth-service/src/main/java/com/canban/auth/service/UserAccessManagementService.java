@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -23,24 +24,16 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Service
 @RequiredArgsConstructor
 public class UserAccessManagementService {
-
-//    /**
-//     * Это нужно для устранения Circular Dependency Exception
-//     */
-//    @Lazy
-
     private final UserService userService;
-
-//    @Autowired
-//    public void setUserService(@Lazy UserService userService) {
-//        this.userService = userService;
-//    }
-
     private final JmsTemplate jmsTemplate;
     private final ActivationRepository activationRepository;
     private final MailSenderService mailSenderService;
 
     private List<User> users = new CopyOnWriteArrayList<>();
+
+    public Optional<UserAwaitActivation> findByUsername(String username) {
+        return activationRepository.findByUsername(username);
+    }
 
     @Transactional
     public boolean checkActivateKey(String username, String secretCode) {
