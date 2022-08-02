@@ -43,6 +43,9 @@ public class RegisterController {
         if (userService.findByUsername(registrationUserDto.getUsername()).isPresent()) {
             throw new InvalidRegistrationException("Пользователь с таким именем уже существует");
         }
+        if (userService.findByEmail(registrationUserDto.getEmail()).isPresent()) {
+            throw new InvalidRegistrationException("Пользователь с таким email уже существует");
+        }
         userValidator.validate(registrationUserDto);
         registrationUserDto.setPassword(passwordEncoder.encode(registrationUserDto.getPassword()));
         userService.createUser(userMapper.dtoToEntity(registrationUserDto,List.of(roleService.getUserRole())));
