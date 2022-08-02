@@ -9,9 +9,6 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @Schema(description = "Модель события для сервиса аналитики")
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
 public class EventsAnalyticsDto {
 
     @Schema(description = "ID события", required = true, example = "1")
@@ -32,4 +29,63 @@ public class EventsAnalyticsDto {
     @Schema(description = "Пользователи, которые имеют доступ к событию", required = true, example = "user2, user3")
     private Set<String> users;
 
+    public EventsAnalyticsDto() {
+    }
+
+    public EventsAnalyticsDto(Long eventId, String eventTitle, String eventUsername, LocalDateTime eventBeginDate, LocalDateTime eventEndDate, Set<String> users) {
+        this.eventId = eventId;
+        this.eventTitle = eventTitle;
+        this.eventUsername = eventUsername;
+        this.eventBeginDate = eventBeginDate;
+        this.eventEndDate = eventEndDate;
+        this.users = users;
+    }
+
+    public Long getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(Long eventId) {
+        this.eventId = eventId;
+    }
+
+    public String getEventTitle() {
+        return eventTitle;
+    }
+
+    public void setEventTitle(String eventTitle) {
+        this.eventTitle = eventTitle;
+    }
+
+    public String getEventUsername() {
+        return eventUsername;
+    }
+
+    public void setEventUsername(String eventUsername) {
+        this.eventUsername = eventUsername;
+    }
+
+    public LocalDateTime getEventBeginDate() {
+        return eventBeginDate;
+    }
+
+    public void setEventBeginDate(LocalDateTime eventBeginDate) {
+        this.eventBeginDate = eventBeginDate;
+    }
+
+    public LocalDateTime getEventEndDate() {
+        return eventEndDate;
+    }
+
+    public void setEventEndDate(LocalDateTime eventEndDate) {
+        this.eventEndDate = eventEndDate;
+    }
+
+    public Set<String> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<String> users) {
+        this.users = users;
+    }
 }

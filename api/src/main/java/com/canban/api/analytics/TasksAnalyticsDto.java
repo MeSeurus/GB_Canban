@@ -10,9 +10,6 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Schema(description = "Модель события для сервиса аналитики")
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
 public class TasksAnalyticsDto {
 
     @Schema(description = "ID задачи", required = true, example = "1")
@@ -42,4 +39,90 @@ public class TasksAnalyticsDto {
     @Schema(description = "Имя канбан-доски задачи", required = true, example = "HIGH")
     private String taskKanbanName;
 
+    public TasksAnalyticsDto(Long taskId, String taskTitle, String taskUsername, LocalDateTime taskBeginDate, LocalDateTime taskEndDate, LocalDateTime taskActualEndDate, State taskState, Priority taskPriority, String taskKanbanName) {
+        this.taskId = taskId;
+        this.taskTitle = taskTitle;
+        this.taskUsername = taskUsername;
+        this.taskBeginDate = taskBeginDate;
+        this.taskEndDate = taskEndDate;
+        this.taskActualEndDate = taskActualEndDate;
+        this.taskState = taskState;
+        this.taskPriority = taskPriority;
+        this.taskKanbanName = taskKanbanName;
+    }
+
+    public TasksAnalyticsDto() {
+    }
+
+    public Long getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(Long taskId) {
+        this.taskId = taskId;
+    }
+
+    public String getTaskTitle() {
+        return taskTitle;
+    }
+
+    public void setTaskTitle(String taskTitle) {
+        this.taskTitle = taskTitle;
+    }
+
+    public String getTaskUsername() {
+        return taskUsername;
+    }
+
+    public void setTaskUsername(String taskUsername) {
+        this.taskUsername = taskUsername;
+    }
+
+    public LocalDateTime getTaskBeginDate() {
+        return taskBeginDate;
+    }
+
+    public void setTaskBeginDate(LocalDateTime taskBeginDate) {
+        this.taskBeginDate = taskBeginDate;
+    }
+
+    public LocalDateTime getTaskEndDate() {
+        return taskEndDate;
+    }
+
+    public void setTaskEndDate(LocalDateTime taskEndDate) {
+        this.taskEndDate = taskEndDate;
+    }
+
+    public LocalDateTime getTaskActualEndDate() {
+        return taskActualEndDate;
+    }
+
+    public void setTaskActualEndDate(LocalDateTime taskActualEndDate) {
+        this.taskActualEndDate = taskActualEndDate;
+    }
+
+    public State getTaskState() {
+        return taskState;
+    }
+
+    public void setTaskState(State taskState) {
+        this.taskState = taskState;
+    }
+
+    public Priority getTaskPriority() {
+        return taskPriority;
+    }
+
+    public void setTaskPriority(Priority taskPriority) {
+        this.taskPriority = taskPriority;
+    }
+
+    public String getTaskKanbanName() {
+        return taskKanbanName;
+    }
+
+    public void setTaskKanbanName(String taskKanbanName) {
+        this.taskKanbanName = taskKanbanName;
+    }
 }
