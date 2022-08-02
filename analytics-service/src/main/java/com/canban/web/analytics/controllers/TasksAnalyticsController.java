@@ -17,9 +17,4 @@ public class TasksAnalyticsController {
 
     private final TasksAnalyticsService tasksAnalyticsService;
 
-    @PostMapping
-    public void addEventsAnalytics(@RequestBody List<TasksAnalyticsDto> tasksAnalyticsDtoList) {
-        tasksAnalyticsService.addTasksAnalytics(tasksAnalyticsDtoList);
-    }
-
 }

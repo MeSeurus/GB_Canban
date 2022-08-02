@@ -1,6 +1,6 @@
 package com.canban.web.chat.exceptions;
 
-import com.canban.api.exceptions.AppError;
+import com.canban.api.errors.AppError;
 import com.canban.api.exceptions.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

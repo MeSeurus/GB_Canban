@@ -24,7 +24,7 @@ public class EventsAnalyticsService {
 
     private final EventsAnalyticsMapper eventsAnalyticsMapper;
 
-    @Scheduled(fixedRate = 30000) // не помню надо читать
+    @Scheduled(fixedRate = 3600000) // 3600000 - час, время в миллисекундах
     @Transactional
     public void askCoreForEventsAnalytics() {
         EventsAnalyticsDtoWithList eventsAnalyticsDtoWithList = coreIntegration.getEventsAnalyticsFromCore();

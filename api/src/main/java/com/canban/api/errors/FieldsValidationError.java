@@ -1,4 +1,4 @@
-package com.canban.api.exceptions;
+package com.canban.api.errors;
 
 import java.util.List;
 

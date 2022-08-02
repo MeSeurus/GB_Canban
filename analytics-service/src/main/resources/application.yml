@@ -28,7 +28,7 @@ spring:
     hibernate:
       ddl-auto: none
   application:
-    name: core-service
+    name: analytics-service
 
 eureka:
   instance:
