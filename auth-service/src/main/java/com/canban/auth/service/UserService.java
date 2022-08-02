@@ -20,7 +20,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Random;
@@ -49,6 +48,9 @@ public class UserService implements UserDetailsService {
     
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     @Override

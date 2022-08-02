@@ -5,18 +5,20 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
+
+import static com.canban.auth.cnst.RegexConst.VALIDATE_EMAIL;
+import static com.canban.auth.cnst.RegexConst.VALIDATE_PASSWORD;
 
 @Component
 @RequiredArgsConstructor
 public class UserValidator {
 
-    public static boolean patternMatches(String emailAddress) {
-        String regexPattern = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+(?:\\.[a-zA-Z0-9_!#$%&'* +/=?`{|}~^-]+)*@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$";
-        return Pattern.compile(regexPattern)
-                .matcher(emailAddress)
-                .matches();
-    }
+//    public static boolean patternMatches(String emailAddress) {
+//        String regexPattern = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+(?:\\.[a-zA-Z0-9_!#$%&'* +/=?`{|}~^-]+)*@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$";
+//        return Pattern.compile(regexPattern)
+//                .matcher(emailAddress)
+//                .matches();
+//    }
 
     public void validate(RegistrationUserDto registrationUserDto) {
         List<String> errors = new ArrayList<>();
@@ -32,13 +34,13 @@ public class UserValidator {
         if (registrationUserDto.getLastName().isEmpty()) {
             errors.add("Поле фамилия не должно быть пустым");
         }
-        if (registrationUserDto.getPassword().length() < 8) {
+        if (!registrationUserDto.getPassword().matches(VALIDATE_PASSWORD)) {
             errors.add("Пароль должен содержать минимум 8 символов");
         }
         if (registrationUserDto.getPassword().equals(registrationUserDto.getUsername())) {
             errors.add("Пароль не должен совпадать с именем пользователя");
         }
-        if (!patternMatches(registrationUserDto.getEmail())) {
+        if (!registrationUserDto.getEmail().matches(VALIDATE_EMAIL)) {
             errors.add("Введите корректный адрес электронной почты");
         }
         if (!errors.isEmpty()) {

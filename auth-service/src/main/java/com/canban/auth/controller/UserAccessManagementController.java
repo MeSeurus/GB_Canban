@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import static com.canban.auth.cnst.RegexConst.VALIDATE_PASSWORD;
+
 
 @RestController
 @RequestMapping("/api/v1/user/access/management")
@@ -60,7 +62,7 @@ public class UserAccessManagementController {
         if (!newPasswordDto.getNewPassword().equals(newPasswordDto.getConfirmNewPassword())){
             throw new InvalidRegistrationException("Пароли не совпадают");
         }
-        if (newPasswordDto.getNewPassword().length() < 8){
+        if (newPasswordDto.getNewPassword().matches(VALIDATE_PASSWORD)){
             throw new InvalidRegistrationException("Пароль не должен быть меньше 8 символов");
         }
         userAccessManagementService.setNewPassword(newPasswordDto.getUsername(),passwordEncoder.encode(newPasswordDto.getNewPassword()),newPasswordDto.getPasswordCode());
