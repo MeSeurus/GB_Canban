@@ -1,6 +1,6 @@
 package com.canban.web.core.entities;
-import com.canban.web.core.enums.Priority;
-import com.canban.web.core.enums.State;
+import com.canban.api.core.Priority;
+import com.canban.api.core.State;
 import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

@@ -2,8 +2,8 @@ package com.canban.web.core.mapper;
 
 import com.canban.api.core.TaskDto;
 import com.canban.web.core.entities.Task;
-import com.canban.web.core.enums.Priority;
-import com.canban.web.core.enums.State;
+import com.canban.api.core.Priority;
+import com.canban.api.core.State;
 import org.springframework.stereotype.Component;
 @Component
 public class TaskMapper {
