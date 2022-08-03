@@ -34,6 +34,13 @@ public class TasksAnalytics {
     @Column(name = "task_username")
     private String taskUsername;
 
+    // ниже не будущее
+//    @Column(name = "task_username_creator")
+//    private String taskUserCreator;
+//
+//    @Column(name = "task_username_executor")
+//    private String taskUserExecutor;
+
     @Column(name = "task_begin_date")
     private LocalDateTime taskBeginDate;
 
