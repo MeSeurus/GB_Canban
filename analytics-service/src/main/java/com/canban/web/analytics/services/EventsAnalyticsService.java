@@ -54,4 +54,12 @@ public class EventsAnalyticsService {
     public Optional<EventsAnalytics> getTheShortestEventLastWeek() {
         return eventsAnalyticsRepository.getTheShortestEventForLastWeek();
     }
+
+    public Integer getCountOfEventsLastWeek() {
+        return eventsAnalyticsRepository.getCountOfEventsForLastWeek();
+    }
+
+    public Integer getCountOfEventsLastMonth() {
+        return eventsAnalyticsRepository.getCountOfEventsForLastMonth();
+    }
 }

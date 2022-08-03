@@ -42,4 +42,20 @@ public interface EventsAnalyticsRepository extends JpaRepository<EventsAnalytics
             nativeQuery = true
     )
     Optional<EventsAnalytics> getTheShortestEventForLastWeek();
+
+
+    @Query(
+            value = "select count(*) from events_analytics " +
+                    "where (CURRENT_DATE -  event_begin_date) < '1 MONTH'",
+            nativeQuery = true
+    )
+    Integer getCountOfEventsForLastMonth();
+
+    @Query(
+            value = "select count(*) from events_analytics " +
+                    "where (CURRENT_DATE -  event_begin_date) < '1 WEEK'",
+            nativeQuery = true
+    )
+    Integer getCountOfEventsForLastWeek();
+
 }
