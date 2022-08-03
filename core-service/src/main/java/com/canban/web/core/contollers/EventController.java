@@ -84,23 +84,23 @@ public class EventController {
     }
 
     @PatchMapping("/change/title")
-    public void changeTitle(@RequestBody Event requestBody){
+    public void changeTitle(@RequestBody EventDto requestBody){
 
         eventService.changeTitle(requestBody.getId(), requestBody.getTitle());
     }
 
     @PatchMapping("/change/content")
-    public void changeContent(@RequestBody Event requestBody){
+    public void changeContent(@RequestBody EventDto requestBody){
         eventService.changeContent(requestBody.getId(), requestBody.getContent());
     }
 
     @PatchMapping("/change/begin_date")
-    public void changeBeginDate(@RequestBody Event requestBody){
+    public void changeBeginDate(@RequestBody EventDto requestBody){
         eventService.changeBeginDate(requestBody.getId(), requestBody.getBeginDate());
     }
 
     @PatchMapping("/change/end_date")
-    public void changeEndDate(@RequestBody Event requestBody){
+    public void changeEndDate(@RequestBody EventDto requestBody){
         eventService.changeEndDate(requestBody.getId(), requestBody.getEndDate());
     }
 

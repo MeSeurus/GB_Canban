@@ -64,49 +64,49 @@ public class TaskController {
     }
 
     @PatchMapping("/change/title")
-    public void changeTitle(@RequestBody Task requestBody){
+    public void changeTitle(@RequestBody TaskDto requestBody){
 
         taskService.changeTitle(requestBody.getId(), requestBody.getContent());
     }
 
     @PatchMapping("/change/content")
-    public void changeContent(@RequestBody Task requestBody){
+    public void changeContent(@RequestBody TaskDto requestBody){
         taskService.changeContent(requestBody.getId(), requestBody.getContent());
     }
 
     @PatchMapping("/change/username")
-    public void changeUsername(@RequestBody Task requestBody){
+    public void changeUsername(@RequestBody TaskDto requestBody){
         taskValidator.validateUser(requestBody.getId(), requestBody.getContent());
         taskService.changeUsername(requestBody.getId(), requestBody.getContent());
     }
 
     @PatchMapping("/change/begin_date")
-    public void changeBeginDate(@RequestBody Task requestBody){
+    public void changeBeginDate(@RequestBody TaskDto requestBody){
         taskService.changeBeginDate(requestBody.getId(), requestBody.getBeginDate());
     }
 
     @PatchMapping("/change/end_date")
-    public void changeEndDate(@RequestBody Task requestBody){
+    public void changeEndDate(@RequestBody TaskDto requestBody){
         taskService.changeEndDate(requestBody.getId(), requestBody.getEndDate());
     }
 
     @PatchMapping("/change/state")
-    public void changeState(@RequestBody Task requestBody){
-        taskService.changeState(requestBody.getId(), requestBody.getState());
+    public void changeState(@RequestBody TaskDto requestBody){
+        taskService.changeState(requestBody.getId(), State.valueOf(requestBody.getState()));
     }
 
     @PatchMapping("/change/priority")
-    public void changePriority(@RequestBody Task requestBody){
-        taskService.changePriority(requestBody.getId(), requestBody.getPriority());
+    public void changePriority(@RequestBody TaskDto requestBody){
+        taskService.changePriority(requestBody.getId(), Priority.valueOf(requestBody.getPriority()));
     }
 
     @PatchMapping("/change/actual_end_date")
-    public void changeActualEndDate(@RequestBody Task requestBody){
+    public void changeActualEndDate(@RequestBody TaskDto requestBody){
         taskService.changeActualEndDate(requestBody.getId(), requestBody.getBeginDate());
     }
 
     @PatchMapping("/change/kanban_name")
-    public void changeKanbanName(@RequestBody Task requestBody){
+    public void changeKanbanName(@RequestBody TaskDto requestBody){
         taskService.changeKanbanName(requestBody.getId(), requestBody.getKanbanName());
     }
 }
