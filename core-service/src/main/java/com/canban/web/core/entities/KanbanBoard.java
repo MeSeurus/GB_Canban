@@ -6,6 +6,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "kanban_boards")
@@ -17,15 +18,23 @@ import java.time.LocalDateTime;
 public class KanbanBoard {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
     @Column(name = "name")
     private String name;
 
-    @Column(name = "creator")
-    private String creator;
+    @Column(name = "created_by")
+    private String createdBy;
+
+    @ElementCollection
+    @CollectionTable(
+            name = "kanban_boards_users",
+            joinColumns = @JoinColumn(name = "kanban_board_id", referencedColumnName = "id")
+    )
+    @Column(name = "username")
+    private Set<String> users;
 
     @CreationTimestamp
     @Column(name = "created_at")

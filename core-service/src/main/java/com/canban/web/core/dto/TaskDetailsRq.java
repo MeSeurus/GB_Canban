@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Data
 
 public class TaskDetailsRq {
+
     @Schema(description = "Название задачи", required = true)
     private String title;
 
@@ -33,7 +34,9 @@ public class TaskDetailsRq {
     @Schema(description = "Приоритет задачи")
     private Priority priority;
 
-    @Schema(description = "Имя kanban доски")
-    private String kanbanName;
+    @Schema(description = "ID kanban доски")
+    private Long kanbanBoardId;
+
+
 }
 

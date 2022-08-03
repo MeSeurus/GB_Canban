@@ -19,7 +19,7 @@ public class TaskMapper {
                 task.getActualEndDate(),
                 task.getState().toString(),
                 task.getPriority().toString(),
-                task.getKanbanName()
+                task.getKanbanBoardId()
         );
     }
 
@@ -32,6 +32,6 @@ public class TaskMapper {
                 .actualEndDate(taskDto.getActualEndDate())
                 .state(State.valueOf(taskDto.getState()))
                 .priority(Priority.valueOf(taskDto.getPriority()))
-                .kanbanName(taskDto.getKanbanName()).build();
+                .kanbanBoardId(taskDto.getKanbanBoardId()).build();
     }
 }

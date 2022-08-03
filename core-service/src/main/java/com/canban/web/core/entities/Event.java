@@ -1,8 +1,9 @@
 package com.canban.web.core.entities;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,9 +13,7 @@ import java.util.Set;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(name = "events")
 @AllArgsConstructor
-@Builder
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class Event extends AbstractEvent {
 
@@ -35,7 +34,8 @@ public class Event extends AbstractEvent {
                  String content,
                  String username,
                  LocalDateTime beginDate,
-                 LocalDateTime endDate
+                 LocalDateTime endDate,
+                 Set<String> users
     ) {
         this.id = id;
         this.title = title;
@@ -43,6 +43,8 @@ public class Event extends AbstractEvent {
         this.username = username;
         this.beginDate = beginDate;
         this.endDate = endDate;
+        this.users = users;
+
     }
 
     public static class EventBuilder {
@@ -52,6 +54,7 @@ public class Event extends AbstractEvent {
         private String username;
         private LocalDateTime beginDate;
         private LocalDateTime endDate;
+        private Set<String> users;
 
         EventBuilder() {
         }
@@ -86,15 +89,13 @@ public class Event extends AbstractEvent {
             return this;
         }
 
+        public Event.EventBuilder users(final Set<String> users) {
+            this.users = users;
+            return this;
+        }
+
         public Event build() {
-            return new Event(
-                    this.id,
-                    this.title,
-                    this.content,
-                    this.username,
-                    this.beginDate,
-                    this.endDate
-            );
+            return new Event(this.id, this.title, this.content, this.username, this.beginDate, this.endDate, this.users);
         }
     }
 }

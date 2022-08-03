@@ -22,7 +22,7 @@ public class TaskValidator {
         if (taskDetailsRq.getTitle() != null && taskDetailsRq.getTitle().isBlank()) {
             errors.add("Название задачи должно быть указано.");
         }
-        if (taskDetailsRq.getKanbanName() == null || taskDetailsRq.getKanbanName().isBlank()) {
+        if (taskDetailsRq.getKanbanBoardId() == null || taskDetailsRq.getKanbanBoardId().equals(0L)) {
             errors.add("Рабочее пространство задачи должно быть указано.");
         }
         if (taskDetailsRq.getBeginDate() == null) {

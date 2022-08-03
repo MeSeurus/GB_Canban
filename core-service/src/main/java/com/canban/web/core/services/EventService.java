@@ -28,6 +28,7 @@ public class EventService {
                 .username(username)
                 .beginDate(eventDetailsRq.getBeginDate())
                 .endDate(eventDetailsRq.getEndDate())
+                .users(Set.of(username))
                 .build();
         eventRepository.save(event);
     }
