@@ -1,6 +1,7 @@
 package com.canban.web.analytics.controllers;
 
 import com.canban.api.analytics.EventsAnalyticsDto;
+import com.canban.api.exceptions.ResourceNotFoundException;
 import com.canban.web.analytics.mappers.EventsAnalyticsMapper;
 import com.canban.web.analytics.services.EventsAnalyticsService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,9 +20,26 @@ public class EventsAnalyticsController {
 
     private final EventsAnalyticsMapper eventsAnalyticsMapper;
 
-    @GetMapping
-    public EventsAnalyticsDto getTheLongest() {
-        return eventsAnalyticsMapper.entityToDto(eventsAnalyticsService.getTheLongestEvent());
+    /**
+     * Самый длинный ивент за последний месяц
+     * @return EventsAnalyticsDto
+     */
+    @GetMapping("/month")
+    public EventsAnalyticsDto getTheLongestForLastMonth() {
+        return eventsAnalyticsMapper.entityToDto(
+                eventsAnalyticsService.getTheLongestEventLastMonth()
+                        .orElseThrow(() -> new ResourceNotFoundException("За последний месяц не было ивентов")));
+    }
+
+    /**
+     * Самый длинный ивент за последнюю неделю
+     * @return EventsAnalyticsDto
+     */
+    @GetMapping("/week")
+    public EventsAnalyticsDto getTheLongestForLastWeek() {
+        return eventsAnalyticsMapper.entityToDto(
+                eventsAnalyticsService.getTheLongestEventLastWeek()
+                        .orElseThrow(() -> new ResourceNotFoundException("За последнюю неделю не было ивентов")));
     }
 
 }
