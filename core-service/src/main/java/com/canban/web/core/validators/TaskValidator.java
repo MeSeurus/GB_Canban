@@ -1,6 +1,5 @@
 package com.canban.web.core.validators;
 
-import com.canban.api.core.TaskDto;
 import com.canban.api.exceptions.ResourceNotFoundException;
 import com.canban.api.exceptions.ValidationException;
 import com.canban.web.core.dto.TaskDetailsRq;
@@ -32,32 +31,28 @@ public class TaskValidator {
         if (taskDetailsRq.getEndDate() == null) {
             errors.add("Дата завершения задачи должна быть указана.");
         }
-        if (taskDetailsRq.getBeginDate().compareTo(taskDetailsRq.getEndDate()) >= 0 ){
+        if (taskDetailsRq.getBeginDate().compareTo(taskDetailsRq.getEndDate()) >= 0) {
             errors.add("Дата начала задачи должна быть раньше даты окончания.");
         }
         LocalDateTime now = LocalDateTime.now();
-        if(now.compareTo(taskDetailsRq.getEndDate()) >= 0 ){
+        if (now.compareTo(taskDetailsRq.getEndDate()) >= 0) {
             errors.add("Дата завершения задачи должна быть позже текущего времени.");
         }
-
-
 
         if (!errors.isEmpty()) {
             throw new ValidationException(errors);
         }
     }
 
-    public void validateUser(Long id, String UserName){
+    public void validateUser(Long id) {
         List<String> errors = new ArrayList<>();
 
-        Task task = taskRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Unable to change task's username."));
-        if (task.getState() != State.CREATED){
+        Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change task's username."));
+        if (task.getState() != State.CREATED) {
             errors.add("Ошибка. Исполнитель может быть изменен только в статусе СОЗДАНО ");
         }
         if (!errors.isEmpty()) {
             throw new ValidationException(errors);
         }
-
     }
-
 }

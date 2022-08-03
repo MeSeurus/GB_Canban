@@ -43,7 +43,6 @@ public class Event extends AbstractEvent {
         this.username = username;
         this.beginDate = beginDate;
         this.endDate = endDate;
-
     }
 
     public static class EventBuilder {
@@ -55,7 +54,6 @@ public class Event extends AbstractEvent {
         private LocalDateTime endDate;
 
         EventBuilder() {
-
         }
 
         public Event.EventBuilder id(final Long id) {
@@ -89,9 +87,15 @@ public class Event extends AbstractEvent {
         }
 
         public Event build() {
-            return new Event(this.id, this.title, this.content, this.username, this.beginDate, this.endDate);
+            return new Event(
+                    this.id,
+                    this.title,
+                    this.content,
+                    this.username,
+                    this.beginDate,
+                    this.endDate
+            );
         }
-
     }
 }
 

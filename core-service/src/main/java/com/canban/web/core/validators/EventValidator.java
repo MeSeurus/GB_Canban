@@ -14,7 +14,6 @@ public class EventValidator {
     public void validate(EventDetailsRq eventDetailsRq) {
         List<String> errors = new ArrayList<>();
 
-
         if (eventDetailsRq.getTitle() == null || eventDetailsRq.getTitle().isBlank()) {
             errors.add("Название события должно быть указано.");
         }
@@ -22,20 +21,22 @@ public class EventValidator {
         if (eventDetailsRq.getBeginDate() == null) {
             errors.add("Дата проведения события должна быть указана.");
         }
+
         if (eventDetailsRq.getEndDate() == null) {
             errors.add("Дата окончания события должна быть указана.");
         }
 
-        if (eventDetailsRq.getBeginDate().compareTo(eventDetailsRq.getEndDate()) >= 0 ){
+        if (eventDetailsRq.getBeginDate().compareTo(eventDetailsRq.getEndDate()) >= 0) {
             errors.add("Дата начала события должна быть раньше даты окончания.");
         }
+
         LocalDateTime now = LocalDateTime.now();
-        if(now.compareTo(eventDetailsRq.getEndDate()) >= 0 ){
+        if (now.compareTo(eventDetailsRq.getEndDate()) >= 0) {
             errors.add("Дата завершения задачи должна быть позже текущего времени.");
         }
+
         if (!errors.isEmpty()) {
             throw new ValidationException(errors);
         }
     }
-
 }

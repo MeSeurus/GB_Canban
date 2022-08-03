@@ -1,22 +1,23 @@
 package com.canban.web.core.entities;
+
 import com.canban.web.core.enums.Priority;
 import com.canban.web.core.enums.State;
 import lombok.*;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.DefaultValue;
 import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "tasks")
 @AllArgsConstructor
 @Getter
 @Setter
 @NoArgsConstructor
-
-
 @ToString
 
-public class Task extends AbstractEvent{
+public class Task extends AbstractEvent {
     @Column(
             name = "actual_end_date"
     )
@@ -29,7 +30,6 @@ public class Task extends AbstractEvent{
     @DefaultValue("CREATED")
     @NotNull
     private State state;
-
 
     @Column(
             name = "priority"
@@ -50,21 +50,19 @@ public class Task extends AbstractEvent{
                 String content,
                 String username,
                 LocalDateTime beginDate,
-                LocalDateTime dueDate,
+                LocalDateTime endDate,
                 LocalDateTime actualEndDate,
                 State state,
                 Priority priority,
-                String kanbanName ) {
+                String kanbanName) {
 
         this.id = id;
         this.title = title;
         this.content = content;
         this.username = username;
         this.beginDate = beginDate;
-
-        this.endDate = dueDate;
+        this.endDate = endDate;
         this.actualEndDate = actualEndDate;
-
         this.state = state;
         this.priority = priority;
         this.kanbanName = kanbanName;
@@ -74,36 +72,36 @@ public class Task extends AbstractEvent{
         return new TaskBuilder();
     }
 
-
     public static class TaskBuilder {
         private Long id;
         private String title;
         private String content;
         private String username;
         private LocalDateTime beginDate;
-
         private LocalDateTime endDate;
         private LocalDateTime actualEndDate;
         private State state;
         private Priority priority;
         private String kanbanName;
 
-
-
         private TaskBuilder() {
         }
+
         public TaskBuilder id(final Long id) {
             this.id = id;
             return this;
         }
+
         public TaskBuilder title(final String title) {
             this.title = title;
             return this;
         }
+
         public TaskBuilder content(final String content) {
             this.content = content;
             return this;
         }
+
         public TaskBuilder username(final String username) {
             this.username = username;
             return this;
@@ -128,6 +126,7 @@ public class Task extends AbstractEvent{
             this.state = state;
             return this;
         }
+
         public Task.TaskBuilder priority(final Priority priority) {
             this.priority = priority;
             return this;
@@ -151,8 +150,6 @@ public class Task extends AbstractEvent{
                     this.state,
                     this.priority,
                     this.kanbanName);
-
         }
-
     }
 }

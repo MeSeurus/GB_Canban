@@ -20,9 +20,6 @@ public class EventDetailsRq {
     @Schema(description = "Дата назначения события")
     private LocalDateTime beginDate;
 
-
     @Schema(description = "Дата окончания события")
     private LocalDateTime endDate;
-
 }
-

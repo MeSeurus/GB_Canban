@@ -8,10 +8,8 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
-
 @Schema(description = "Модель деталей задачи")
 @Data
-
 
 public class TaskDetailsRq {
     @Schema(description = "Название задачи", required = true)
@@ -21,7 +19,7 @@ public class TaskDetailsRq {
     private String content;
 
     @Schema(description = "Дата начала задачи")
-    LocalDateTime beginDate;
+    private LocalDateTime beginDate;
 
     @Schema(description = "Срок выполнения задачи")
     private LocalDateTime endDate;
@@ -37,7 +35,5 @@ public class TaskDetailsRq {
 
     @Schema(description = "Имя kanban доски")
     private String kanbanName;
-
-
 }
 
