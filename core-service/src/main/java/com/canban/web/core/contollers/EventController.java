@@ -2,6 +2,7 @@ package com.canban.web.core.contollers;
 
 import com.canban.api.core.EventDto;
 import com.canban.web.core.dto.EventDetailsRq;
+import com.canban.web.core.entities.Event;
 import com.canban.web.core.mapper.EventMapper;
 import com.canban.web.core.services.EventService;
 import com.canban.web.core.validators.EventValidator;
@@ -83,23 +84,24 @@ public class EventController {
     }
 
     @PatchMapping("/change/title")
-    public void changeTitle(@RequestBody Long id, @RequestBody String title){
-        eventService.changeTitle(id, title);
+    public void changeTitle(@RequestBody Event requestBody){
+
+        eventService.changeTitle(requestBody.getId(), requestBody.getTitle());
     }
 
     @PatchMapping("/change/content")
-    public void changeContent(@RequestBody Long id, @RequestBody String content){
-        eventService.changeContent(id, content);
+    public void changeContent(@RequestBody Event requestBody){
+        eventService.changeContent(requestBody.getId(), requestBody.getContent());
     }
 
     @PatchMapping("/change/begin_date")
-    public void changeBeginDate(@RequestBody Long id, @RequestBody LocalDateTime beginDate){
-        eventService.changeBeginDate(id, beginDate);
+    public void changeBeginDate(@RequestBody Event requestBody){
+        eventService.changeBeginDate(requestBody.getId(), requestBody.getBeginDate());
     }
 
     @PatchMapping("/change/end_date")
-    public void changeEndDate(@RequestBody Long id, @RequestBody LocalDateTime endDate){
-        eventService.changeEndDate(id, endDate);
+    public void changeEndDate(@RequestBody Event requestBody){
+        eventService.changeEndDate(requestBody.getId(), requestBody.getEndDate());
     }
 
 }

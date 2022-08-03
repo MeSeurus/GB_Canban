@@ -2,6 +2,7 @@ package com.canban.web.core.contollers;
 
 import com.canban.api.core.TaskDto;
 import com.canban.web.core.dto.TaskDetailsRq;
+import com.canban.web.core.entities.Task;
 import com.canban.web.core.enums.Priority;
 import com.canban.web.core.enums.State;
 import com.canban.web.core.mapper.TaskMapper;
@@ -63,48 +64,49 @@ public class TaskController {
     }
 
     @PatchMapping("/change/title")
-    public void changeTitle(@RequestBody Long id, @RequestBody String title){
-        taskService.changeTitle(id, title);
+    public void changeTitle(@RequestBody Task requestBody){
+
+        taskService.changeTitle(requestBody.getId(), requestBody.getContent());
     }
 
     @PatchMapping("/change/content")
-    public void changeContent(@RequestBody Long id, @RequestBody String content){
-        taskService.changeContent(id, content);
+    public void changeContent(@RequestBody Task requestBody){
+        taskService.changeContent(requestBody.getId(), requestBody.getContent());
     }
 
     @PatchMapping("/change/username")
-    public void changeUsername(@RequestParam Long id, @RequestParam String username){
-        taskValidator.validateUser(id, username);
-        taskService.changeUsername(id, username);
+    public void changeUsername(@RequestBody Task requestBody){
+        taskValidator.validateUser(requestBody.getId(), requestBody.getContent());
+        taskService.changeUsername(requestBody.getId(), requestBody.getContent());
     }
 
     @PatchMapping("/change/begin_date")
-    public void changeBeginDate(@RequestBody Long id, @RequestBody LocalDateTime beginDate){
-        taskService.changeBeginDate(id, beginDate);
+    public void changeBeginDate(@RequestBody Task requestBody){
+        taskService.changeBeginDate(requestBody.getId(), requestBody.getBeginDate());
     }
 
     @PatchMapping("/change/end_date")
-    public void changeEndDate(@RequestBody Long id, @RequestBody LocalDateTime endDate){
-        taskService.changeEndDate(id, endDate);
+    public void changeEndDate(@RequestBody Task requestBody){
+        taskService.changeEndDate(requestBody.getId(), requestBody.getEndDate());
     }
 
     @PatchMapping("/change/state")
-    public void changeEndDate(@RequestBody Long id, @RequestBody State state){
-        taskService.changeState(id, state);
+    public void changeState(@RequestBody Task requestBody){
+        taskService.changeState(requestBody.getId(), requestBody.getState());
     }
 
     @PatchMapping("/change/priority")
-    public void changePriority(@RequestBody Long id, @RequestBody Priority priority){
-        taskService.changePriority(id, priority);
+    public void changePriority(@RequestBody Task requestBody){
+        taskService.changePriority(requestBody.getId(), requestBody.getPriority());
     }
 
     @PatchMapping("/change/actual_end_date")
-    public void changeActualEndDate(@RequestBody Long id, @RequestBody LocalDateTime beginDate){
-        taskService.changeActualEndDate(id, beginDate);
+    public void changeActualEndDate(@RequestBody Task requestBody){
+        taskService.changeActualEndDate(requestBody.getId(), requestBody.getBeginDate());
     }
 
     @PatchMapping("/change/kanban_name")
-    public void changeKanbanName(@RequestBody Long id, @RequestBody String kanbanName){
-        taskService.changeKanbanName(id, kanbanName);
+    public void changeKanbanName(@RequestBody Task requestBody){
+        taskService.changeKanbanName(requestBody.getId(), requestBody.getKanbanName());
     }
 }
