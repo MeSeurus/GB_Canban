@@ -2,6 +2,7 @@ package com.canban.web.core.contollers;
 
 import com.canban.api.core.EventDto;
 import com.canban.web.core.dto.EventDetailsRq;
+import com.canban.web.core.entities.Event;
 import com.canban.web.core.mapper.EventMapper;
 import com.canban.web.core.services.EventService;
 import com.canban.web.core.validators.EventValidator;
@@ -14,6 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,7 +57,6 @@ public class EventController {
     public void createEvent(@RequestHeader @Parameter(description = "Список пользователей", required = true) String username, @RequestBody EventDetailsRq eventDetailsRq) {
         eventValidator.validate(eventDetailsRq);
         eventService.createEvent(username, eventDetailsRq);
-
     }
 
     @DeleteMapping("/{id}")
@@ -81,5 +82,23 @@ public class EventController {
         eventService.removeUserFromEvent(usernameToRemove, id);
     }
 
+    @PatchMapping("/change/title")
+    public void changeTitle(@RequestBody EventDto requestBody) {
+        eventService.changeTitle(requestBody.getId(), requestBody.getTitle());
+    }
 
+    @PatchMapping("/change/content")
+    public void changeContent(@RequestBody EventDto requestBody) {
+        eventService.changeContent(requestBody.getId(), requestBody.getContent());
+    }
+
+    @PatchMapping("/change/begin_date")
+    public void changeBeginDate(@RequestBody EventDto requestBody) {
+        eventService.changeBeginDate(requestBody.getId(), requestBody.getBeginDate());
+    }
+
+    @PatchMapping("/change/end_date")
+    public void changeEndDate(@RequestBody EventDto requestBody) {
+        eventService.changeEndDate(requestBody.getId(), requestBody.getEndDate());
+    }
 }

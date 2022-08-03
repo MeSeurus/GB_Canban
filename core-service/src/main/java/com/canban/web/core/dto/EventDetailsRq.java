@@ -18,12 +18,8 @@ public class EventDetailsRq {
     private String content;
 
     @Schema(description = "Дата назначения события")
-    LocalDateTime beginDate; //дата назначения события
-
+    private LocalDateTime beginDate;
 
     @Schema(description = "Дата окончания события")
-    LocalDateTime endDate; //дата окончания события
-
-
+    private LocalDateTime endDate;
 }
-

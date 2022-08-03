@@ -1,18 +1,14 @@
 package com.canban.web.core.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-
 import javax.validation.constraints.NotNull;
-import javax.ws.rs.DefaultValue;
-
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
@@ -22,40 +18,36 @@ import java.time.LocalDateTime;
 @Getter
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 
-public abstract class AbstractEvent implements Serializable {
+public abstract class AbstractEvent {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE) /// ???
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
-    Long id;
+    protected Long id;
 
     @Column(name = "title")
     @NotNull
-    String title;
+    protected String title;
 
     @Column(name = "content")
-    String content;
+    protected String content;
 
     @Column(name = "username")
-    String username;
+    protected String username;
 
     @Column(name = "begin_date")
     @NotNull
-    LocalDateTime beginDate; //дата назначения события
+    protected LocalDateTime beginDate; //дата начала события
 
     @Column(name = "end_date")
     @NotNull
-    LocalDateTime endDate; //дата назначения события
-
+    protected LocalDateTime endDate; //дата окончания события
 
     @CreationTimestamp
     @Column(name = "created_at")
-    LocalDateTime createdAt;
-
+    protected LocalDateTime createdAt;
 
     @UpdateTimestamp
     @Column(name = "updated_at")
-    LocalDateTime updatedAt;
-
+    protected LocalDateTime updatedAt;
 }
-

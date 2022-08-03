@@ -1,7 +1,9 @@
 package com.canban.web.core.mapper;
+
 import com.canban.api.core.EventDto;
 import com.canban.web.core.entities.Event;
 import org.springframework.stereotype.Component;
+
 @Component
 public class EventMapper {
 
@@ -15,7 +17,5 @@ public class EventMapper {
                 event.getBeginDate(),
                 event.getEndDate()
         );
-
     }
-
 }
