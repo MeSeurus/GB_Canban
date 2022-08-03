@@ -62,49 +62,49 @@ public class TaskController {
 
     }
 
-    @PatchMapping("change/title")
-    public void changeTitle(@RequestParam Long id, @RequestParam String title){
+    @PatchMapping("/change/title")
+    public void changeTitle(@RequestBody Long id, @RequestBody String title){
         taskService.changeTitle(id, title);
     }
 
-    @PatchMapping("change/content")
-    public void changeContent(@RequestParam Long id, @RequestParam String content){
+    @PatchMapping("/change/content")
+    public void changeContent(@RequestBody Long id, @RequestBody String content){
         taskService.changeContent(id, content);
     }
 
-    @PatchMapping("change/username")
+    @PatchMapping("/change/username")
     public void changeUsername(@RequestParam Long id, @RequestParam String username){
         taskValidator.validateUser(id, username);
         taskService.changeUsername(id, username);
     }
 
-    @PatchMapping("change/begin_date")
-    public void changeBeginDate(@RequestParam Long id, @RequestParam LocalDateTime beginDate){
+    @PatchMapping("/change/begin_date")
+    public void changeBeginDate(@RequestBody Long id, @RequestBody LocalDateTime beginDate){
         taskService.changeBeginDate(id, beginDate);
     }
 
-    @PatchMapping("change/end_date")
-    public void changeEndDate(@RequestParam Long id, @RequestParam LocalDateTime endDate){
+    @PatchMapping("/change/end_date")
+    public void changeEndDate(@RequestBody Long id, @RequestBody LocalDateTime endDate){
         taskService.changeEndDate(id, endDate);
     }
 
-    @PatchMapping("change/state")
-    public void changeEndDate(@RequestParam Long id, @RequestParam State state){
+    @PatchMapping("/change/state")
+    public void changeEndDate(@RequestBody Long id, @RequestBody State state){
         taskService.changeState(id, state);
     }
 
-    @PatchMapping("change/priority")
-    public void changePriority(@RequestParam Long id, @RequestParam Priority priority){
+    @PatchMapping("/change/priority")
+    public void changePriority(@RequestBody Long id, @RequestBody Priority priority){
         taskService.changePriority(id, priority);
     }
 
-    @PatchMapping("change/actual_end_date")
-    public void changeActualEndDate(@RequestParam Long id, @RequestParam LocalDateTime beginDate){
+    @PatchMapping("/change/actual_end_date")
+    public void changeActualEndDate(@RequestBody Long id, @RequestBody LocalDateTime beginDate){
         taskService.changeActualEndDate(id, beginDate);
     }
 
-    @PatchMapping("change/kanban_name")
-    public void changeKanbanName(@RequestParam Long id, @RequestParam String kanbanName){
+    @PatchMapping("/change/kanban_name")
+    public void changeKanbanName(@RequestBody Long id, @RequestBody String kanbanName){
         taskService.changeKanbanName(id, kanbanName);
     }
 }

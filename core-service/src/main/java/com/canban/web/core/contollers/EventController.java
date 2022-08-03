@@ -82,23 +82,23 @@ public class EventController {
         eventService.removeUserFromEvent(usernameToRemove, id);
     }
 
-    @PatchMapping("change/title")
-    public void changeTitle(@RequestParam Long id, @RequestParam String title){
+    @PatchMapping("/change/title")
+    public void changeTitle(@RequestBody Long id, @RequestBody String title){
         eventService.changeTitle(id, title);
     }
 
-    @PatchMapping("change/content")
-    public void changeContent(@RequestParam Long id, @RequestParam String content){
+    @PatchMapping("/change/content")
+    public void changeContent(@RequestBody Long id, @RequestBody String content){
         eventService.changeContent(id, content);
     }
 
-    @PatchMapping("change/begin_date")
-    public void changeBeginDate(@RequestParam Long id, @RequestParam LocalDateTime beginDate){
+    @PatchMapping("/change/begin_date")
+    public void changeBeginDate(@RequestBody Long id, @RequestBody LocalDateTime beginDate){
         eventService.changeBeginDate(id, beginDate);
     }
 
-    @PatchMapping("change/end_date")
-    public void changeEndDate(@RequestParam Long id, @RequestParam LocalDateTime endDate){
+    @PatchMapping("/change/end_date")
+    public void changeEndDate(@RequestBody Long id, @RequestBody LocalDateTime endDate){
         eventService.changeEndDate(id, endDate);
     }
 
