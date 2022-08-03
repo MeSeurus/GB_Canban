@@ -2,6 +2,7 @@ package com.canban.web.analytics.services;
 
 import com.canban.api.analytics.EventsAnalyticsDto;
 import com.canban.api.analytics.EventsAnalyticsDtoWithList;
+import com.canban.web.analytics.entities.EventsAnalytics;
 import com.canban.web.analytics.integration.CoreIntegration;
 import com.canban.web.analytics.mappers.EventsAnalyticsMapper;
 import com.canban.web.analytics.repositories.EventsAnalyticsRepository;
@@ -24,12 +25,16 @@ public class EventsAnalyticsService {
 
     private final EventsAnalyticsMapper eventsAnalyticsMapper;
 
-    @Scheduled(fixedRate = 3600000) // 3600000 - час, время в миллисекундах
+    @Scheduled(fixedRate = 30000) // 3600000 - час, время в миллисекундах
     @Transactional
     public void askCoreForEventsAnalytics() {
         EventsAnalyticsDtoWithList eventsAnalyticsDtoWithList = coreIntegration.getEventsAnalyticsFromCore();
         eventsAnalyticsDtoWithList.getEventsAnalyticsDtoList()
                 .stream().map(eventsAnalyticsMapper::dtoToEntity).collect(Collectors.toList())
                 .stream().forEach(e -> eventsAnalyticsRepository.save(e));
+    }
+
+    public EventsAnalytics getTheLongestEvent() {
+        return eventsAnalyticsRepository.getTheLongestEventForLastMonth();
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/tasks/analytics")
-@CrossOrigin(origins = "http://localhost:3000/")
+//@CrossOrigin(origins = "http://localhost:3000/")
 @RequiredArgsConstructor
 @Tag(name = "Аналитика задач", description = "Методы работы с аналитикой задач")
 public class TasksAnalyticsController {

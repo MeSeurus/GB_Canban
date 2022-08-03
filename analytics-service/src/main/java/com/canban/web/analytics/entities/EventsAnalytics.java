@@ -9,7 +9,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
 @Builder
@@ -38,10 +37,6 @@ public class EventsAnalytics {
     @Column(name = "event_end_date")
     private LocalDateTime eventEndDate;
 
-    @ElementCollection
-    @Column(name = "added_usernames")
-    private Set<String> users;
-
     @CreationTimestamp
     @Column(name = "created_at")
     LocalDateTime createdAt;
@@ -50,12 +45,11 @@ public class EventsAnalytics {
     @Column(name = "updated_at")
     LocalDateTime updatedAt;
 
-    public EventsAnalytics(Long eventId, String eventTitle, String eventUsername, LocalDateTime eventBeginDate, LocalDateTime eventEndDate, Set<String> users) {
+    public EventsAnalytics(Long eventId, String eventTitle, String eventUsername, LocalDateTime eventBeginDate, LocalDateTime eventEndDate) {
         this.eventId = eventId;
         this.eventTitle = eventTitle;
         this.eventUsername = eventUsername;
         this.eventBeginDate = eventBeginDate;
         this.eventEndDate = eventEndDate;
-        this.users = users;
     }
 }

@@ -11,8 +11,8 @@ create table if not exists events
     title           varchar(60) not null,
     content         varchar(300),
     username        varchar(60),
-    begin_date      date not null,
-    end_date        date not null,
+    begin_date      timestamp not null,
+    end_date        timestamp not null,
     created_at      timestamp default current_timestamp,
     updated_at      timestamp default current_timestamp
 );
@@ -32,9 +32,9 @@ create table if not exists tasks
     title               varchar(60) not null,
     content             varchar(300),
     username            varchar(60),
-    begin_date          date not null,
-    end_date            date not null,
-    actual_end_date     date,
+    begin_date          timestamp not null,
+    end_date            timestamp not null,
+    actual_end_date     timestamp,
     state               varchar(15) not null default 'REGISTERED',
     priority            varchar(15) not null default 'NORMAL',
     kanban_name         varchar(50) not null,

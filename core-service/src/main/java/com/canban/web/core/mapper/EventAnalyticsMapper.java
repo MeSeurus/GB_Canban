@@ -14,8 +14,7 @@ public class EventAnalyticsMapper {
                 event.getTitle(),
                 event.getUsername(),
                 event.getBeginDate(),
-                event.getEndDate(),
-                event.getUsers()
+                event.getEndDate()
         );
     }
 
