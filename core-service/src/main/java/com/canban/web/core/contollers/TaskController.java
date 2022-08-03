@@ -1,8 +1,9 @@
 package com.canban.web.core.contollers;
 
 import com.canban.api.analytics.EventsAnalyticsDtoWithList;
-import com.canban.api.analytics.TasksAnalyticsDto;
 import com.canban.api.analytics.TasksAnalyticsDtoWithList;
+import com.canban.api.core.Priority;
+import com.canban.api.core.State;
 import com.canban.api.core.TaskDto;
 import com.canban.web.core.dto.TaskDetailsRq;
 import com.canban.web.core.mapper.TaskAnalyticsMapper;
@@ -77,10 +78,6 @@ public class TaskController {
             }
     )
 
-
-
-
-
     public void createTask(@RequestHeader @Parameter(description = "Список пользователей", required = true) String username, @RequestBody TaskDetailsRq taskDetailsRq) {
         taskValidator.validate(taskDetailsRq);
         taskService.createTask(username, taskDetailsRq);
@@ -106,9 +103,6 @@ public class TaskController {
     public void changeBeginDate(@RequestBody TaskDto requestBody) {
         taskService.changeBeginDate(requestBody.getId(), requestBody.getBeginDate());
     }
-    public void createTask(@RequestHeader @Parameter(description = "Список пользователей", required = true) String username, @RequestBody TaskDetailsRq taskDetailsRq){
-         taskService.createTask(username, taskDetailsRq);
-
     @PatchMapping("/change/end_date")
     public void changeEndDate(@RequestBody TaskDto requestBody) {
         taskService.changeEndDate(requestBody.getId(), requestBody.getEndDate());
@@ -129,8 +123,4 @@ public class TaskController {
         taskService.changeActualEndDate(requestBody.getId(), requestBody.getBeginDate());
     }
 
-    @PatchMapping("/change/kanban_name")
-    public void changeKanbanName(@RequestBody TaskDto requestBody) {
-        taskService.changeKanbanName(requestBody.getId(), requestBody.getKanbanName());
-    }
 }
