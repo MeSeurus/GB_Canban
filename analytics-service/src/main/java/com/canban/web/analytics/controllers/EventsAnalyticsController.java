@@ -37,9 +37,9 @@ public class EventsAnalyticsController {
      * @return EventsAnalyticsDto
      */
     @GetMapping("/month/long")
-    public EventsAnalyticsDto getTheLongestEventForLastMonth() {
+    public EventsAnalyticsDto getTheLongestEventForLastMonth(@RequestHeader String username) {
         return eventsAnalyticsMapper.entityToDto(
-                eventsAnalyticsService.getTheLongestEventLastMonth()
+                eventsAnalyticsService.getTheLongestEventLastMonth(username)
                         .orElseThrow(() -> new ResourceNotFoundException("За последний месяц не было ивентов")));
     }
 
@@ -48,9 +48,9 @@ public class EventsAnalyticsController {
      * @return EventsAnalyticsDto
      */
     @GetMapping("/week/long")
-    public EventsAnalyticsDto getTheLongestEventForLastWeek() {
+    public EventsAnalyticsDto getTheLongestEventForLastWeek(@RequestHeader String username) {
         return eventsAnalyticsMapper.entityToDto(
-                eventsAnalyticsService.getTheLongestEventLastWeek()
+                eventsAnalyticsService.getTheLongestEventLastWeek(username)
                         .orElseThrow(() -> new ResourceNotFoundException("За последнюю неделю не было ивентов")));
     }
 
@@ -59,9 +59,9 @@ public class EventsAnalyticsController {
      * @return EventsAnalyticsDto
      */
     @GetMapping("/month/short")
-    public EventsAnalyticsDto getTheShortestEventForLastMonth() {
+    public EventsAnalyticsDto getTheShortestEventForLastMonth(@RequestHeader String username) {
         return eventsAnalyticsMapper.entityToDto(
-                eventsAnalyticsService.getTheShortestEventLastMonth()
+                eventsAnalyticsService.getTheShortestEventLastMonth(username)
                         .orElseThrow(() -> new ResourceNotFoundException("За последний месяц не было ивентов")));
     }
 
@@ -70,9 +70,9 @@ public class EventsAnalyticsController {
      * @return EventsAnalyticsDto
      */
     @GetMapping("/week/short")
-    public EventsAnalyticsDto getTheShortestEventForLastWeek() {
+    public EventsAnalyticsDto getTheShortestEventForLastWeek(@RequestHeader String username) {
         return eventsAnalyticsMapper.entityToDto(
-                eventsAnalyticsService.getTheShortestEventLastWeek()
+                eventsAnalyticsService.getTheShortestEventLastWeek(username)
                         .orElseThrow(() -> new ResourceNotFoundException("За последнюю неделю не было ивентов")));
     }
 
@@ -81,8 +81,8 @@ public class EventsAnalyticsController {
      * @return Integer
      */
     @GetMapping("/week/count")
-    public Integer getCountOfEventsForLastWeek() {
-        return eventsAnalyticsService.getCountOfEventsLastWeek();
+    public Integer getCountOfEventsForLastWeek(@RequestHeader String username) {
+        return eventsAnalyticsService.getCountOfEventsLastWeek(username);
     }
 
     /**
@@ -90,8 +90,8 @@ public class EventsAnalyticsController {
      * @return Integer
      */
     @GetMapping("/month/count")
-    public Integer getCountOfEventsForLastMonth() {
-        return eventsAnalyticsService.getCountOfEventsLastMonth();
+    public Integer getCountOfEventsForLastMonth(@RequestHeader String username) {
+        return eventsAnalyticsService.getCountOfEventsLastMonth(username);
     }
 
 }

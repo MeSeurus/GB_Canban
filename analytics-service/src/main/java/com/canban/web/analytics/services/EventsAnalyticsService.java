@@ -39,27 +39,27 @@ public class EventsAnalyticsService {
         return eventsAnalyticsRepository.findAll();
     }
 
-    public Optional<EventsAnalytics> getTheLongestEventLastMonth() {
-        return eventsAnalyticsRepository.getTheLongestEventForLastMonth();
+    public Optional<EventsAnalytics> getTheLongestEventLastMonth(String username) {
+        return eventsAnalyticsRepository.getTheLongestEventForLastMonth(username);
     }
 
-    public Optional<EventsAnalytics> getTheLongestEventLastWeek() {
-        return eventsAnalyticsRepository.getTheLongestEventForLastWeek();
+    public Optional<EventsAnalytics> getTheLongestEventLastWeek(String username) {
+        return eventsAnalyticsRepository.getTheLongestEventForLastWeek(username);
     }
 
-    public Optional<EventsAnalytics> getTheShortestEventLastMonth() {
-        return eventsAnalyticsRepository.getTheShortestEventForLastMonth();
+    public Optional<EventsAnalytics> getTheShortestEventLastMonth(String username) {
+        return eventsAnalyticsRepository.getTheShortestEventForLastMonth(username);
     }
 
-    public Optional<EventsAnalytics> getTheShortestEventLastWeek() {
-        return eventsAnalyticsRepository.getTheShortestEventForLastWeek();
+    public Optional<EventsAnalytics> getTheShortestEventLastWeek(String username) {
+        return eventsAnalyticsRepository.getTheShortestEventForLastWeek(username);
     }
 
-    public Integer getCountOfEventsLastWeek() {
-        return eventsAnalyticsRepository.getCountOfEventsForLastWeek();
+    public Integer getCountOfEventsLastWeek(String username) {
+        return eventsAnalyticsRepository.getCountOfEventsForLastWeek(username);
     }
 
-    public Integer getCountOfEventsLastMonth() {
-        return eventsAnalyticsRepository.getCountOfEventsForLastMonth();
+    public Integer getCountOfEventsLastMonth(String username) {
+        return eventsAnalyticsRepository.getCountOfEventsForLastMonth(username);
     }
 }
