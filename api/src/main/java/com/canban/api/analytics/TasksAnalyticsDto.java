@@ -37,9 +37,16 @@ public class TasksAnalyticsDto {
     private Priority taskPriority;
 
     @Schema(description = "Имя канбан-доски задачи", required = true, example = "HIGH")
-    private String taskKanbanName;
+    private Long kanbanBoardId;
 
-    public TasksAnalyticsDto(Long taskId, String taskTitle, String taskUsername, LocalDateTime taskBeginDate, LocalDateTime taskEndDate, LocalDateTime taskActualEndDate, State taskState, Priority taskPriority, String taskKanbanName) {
+    public TasksAnalyticsDto(Long taskId,
+                             String taskTitle,
+                             String taskUsername,
+                             LocalDateTime taskBeginDate,
+                             LocalDateTime taskEndDate,
+                             LocalDateTime taskActualEndDate,
+                             State taskState, Priority taskPriority,
+                             Long kanbanBoardId) {
         this.taskId = taskId;
         this.taskTitle = taskTitle;
         this.taskUsername = taskUsername;
@@ -48,7 +55,7 @@ public class TasksAnalyticsDto {
         this.taskActualEndDate = taskActualEndDate;
         this.taskState = taskState;
         this.taskPriority = taskPriority;
-        this.taskKanbanName = taskKanbanName;
+        this.kanbanBoardId = kanbanBoardId;
     }
 
     public TasksAnalyticsDto() {
@@ -118,11 +125,11 @@ public class TasksAnalyticsDto {
         this.taskPriority = taskPriority;
     }
 
-    public String getTaskKanbanName() {
-        return taskKanbanName;
+    public Long getTaskKanbanBoardID() {
+        return kanbanBoardId;
     }
 
-    public void setTaskKanbanName(String taskKanbanName) {
-        this.taskKanbanName = taskKanbanName;
+    public void setTaskKanbanBoardID(Long kanbanBoardId) {
+        this.kanbanBoardId = kanbanBoardId;
     }
 }

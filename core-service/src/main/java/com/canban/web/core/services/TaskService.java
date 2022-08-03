@@ -1,21 +1,18 @@
 package com.canban.web.core.services;
 
 
+import com.canban.api.core.Priority;
+import com.canban.api.core.State;
 import com.canban.api.exceptions.ResourceNotFoundException;
 import com.canban.web.core.dto.TaskDetailsRq;
-import com.canban.web.core.entities.Event;
 import com.canban.web.core.entities.Task;
-import com.canban.web.core.enums.Priority;
-import com.canban.web.core.enums.State;
 import com.canban.web.core.repositories.TaskRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.PropertyValues;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
@@ -109,11 +106,4 @@ public class TaskService {
     }
 
 
-}
-
-    @Transactional
-    public void changeKanbanName(Long id, String kanbanName) {
-        Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change task's kanban name. Task not found"));
-        task.setKanbanName(kanbanName);
-    }
 }

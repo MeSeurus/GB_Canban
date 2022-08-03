@@ -1,10 +1,10 @@
 package com.canban.web.core.validators;
 
+import com.canban.api.core.State;
 import com.canban.api.exceptions.ResourceNotFoundException;
 import com.canban.api.exceptions.ValidationException;
 import com.canban.web.core.dto.TaskDetailsRq;
 import com.canban.web.core.entities.Task;
-import com.canban.web.core.enums.State;
 import com.canban.web.core.repositories.TaskRepository;
 import org.springframework.stereotype.Component;
 

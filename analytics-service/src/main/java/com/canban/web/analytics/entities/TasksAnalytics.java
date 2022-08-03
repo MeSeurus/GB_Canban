@@ -61,17 +61,25 @@ public class TasksAnalytics {
     private Priority taskPriority;
 
     @Column(name = "task_kanban_name")
-    private String taskKanbanName;
+    private Long taskKanbanBoardId;
 
     @CreationTimestamp
     @Column(name = "created_at")
-    LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 
     @UpdateTimestamp
     @Column(name = "updated_at")
-    LocalDateTime updatedAt;
+    private LocalDateTime updatedAt;
 
-    public TasksAnalytics(Long taskId, String taskTitle, String taskUsername, LocalDateTime taskBeginDate, LocalDateTime taskEndDate, LocalDateTime taskActualEndDate, State taskState, Priority taskPriority, String taskKanbanName) {
+    public TasksAnalytics(Long taskId,
+                          String taskTitle,
+                          String taskUsername,
+                          LocalDateTime taskBeginDate,
+                          LocalDateTime taskEndDate,
+                          LocalDateTime taskActualEndDate,
+                          State taskState,
+                          Priority taskPriority,
+                          Long taskKanbanBoardId) {
         this.taskId = taskId;
         this.taskTitle = taskTitle;
         this.taskUsername = taskUsername;
@@ -80,7 +88,7 @@ public class TasksAnalytics {
         this.taskActualEndDate = taskActualEndDate;
         this.taskState = taskState;
         this.taskPriority = taskPriority;
-        this.taskKanbanName = taskKanbanName;
+        this.taskKanbanBoardId = taskKanbanBoardId;
     }
 
 }

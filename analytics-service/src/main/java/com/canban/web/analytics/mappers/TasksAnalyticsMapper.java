@@ -17,7 +17,7 @@ public class TasksAnalyticsMapper {
                 tasksAnalyticsDto.getTaskActualEndDate(),
                 tasksAnalyticsDto.getTaskState(),
                 tasksAnalyticsDto.getTaskPriority(),
-                tasksAnalyticsDto.getTaskKanbanName()
+                tasksAnalyticsDto.getTaskKanbanBoardID()
                 );
     }
 
