@@ -41,7 +41,6 @@ public class EventDto {
         this.username = username;
         this.beginDate = beginDate;
         this.endDate = endDate;
-
     }
 
     public EventDto(Long id, String title, String content) {

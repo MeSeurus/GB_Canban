@@ -67,13 +67,21 @@ public class TaskDto {
         this.kanbanName = kanbanName;
     }
 
-    public TaskDto(Long id, String title, String content, String username, LocalDateTime eventDate, LocalDateTime dueDate, String state, String priority, String kanbanName) {
+    public TaskDto(Long id,
+                   String title,
+                   String content,
+                   String username,
+                   LocalDateTime beginDate,
+                   LocalDateTime endDate,
+                   String state,
+                   String priority,
+                   String kanbanName) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.username = username;
-        this.endDate = eventDate;
-        this.beginDate = dueDate;
+        this.endDate = beginDate;
+        this.beginDate = endDate;
         this.state = state;
         this.priority = priority;
         this.kanbanName = kanbanName;
