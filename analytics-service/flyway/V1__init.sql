@@ -27,9 +27,10 @@ create table if not exists tasks_analytics
 
 insert into events_analytics (event_id, event_title, event_username, event_begin_date, event_end_date)
 values (1, 'Create simple program', 'user3', '2022-06-24 01:00:00', '2022-06-28 03:00:00'),
-       (2, 'Create hard program', 'user3', '2022-06-24 01:00:00', '2022-06-24 03:00:00'),
-       (3, 'Create hard program', 'user3', '2022-08-01 05:00:00', '2022-08-03 07:00:00'),
-       (4, 'Create hard program', 'user3', '2022-07-10 01:00:00', '2022-08-02 07:00:00');
+       (2, 'Create hard program', 'user3', '2022-07-24 01:00:00', '2022-07-24 03:00:00'),
+       (3, 'Create hard program', 'user3', '2022-07-28 01:00:00', '2022-08-03 03:00:00'),
+       (4, 'Create hard program', 'user3', '2022-08-01 05:00:00', '2022-08-03 07:00:00'),
+       (5, 'Create hard program', 'user3', '2022-07-10 01:00:00', '2022-08-02 07:00:00');
 
 insert into tasks_analytics (task_id, task_title, task_username, task_begin_date, task_end_date,task_actual_end_date, task_state, task_priority, task_kanban_name)
 values  (1, 'Create simple program', 'user3', '2022-06-24 01:00:00','2022-06-30 01:00:00', '2022-08-26 01:00:00', 'COMPLETE', 'HIGH', 'kanban1' ),
