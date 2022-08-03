@@ -36,8 +36,8 @@ public class TaskDetailsRq {
     @Schema(description = "Приоритет задачи")
     private Priority priority;
 
-    @Schema(description = "Имя canban доски")
-    private String kanbanName;
+    @Schema(description = "ID kanban доски")
+    private Long kanbanBoardId;
 
 
 }

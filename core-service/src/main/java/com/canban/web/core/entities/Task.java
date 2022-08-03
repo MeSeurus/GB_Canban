@@ -40,10 +40,10 @@ public class Task extends AbstractEvent{
     private Priority priority;
 
     @Column(
-            name = "kanban_name"
+            name = "kanban_board_id"
     )
     @NotNull
-    private String kanbanName;
+    private Long kanbanBoardId;
 
     public Task(Long id,
                 String title,
@@ -54,7 +54,7 @@ public class Task extends AbstractEvent{
                 LocalDateTime actualEndDate,
                 State state,
                 Priority priority,
-                String kanbanName ) {
+                Long kanbanBoardId ) {
 
         this.id = id;
         this.title = title;
@@ -67,7 +67,7 @@ public class Task extends AbstractEvent{
 
         this.state = state;
         this.priority = priority;
-        this.kanbanName = kanbanName;
+        this.kanbanBoardId = kanbanBoardId;
     }
 
     public static TaskBuilder taskBuilder() {
@@ -86,7 +86,7 @@ public class Task extends AbstractEvent{
         private LocalDateTime actualEndDate;
         private State state;
         private Priority priority;
-        private String kanbanName;
+        private Long kanbanBoardId;
 
 
 
@@ -133,8 +133,8 @@ public class Task extends AbstractEvent{
             return this;
         }
 
-        public Task.TaskBuilder kanbanName(final String kanbanName) {
-            this.kanbanName = kanbanName;
+        public Task.TaskBuilder kanbanBoardId(final Long kanbanBoardId) {
+            this.kanbanBoardId = kanbanBoardId;
             return this;
         }
 
@@ -150,7 +150,7 @@ public class Task extends AbstractEvent{
                     this.actualEndDate,
                     this.state,
                     this.priority,
-                    this.kanbanName);
+                    this.kanbanBoardId);
 
         }
 
