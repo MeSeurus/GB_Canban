@@ -11,11 +11,15 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
 @RequiredArgsConstructor
 public class EventService {
     private final EventRepository eventRepository;
+
+
+    private List<Event> events = new CopyOnWriteArrayList<>();
 
     public List<Event> findEventsByUser(String username) {
         return eventRepository.findEventsByUsername(username);
@@ -31,6 +35,15 @@ public class EventService {
                 .users(Set.of(username))
                 .build();
         eventRepository.save(event);
+        events.add(event);
+    }
+
+    public List<Event> findAllForAnalytics() {
+        return events;
+    }
+
+    public void clearList() {
+        events.clear();
     }
 
     public List<Event> findAll() {
@@ -49,6 +62,7 @@ public class EventService {
         users.add(username);
         event.setUsers(users);
         eventRepository.save(event);
+        events.add(event);
     }
 
     @Transactional
@@ -61,6 +75,7 @@ public class EventService {
         }
         event.setUsers(users);
         eventRepository.save(event);
+        events.add(event);
     }
 
     @Transactional

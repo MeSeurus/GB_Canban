@@ -1,9 +1,11 @@
 package com.canban.web.core.contollers;
 
+import com.canban.api.analytics.EventsAnalyticsDtoWithList;
+import com.canban.api.analytics.TasksAnalyticsDto;
+import com.canban.api.analytics.TasksAnalyticsDtoWithList;
 import com.canban.api.core.TaskDto;
 import com.canban.web.core.dto.TaskDetailsRq;
-import com.canban.web.core.enums.Priority;
-import com.canban.web.core.enums.State;
+import com.canban.web.core.mapper.TaskAnalyticsMapper;
 import com.canban.web.core.mapper.TaskMapper;
 import com.canban.web.core.services.TaskService;
 import com.canban.web.core.validators.TaskValidator;
@@ -27,7 +29,29 @@ import java.util.stream.Collectors;
 public class TaskController {
     private final TaskService taskService;
     private final TaskMapper taskMapper;
+
     private final TaskValidator taskValidator;
+    private final TaskAnalyticsMapper taskAnalyticsMapper;
+
+    @GetMapping("/analytics")
+    @Operation(
+            summary = "Запрос на получение всех задач всех пользователей для микросервиса аналитики за текущее время работы Core-MC",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = EventsAnalyticsDtoWithList.class))
+                    )
+            }
+    )
+    public TasksAnalyticsDtoWithList findAllTasksForAnalytics() {
+        TasksAnalyticsDtoWithList tasksAnalyticsDtoWithList =
+                new TasksAnalyticsDtoWithList(taskService.findAllForAnalytics()
+                        .stream()
+                        .map(taskAnalyticsMapper::entityToDto)
+                        .collect(Collectors.toList()));
+        taskService.clearList();
+        return tasksAnalyticsDtoWithList;
+    }
 
     @GetMapping()
     @Operation(
@@ -78,6 +102,8 @@ public class TaskController {
     public void changeBeginDate(@RequestBody TaskDto requestBody) {
         taskService.changeBeginDate(requestBody.getId(), requestBody.getBeginDate());
     }
+    public void createTask(@RequestHeader @Parameter(description = "Список пользователей", required = true) String username, @RequestBody TaskDetailsRq taskDetailsRq){
+         taskService.createTask(username, taskDetailsRq);
 
     @PatchMapping("/change/end_date")
     public void changeEndDate(@RequestBody TaskDto requestBody) {

@@ -1,14 +1,8 @@
 package com.canban.web.core.mapper;
 
-import com.canban.api.core.EventDto;
-import com.canban.api.core.TaskDto;
 import com.canban.web.core.dto.KanbanBoardDetailsRq;
 import com.canban.web.core.dto.KanbanBoardDetailsRs;
-import com.canban.web.core.entities.Event;
 import com.canban.web.core.entities.KanbanBoard;
-import com.canban.web.core.entities.Task;
-import com.canban.web.core.enums.Priority;
-import com.canban.web.core.enums.State;
 import org.springframework.stereotype.Component;
 
 

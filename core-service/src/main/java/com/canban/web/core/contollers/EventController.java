@@ -1,7 +1,10 @@
 package com.canban.web.core.contollers;
 
+import com.canban.api.analytics.EventsAnalyticsDtoWithList;
+import com.canban.api.analytics.EventsAnalyticsDto;
 import com.canban.api.core.EventDto;
 import com.canban.web.core.dto.EventDetailsRq;
+import com.canban.web.core.mapper.EventAnalyticsMapper;
 import com.canban.web.core.entities.Event;
 import com.canban.web.core.mapper.EventMapper;
 import com.canban.web.core.services.EventService;
@@ -27,8 +30,32 @@ import java.util.stream.Collectors;
 public class EventController {
 
     private final EventValidator eventValidator;
+
     private final EventService eventService;
+
     private final EventMapper eventMapper;
+
+    private final EventAnalyticsMapper eventAnalyticsMapper;
+
+    @GetMapping("/analytics")
+    @Operation(
+            summary = "Запрос на получение всех событий всех пользователей для микросервиса аналитики за текущее время работы Core-MC",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = EventsAnalyticsDtoWithList.class))
+                    )
+            }
+    )
+    public EventsAnalyticsDtoWithList findAllEventsForAnalytics() {
+        EventsAnalyticsDtoWithList eventsAnalyticsDtoWithList =
+                new EventsAnalyticsDtoWithList(eventService.findAllForAnalytics()
+                        .stream()
+                        .map(eventAnalyticsMapper::entityToDto)
+                        .collect(Collectors.toList()));
+        eventService.clearList();
+        return eventsAnalyticsDtoWithList;
+    }
 
     @GetMapping()
     @Operation(

@@ -1,20 +1,20 @@
 package com.canban.web.core.mapper;
-import com.canban.api.core.EventDto;
+
+import com.canban.api.analytics.EventsAnalyticsDto;
 import com.canban.web.core.entities.Event;
 import org.springframework.stereotype.Component;
 
-@Component
-public class EventMapper {
 
-    public EventDto entityToDto(Event event) {
-        return new EventDto(
+@Component
+public class EventAnalyticsMapper {
+
+    public EventsAnalyticsDto entityToDto(Event event) {
+        return new EventsAnalyticsDto(
                 event.getId(),
                 event.getTitle(),
-                event.getContent(),
                 event.getUsername(),
                 event.getBeginDate(),
-                event.getEndDate(),
-                event.getUsers()
+                event.getEndDate()
         );
     }
 

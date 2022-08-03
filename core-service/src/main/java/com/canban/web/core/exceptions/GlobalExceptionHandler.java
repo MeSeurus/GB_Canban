@@ -1,7 +1,7 @@
 package com.canban.web.core.exceptions;
 
-import com.canban.api.exceptions.AppError;
-import com.canban.api.exceptions.FieldsValidationError;
+import com.canban.api.errors.AppError;
+import com.canban.api.errors.FieldsValidationError;
 import com.canban.api.exceptions.ResourceNotFoundException;
 import com.canban.api.exceptions.ValidationException;
 import lombok.extern.slf4j.Slf4j;

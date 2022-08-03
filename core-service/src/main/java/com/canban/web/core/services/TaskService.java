@@ -3,21 +3,27 @@ package com.canban.web.core.services;
 
 import com.canban.api.exceptions.ResourceNotFoundException;
 import com.canban.web.core.dto.TaskDetailsRq;
+import com.canban.web.core.entities.Event;
 import com.canban.web.core.entities.Task;
 import com.canban.web.core.enums.Priority;
 import com.canban.web.core.enums.State;
 import com.canban.web.core.repositories.TaskRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.PropertyValues;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+import java.util.concurrent.CopyOnWriteArrayList;
+
 @Service
 @RequiredArgsConstructor
 public class TaskService {
     private final TaskRepository taskRepository;
+
+    private List<Task> tasks = new CopyOnWriteArrayList<>();
 
     public List<Task> findTaskByUsername(String username) {
         return taskRepository.findTasksByUserName(username);
@@ -36,6 +42,7 @@ public class TaskService {
                 .priority(taskDetailsRq.getPriority())
                 .build();
         taskRepository.save(task);
+        tasks.add(task);
     }
 
     public List<Task> findAll() {
@@ -93,6 +100,16 @@ public class TaskService {
         Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change task's actual end date. Task not found"));
         task.setActualEndDate(actualEndDate);
     }
+    public List<Task> findAllForAnalytics() {
+        return tasks;
+    }
+
+    public void clearList() {
+        tasks.clear();
+    }
+
+
+}
 
     @Transactional
     public void changeKanbanName(Long id, String kanbanName) {
