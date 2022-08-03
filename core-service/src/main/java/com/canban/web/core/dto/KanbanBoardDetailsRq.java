@@ -12,5 +12,5 @@ import java.time.LocalDateTime;
 @Data
 public class KanbanBoardDetailsRq {
     private String name;
-    private String creator;
+    private String createdBy;
 }

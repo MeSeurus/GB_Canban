@@ -20,7 +20,7 @@ public class KanbanService {
 
     @Transactional
     public void createBoard(String username, KanbanBoard kanbanBoard) {
-        kanbanBoard.setCreator(username);
+        kanbanBoard.setCreatedBy(username);
         kanbanBoard.setUsers(Set.of(username));
         kanbanBoardRepository.save(kanbanBoard);
     }

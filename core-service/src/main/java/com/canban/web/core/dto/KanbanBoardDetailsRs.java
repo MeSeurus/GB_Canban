@@ -11,6 +11,6 @@ import java.util.Set;
 public class KanbanBoardDetailsRs {
     private Long id;
     private String name;
-    private String creator;
+    private String createdBy;
     private Set<String> users;
 }

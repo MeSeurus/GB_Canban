@@ -25,8 +25,8 @@ public class KanbanBoard {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "creator")
-    private String creator;
+    @Column(name = "created_by")
+    private String createdBy;
 
     @ElementCollection
     @CollectionTable(
