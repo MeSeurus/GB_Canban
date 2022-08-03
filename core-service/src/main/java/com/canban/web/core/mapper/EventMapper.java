@@ -13,7 +13,8 @@ public class EventMapper {
                 event.getContent(),
                 event.getUsername(),
                 event.getBeginDate(),
-                event.getEndDate()
+                event.getEndDate(),
+                event.getUsers()
         );
 
     }

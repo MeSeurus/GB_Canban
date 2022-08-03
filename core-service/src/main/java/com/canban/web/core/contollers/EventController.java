@@ -39,7 +39,9 @@ public class EventController {
             }
     )
     public List<EventDto> findEventsByUsername(@RequestHeader @Parameter(description = "Имя пользователя", required = true) String username) {
-        return eventService.findEventsByUser(username).stream().map(e -> eventMapper.entityToDto(e)).collect(Collectors.toList());
+        return eventService.findEventsByUser(username).stream()
+                .map(eventMapper::entityToDto)
+                .collect(Collectors.toList());
     }
 
     @PostMapping()

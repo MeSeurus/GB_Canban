@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import java.time.LocalDateTime;
+import java.util.Set;
+
 @Schema(description = "Модель события")
 @Getter
 @Setter
@@ -24,12 +26,15 @@ public class EventDto {
     @Schema(description = "Дата начала события", required = true)
     private LocalDateTime endDate;
 
+    private Set<String> users;
+
     public EventDto(Long id,
                     String title,
                     String content,
                     String username,
                     LocalDateTime beginDate,
-                    LocalDateTime endDate
+                    LocalDateTime endDate,
+                    Set<String> users
     ) {
 
         this.id = id;
@@ -37,6 +42,8 @@ public class EventDto {
         this.content = content;
         this.username = username;
         this.beginDate = beginDate;
+        this.endDate = endDate;
+        this.users = users;
 
     }
 

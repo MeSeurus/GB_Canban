@@ -15,6 +15,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class EventService {
     private final EventRepository eventRepository;
+
     public List<Event> findEventsByUser(String username) {
         return eventRepository.findEventsByUsername(username);
     }
@@ -28,7 +29,7 @@ public class EventService {
                 .username(username)
                 .beginDate(eventDetailsRq.getBeginDate())
                 .endDate(eventDetailsRq.getEndDate())
-
+                .users(Set.of(username))
                 .build();
         eventRepository.save(event);
     }
