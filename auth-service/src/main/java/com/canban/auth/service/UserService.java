@@ -1,5 +1,7 @@
 package com.canban.auth.service;
 
+import com.canban.api.activemqevents.ActivationEvent;
+import com.canban.auth.config.JmsConfig;
 import com.canban.auth.entity.Role;
 import com.canban.auth.entity.User;
 import com.canban.auth.entity.security.CodeType;
@@ -7,11 +9,11 @@ import com.canban.auth.entity.security.UserAwaitActivation;
 import com.canban.auth.entity.security.UserStatus;
 import com.canban.auth.exceptions.InvalidAuthorizationException;
 import com.canban.auth.exceptions.UserNotActiveException;
-import com.canban.auth.repository.ActivationRepository;
 import com.canban.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,8 +31,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
-    private final MailSenderService mailSenderService;
     private UserAccessManagementService userAccessManagementService;
+    private final JmsTemplate jmsTemplate;
     /**
      * Это нужно для устранения Circular Dependency Exception
      */
@@ -68,7 +70,8 @@ public class UserService implements UserDetailsService {
         userAwaitActivation.setSecretCode(getRandomNumberString());
         userAwaitActivation.setCodeType(CodeType.ACTIVATION_CODE);
         userAccessManagementService.createUser(userAwaitActivation);
-        mailSenderService.sendMail(user.getEmail(),"Canban activation link","http://localhost:5555/auth/api/v1/user/access/management/activation/?username=" + userAwaitActivation.getUsername() + "&code=" + userAwaitActivation.getSecretCode());
+        jmsTemplate.convertAndSend(JmsConfig.ACTIVATION, new ActivationEvent(userAwaitActivation.getUsername(),userAwaitActivation.getSecretCode(), user.getEmail()));
+      //  mailSenderService.sendMail(user.getEmail(),"Canban activation link","http://localhost:5555/auth/api/v1/user/access/management/activation/?username=" + userAwaitActivation.getUsername() + "&code=" + userAwaitActivation.getSecretCode());
     }
 
     private String getRandomNumberString (){
