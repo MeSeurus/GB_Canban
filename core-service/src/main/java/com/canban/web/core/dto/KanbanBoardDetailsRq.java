@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class KanbanBoardDetailsRq {
-    private String name;
-    private String createdBy;
+
+    private String title;
+
 }

@@ -5,14 +5,11 @@ import com.canban.api.core.Priority;
 import com.canban.api.core.State;
 import com.canban.api.exceptions.ResourceNotFoundException;
 import com.canban.web.core.dto.TaskDetailsRq;
-import com.canban.web.core.entities.Event;
 import com.canban.web.core.entities.Task;
 import com.canban.web.core.mapper.DateFormatter;
 import com.canban.web.core.repositories.TaskRepository;
-import com.canban.web.core.specification.EventSpecifications;
 import com.canban.web.core.specification.TaskSpecification;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.PropertyValues;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -78,10 +75,6 @@ public class TaskService {
             spec = spec.and(TaskSpecification.priorityEquals(Priority.valueOf(priorityStr)));
         }
         return taskRepository.findAll(spec);
-    }
-
-    public List<Task> findTaskByUsername(String username) {
-        return taskRepository.findTasksByUserCreator(username);
     }
 
     public void createTask(String username, TaskDetailsRq taskDetailsRq) {
