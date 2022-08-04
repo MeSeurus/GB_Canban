@@ -7,8 +7,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,9 +31,8 @@ public class UserAccessManagementController {
                     @ApiResponse(description = "Успешный ответ", responseCode = "200")
             }
     )
-    public ResponseEntity<?> activation(@RequestParam(name = "username") String username, @RequestParam (name = "code") String code){
+    public void activation(@RequestParam(name = "username") String username, @RequestParam(name = "code") String code) {
         userAccessManagementService.checkActivateKey(username, code);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/recovery/password")
@@ -45,9 +42,8 @@ public class UserAccessManagementController {
             responses = {
                     @ApiResponse(description = "Успешный ответ", responseCode = "200")
             })
-    public ResponseEntity<?> recoverPassword (@RequestBody String username){
+    public void recoverPassword(@RequestBody String username) {
         userAccessManagementService.sendRecoverPasswordLink(username);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/set/password")
@@ -58,17 +54,19 @@ public class UserAccessManagementController {
                     @ApiResponse(description = "Успешный ответ", responseCode = "200")
             }
     )
-    public ResponseEntity<?> setNewPassword(@RequestBody NewPasswordDto newPasswordDto){
-        if (userAccessManagementService.findByUsername(newPasswordDto.getUsername()).isEmpty()) {
-            throw new InvalidRegistrationException("Пользователь с таким никнеймом не найден");
+    public void setNewPassword(@RequestBody NewPasswordDto newPasswordDto) {
+        String exMessage = "";
+        if (!newPasswordDto.getNewPassword().equals(newPasswordDto.getConfirmNewPassword())) {
+            exMessage = exMessage.concat("Пароли не совпадают; ");
         }
-        if (!newPasswordDto.getNewPassword().equals(newPasswordDto.getConfirmNewPassword())){
-            throw new InvalidRegistrationException("Пароли не совпадают");
+        if (!newPasswordDto.getNewPassword().matches(VALIDATE_PASSWORD)) {
+            exMessage = exMessage.concat("Пароль не должен быть меньше 8 символов");
         }
-        if (!newPasswordDto.getNewPassword().matches(VALIDATE_PASSWORD)){
-            throw new InvalidRegistrationException("Пароль не должен быть меньше 8 символов");
+        if (exMessage.length() > 0) throw new InvalidRegistrationException(exMessage);
+        if (!userAccessManagementService.userAndCodeExistInDb(newPasswordDto.getUsername(), newPasswordDto.getPasswordCode())) {
+            throw new InvalidRegistrationException("Некорректная ссылка");
         }
-        userAccessManagementService.setNewPassword(newPasswordDto.getUsername(),passwordEncoder.encode(newPasswordDto.getNewPassword()),newPasswordDto.getPasswordCode());
-        return new ResponseEntity<>(HttpStatus.OK);
+        userAccessManagementService.setNewPassword(newPasswordDto.getUsername(), passwordEncoder.encode(newPasswordDto.getNewPassword()), newPasswordDto.getPasswordCode());
     }
+
 }

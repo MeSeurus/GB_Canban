@@ -33,9 +33,7 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private UserAccessManagementService userAccessManagementService;
     private final JmsTemplate jmsTemplate;
-    /**
-     * Это нужно для устранения Circular Dependency Exception
-     */
+
     @Autowired
     public void setUserAccessManagementService(@Lazy UserAccessManagementService userAccessManagementService) {
         this.userAccessManagementService = userAccessManagementService;
@@ -44,6 +42,7 @@ public class UserService implements UserDetailsService {
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
@@ -52,8 +51,10 @@ public class UserService implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("Пользователь '%s' не найден", username)));
-        if (user.getUserStatus() == UserStatus.NOT_ACTIVE) throw new UserNotActiveException(String.format("Пользователь '%s' не активирован", username));
-        if (user.getUserStatus() == UserStatus.SUSPICIOUS) throw new InvalidAuthorizationException(String.format("Пользователь '%s' превысил количество попыток ввода пароля", username));
+        if (user.getUserStatus() == UserStatus.NOT_ACTIVE)
+            throw new UserNotActiveException(String.format("Пользователь '%s' не активирован", username));
+        if (user.getUserStatus() == UserStatus.SUSPICIOUS)
+            throw new InvalidAuthorizationException(String.format("Пользователь '%s' превысил количество попыток ввода пароля", username));
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
     }
 
@@ -70,28 +71,26 @@ public class UserService implements UserDetailsService {
         userAwaitActivation.setSecretCode(getRandomNumberString());
         userAwaitActivation.setCodeType(CodeType.ACTIVATION_CODE);
         userAccessManagementService.createUser(userAwaitActivation);
-        jmsTemplate.convertAndSend(JmsConfig.ACTIVATION, new ActivationEvent(userAwaitActivation.getUsername(),userAwaitActivation.getSecretCode(), user.getEmail()));
-      //  mailSenderService.sendMail(user.getEmail(),"Canban activation link","http://localhost:5555/auth/api/v1/user/access/management/activation/?username=" + userAwaitActivation.getUsername() + "&code=" + userAwaitActivation.getSecretCode());
+        jmsTemplate.convertAndSend(JmsConfig.ACTIVATION, new ActivationEvent(userAwaitActivation.getUsername(), userAwaitActivation.getSecretCode(), user.getEmail()));
     }
 
-    private String getRandomNumberString (){
+    private String getRandomNumberString() {
         Random random = new Random();
         int number = random.nextInt(999999);
         return String.format("%06d", number);
     }
 
     @Transactional
-    public void updateStatus (String username, UserStatus userStatus){
+    public void updateStatus(String username, UserStatus userStatus) {
         userRepository.updateStatus(username, userStatus);
     }
 
-    public Optional<String> getEmailByUsername (String username){
+    public Optional<String> getEmailByUsername(String username) {
         return userRepository.getEmailByUsername(username);
-
     }
 
     @Transactional
-    public void updatePassword (String username, String password){
+    public void updatePassword(String username, String password) {
         userRepository.updatePassword(username, password);
     }
 }

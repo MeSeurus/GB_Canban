@@ -1,7 +1,6 @@
 package com.canban.mail.listener;
 
 import com.canban.api.activemqevents.ActivationEvent;
-import com.canban.api.activemqevents.ChangeStatusEvent;
 import com.canban.mail.config.JmsConfig;
 import com.canban.mail.service.MailSenderService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +17,7 @@ public class ActivationListener {
 
     @JmsListener(destination = JmsConfig.ACTIVATION)
     public void listen(@Payload ActivationEvent activationEvent) {
-        mailSenderService.sendMail(activationEvent.getEmail(), "Canban activation link","http://localhost:5555/auth/api/v1/user/access/management/activation/?username=" + activationEvent.getUsername() + "&code=" + activationEvent.getCode());
+        mailSenderService.sendMail(activationEvent.getEmail(), "Canban activation link", "http://localhost:5555/auth/api/v1/user/access/management/activation/?username=" + activationEvent.getUsername() + "&code=" + activationEvent.getCode());
 
     }
 }

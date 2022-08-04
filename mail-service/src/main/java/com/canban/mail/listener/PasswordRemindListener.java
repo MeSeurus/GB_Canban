@@ -1,7 +1,5 @@
 package com.canban.mail.listener;
 
-
-import com.canban.api.activemqevents.ActivationEvent;
 import com.canban.api.activemqevents.PasswordRemindEvent;
 import com.canban.mail.config.JmsConfig;
 import com.canban.mail.service.MailSenderService;
@@ -17,7 +15,7 @@ public class PasswordRemindListener {
 
     @JmsListener(destination = JmsConfig.PASSWORD_REMIND)
     public void listen(@Payload PasswordRemindEvent passwordRemindEventEvent) {
-        mailSenderService.sendMail(passwordRemindEventEvent.getEmail(), "Canban password recovery link","http://localhost:5555/auth/set/password/?username=" + passwordRemindEventEvent.getUsername() + "&passcode=" + passwordRemindEventEvent.getPasscode());
+        mailSenderService.sendMail(passwordRemindEventEvent.getEmail(), "Canban password recovery link", "http://localhost:5555/auth/set/password/?username=" + passwordRemindEventEvent.getUsername() + "&passcode=" + passwordRemindEventEvent.getPasscode());
 
     }
 }
