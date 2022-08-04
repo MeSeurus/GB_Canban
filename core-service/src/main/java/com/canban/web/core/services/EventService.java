@@ -4,7 +4,10 @@ import com.canban.api.exceptions.ResourceNotFoundException;
 import com.canban.web.core.dto.EventDetailsRq;
 import com.canban.web.core.entities.Event;
 import com.canban.web.core.repositories.EventRepository;
+import com.canban.web.core.specification.EventSpecifications;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,8 +21,33 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class EventService {
     private final EventRepository eventRepository;
 
-
     private List<Event> events = new CopyOnWriteArrayList<>();
+
+    public List<Event> findAll(String username,
+                               String titlePart,
+                               LocalDateTime maxBeginDate,
+                               LocalDateTime minBeginDate,
+                               LocalDateTime maxEndDate,
+                               LocalDateTime minEndDate) {
+        Specification<Event> spec = Specification.where(null);
+        spec = spec.and(EventSpecifications.usernameEqual(username)); // обязательное поле
+        if (titlePart != null) {
+            spec = spec.and(EventSpecifications.titleLike(titlePart));
+        }
+        if (maxBeginDate != null) {
+            spec = spec.and(EventSpecifications.beginDateLessOrEqualsThen(maxBeginDate));
+        }
+        if (minBeginDate != null) {
+            spec = spec.and(EventSpecifications.beginDateGreaterOrEqualsThen(minBeginDate));
+        }
+        if (maxEndDate != null) {
+            spec = spec.and(EventSpecifications.endDateLessOrEqualsThen(maxEndDate));
+        }
+        if (minEndDate != null) {
+            spec = spec.and(EventSpecifications.endDateGreaterOrEqualsThen(minEndDate));
+        }
+        return eventRepository.findAll(spec);
+    }
 
     public List<Event> findEventsByUser(String username) {
         return eventRepository.findEventsByUsername(username);
@@ -44,10 +72,6 @@ public class EventService {
 
     public void clearList() {
         events.clear();
-    }
-
-    public List<Event> findAll() {
-        return eventRepository.findAll();
     }
 
     public void deleteById(Long id) {

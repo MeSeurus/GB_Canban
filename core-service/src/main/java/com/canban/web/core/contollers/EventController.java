@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -55,6 +56,30 @@ public class EventController {
                         .collect(Collectors.toList()));
         eventService.clearList();
         return eventsAnalyticsDtoWithList;
+    }
+
+    @Operation(
+            summary = "Запрос на получение страницы продуктов",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = Page.class))
+                    )
+            }
+    )
+    @GetMapping("/my")
+    public List<EventDto> findAllEventsByUsername(
+            @RequestHeader @Parameter(description = "Имя пользователя", required = true) String username,
+            @RequestParam(name = "title_part", required = false) String titlePart,
+            @RequestParam(name = "max_begin_date", required = false) LocalDateTime maxBeginDate,
+            @RequestParam(name = "min_begin_date", required = false) LocalDateTime minBeginDate,
+            @RequestParam(name = "max_end_date", required = false) LocalDateTime maxEndDate,
+            @RequestParam(name = "min_end_date", required = false) LocalDateTime minEndDate
+    ) {
+        return eventService.findAll(username, titlePart, maxBeginDate, minBeginDate, maxEndDate, minEndDate)
+                .stream()
+                .map(e -> eventMapper.entityToDto(e))
+                .collect(Collectors.toList());
     }
 
     @GetMapping()
