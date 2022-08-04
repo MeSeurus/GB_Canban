@@ -2,6 +2,7 @@ package com.canban.web.core.entities;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -22,19 +23,19 @@ public class KanbanBoard {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "title")
+    private String title;
 
     @Column(name = "created_by")
     private String createdBy;
 
-    @ElementCollection
+    @ElementCollection()
     @CollectionTable(
             name = "kanban_boards_users",
             joinColumns = @JoinColumn(name = "kanban_board_id", referencedColumnName = "id")
     )
-    @Column(name = "username")
-    private Set<String> users;
+    @Column(name = "username_added")
+    private Set<String> usernameAdded;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -44,4 +45,9 @@ public class KanbanBoard {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    public KanbanBoard(String title, String createdBy, Set<String> usernameAdded) {
+        this.title = title;
+        this.createdBy = createdBy;
+        this.usernameAdded = usernameAdded;
+    }
 }

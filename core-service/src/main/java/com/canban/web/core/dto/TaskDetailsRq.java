@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 
 @Schema(description = "Модель деталей задачи")
 @Data
-
 public class TaskDetailsRq {
 
     @Schema(description = "Название задачи", required = true)
@@ -18,6 +17,9 @@ public class TaskDetailsRq {
 
     @Schema(description = "Описание задачи", required = true)
     private String content;
+
+    @Schema(description = "Имя исполнителя задачи", required = true)
+    private String userExecutor;
 
     @Schema(description = "Дата начала задачи")
     private LocalDateTime beginDate;

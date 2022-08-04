@@ -32,16 +32,13 @@ public abstract class AbstractEvent {
     @Column(name = "content")
     protected String content;
 
-    @Column(name = "username")
-    protected String username;
-
     @Column(name = "begin_date")
     @NotNull
-    protected LocalDateTime beginDate; //дата начала события
+    protected LocalDateTime beginDate;
 
     @Column(name = "end_date")
     @NotNull
-    protected LocalDateTime endDate; //дата окончания события
+    protected LocalDateTime endDate;
 
     @CreationTimestamp
     @Column(name = "created_at")

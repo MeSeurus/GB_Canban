@@ -3,8 +3,12 @@ package com.canban.web.core.services;
 import com.canban.api.exceptions.ResourceNotFoundException;
 import com.canban.web.core.dto.EventDetailsRq;
 import com.canban.web.core.entities.Event;
+import com.canban.web.core.mapper.DateFormatter;
 import com.canban.web.core.repositories.EventRepository;
+import com.canban.web.core.specification.EventSpecifications;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,8 +22,35 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class EventService {
     private final EventRepository eventRepository;
 
+    private final DateFormatter dateFormatter;
 
     private List<Event> events = new CopyOnWriteArrayList<>();
+
+    public List<Event> findAll(String username,
+                               String titlePart,
+                               String maxBeginDate,
+                               String minBeginDate,
+                               String maxEndDate,
+                               String minEndDate) {
+        Specification<Event> spec = Specification.where(null);
+        spec = spec.and(EventSpecifications.usernameEqual(username)); // обязательное поле
+        if (titlePart != null) {
+            spec = spec.and(EventSpecifications.titleLike(titlePart));
+        }
+        if (maxBeginDate != null) {
+            spec = spec.and(EventSpecifications.beginDateLessOrEqualsThen(dateFormatter.stringToDate(maxBeginDate)));
+        }
+        if (minBeginDate != null) {
+            spec = spec.and(EventSpecifications.beginDateGreaterOrEqualsThen(dateFormatter.stringToDate(minBeginDate)));
+        }
+        if (maxEndDate != null) {
+            spec = spec.and(EventSpecifications.endDateLessOrEqualsThen(dateFormatter.stringToDate(maxEndDate)));
+        }
+        if (minEndDate != null) {
+            spec = spec.and(EventSpecifications.endDateGreaterOrEqualsThen(dateFormatter.stringToDate(minEndDate)));
+        }
+        return eventRepository.findAll(spec);
+    }
 
     public List<Event> findEventsByUser(String username) {
         return eventRepository.findEventsByUsername(username);
@@ -44,10 +75,6 @@ public class EventService {
 
     public void clearList() {
         events.clear();
-    }
-
-    public List<Event> findAll() {
-        return eventRepository.findAll();
     }
 
     public void deleteById(Long id) {

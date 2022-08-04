@@ -2,6 +2,7 @@ package com.canban.web.core.contollers;
 
 import com.canban.api.analytics.EventsAnalyticsDtoWithList;
 import com.canban.api.analytics.TasksAnalyticsDtoWithList;
+import com.canban.api.core.EventDto;
 import com.canban.api.core.Priority;
 import com.canban.api.core.State;
 import com.canban.api.core.TaskDto;
@@ -54,18 +55,45 @@ public class TaskController {
         return tasksAnalyticsDtoWithList;
     }
 
-    @GetMapping()
     @Operation(
-            summary = "Запрос на получение всех заданий по имени пользователя",
+            summary = "Запрос на получение всех задач по Id доски",
             responses = {
                     @ApiResponse(
                             description = "Успешный ответ", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = TaskDto.class))
+                            content = @Content(schema = @Schema(implementation = List.class))
                     )
             }
     )
-    public List<TaskDto> findEventsByUsername(@RequestHeader @Parameter(description = "Имя пользователя", required = true) String username) {
-        return taskService.findTaskByUsername(username).stream().map(taskMapper::entityToDto).collect(Collectors.toList());
+    @GetMapping("/{id}")
+    public List<TaskDto> findAllTasksByUsername(
+            @PathVariable(name = "id", required = true) Long boardId,
+            @RequestParam(name = "title_part", required = false) String titlePart,
+            @RequestParam(name = "user_creator", required = false) String userCreator,
+            @RequestParam(name = "user_executor", required = false) String userExecutor,
+            @RequestParam(name = "max_begin_date", required = false) String maxBeginDate,
+            @RequestParam(name = "min_begin_date", required = false) String minBeginDate,
+            @RequestParam(name = "max_end_date", required = false) String maxEndDate,
+            @RequestParam(name = "min_end_date", required = false) String minEndDate,
+            @RequestParam(name = "max_actual_end_date", required = false) String maxActualEndDate,
+            @RequestParam(name = "min_actual_end_date", required = false) String minActualEndDate,
+            @RequestParam(name = "state", required = false) String state,
+            @RequestParam(name = "priority", required = false) String priority
+    ) {
+        return taskService.findAll(boardId,
+                        titlePart,
+                        userCreator,
+                        userExecutor,
+                        maxBeginDate,
+                        minBeginDate,
+                        maxEndDate,
+                        minEndDate,
+                        maxActualEndDate,
+                        minActualEndDate,
+                        state,
+                        priority)
+                .stream()
+                .map(e -> taskMapper.entityToDtoWithCreator(e))
+                .collect(Collectors.toList());
     }
 
     @PostMapping()
@@ -77,7 +105,6 @@ public class TaskController {
                     )
             }
     )
-
     public void createTask(@RequestHeader @Parameter(description = "Список пользователей", required = true) String username, @RequestBody TaskDetailsRq taskDetailsRq) {
         taskValidator.validate(taskDetailsRq);
         taskService.createTask(username, taskDetailsRq);
@@ -93,10 +120,10 @@ public class TaskController {
         taskService.changeContent(requestBody.getId(), requestBody.getContent());
     }
 
-    @PatchMapping("/change/username")
-    public void changeUsername(@RequestBody TaskDto requestBody) {
+    @PatchMapping("/change/user_executor")
+    public void changeUsernameExecutor(@RequestBody TaskDto requestBody) {
         taskValidator.validateUser(requestBody.getId());
-        taskService.changeUsername(requestBody.getId(), requestBody.getContent());
+        taskService.changeExecutorUsername(requestBody.getId(), requestBody.getContent());
     }
 
     @PatchMapping("/change/begin_date")

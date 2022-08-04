@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Schema(description = "Модель события для сервиса аналитики")
 public class TasksAnalyticsDto {
 
@@ -18,8 +21,11 @@ public class TasksAnalyticsDto {
     @Schema(description = "Название задачи", required = true, example = "Create program")
     private String taskTitle;
 
-    @Schema(description = "Имя пользователя задачи", required = true, example = "user1")
-    private String taskUsername;
+    @Schema(description = "Имя пользователя создателя задачи", required = true, example = "user1")
+    private String taskUserCreator;
+
+    @Schema(description = "Имя пользователя исполнителя задачи", required = true, example = "user2")
+    private String taskUserExecutor;
 
     @Schema(description = "Дата начала задачи", required = true, example = "2022-06-24 01:00:00")
     private LocalDateTime taskBeginDate;
@@ -39,97 +45,4 @@ public class TasksAnalyticsDto {
     @Schema(description = "Имя канбан-доски задачи", required = true, example = "HIGH")
     private Long kanbanBoardId;
 
-    public TasksAnalyticsDto(Long taskId,
-                             String taskTitle,
-                             String taskUsername,
-                             LocalDateTime taskBeginDate,
-                             LocalDateTime taskEndDate,
-                             LocalDateTime taskActualEndDate,
-                             State taskState, Priority taskPriority,
-                             Long kanbanBoardId) {
-        this.taskId = taskId;
-        this.taskTitle = taskTitle;
-        this.taskUsername = taskUsername;
-        this.taskBeginDate = taskBeginDate;
-        this.taskEndDate = taskEndDate;
-        this.taskActualEndDate = taskActualEndDate;
-        this.taskState = taskState;
-        this.taskPriority = taskPriority;
-        this.kanbanBoardId = kanbanBoardId;
-    }
-
-    public TasksAnalyticsDto() {
-    }
-
-    public Long getTaskId() {
-        return taskId;
-    }
-
-    public void setTaskId(Long taskId) {
-        this.taskId = taskId;
-    }
-
-    public String getTaskTitle() {
-        return taskTitle;
-    }
-
-    public void setTaskTitle(String taskTitle) {
-        this.taskTitle = taskTitle;
-    }
-
-    public String getTaskUsername() {
-        return taskUsername;
-    }
-
-    public void setTaskUsername(String taskUsername) {
-        this.taskUsername = taskUsername;
-    }
-
-    public LocalDateTime getTaskBeginDate() {
-        return taskBeginDate;
-    }
-
-    public void setTaskBeginDate(LocalDateTime taskBeginDate) {
-        this.taskBeginDate = taskBeginDate;
-    }
-
-    public LocalDateTime getTaskEndDate() {
-        return taskEndDate;
-    }
-
-    public void setTaskEndDate(LocalDateTime taskEndDate) {
-        this.taskEndDate = taskEndDate;
-    }
-
-    public LocalDateTime getTaskActualEndDate() {
-        return taskActualEndDate;
-    }
-
-    public void setTaskActualEndDate(LocalDateTime taskActualEndDate) {
-        this.taskActualEndDate = taskActualEndDate;
-    }
-
-    public State getTaskState() {
-        return taskState;
-    }
-
-    public void setTaskState(State taskState) {
-        this.taskState = taskState;
-    }
-
-    public Priority getTaskPriority() {
-        return taskPriority;
-    }
-
-    public void setTaskPriority(Priority taskPriority) {
-        this.taskPriority = taskPriority;
-    }
-
-    public Long getTaskKanbanBoardID() {
-        return kanbanBoardId;
-    }
-
-    public void setTaskKanbanBoardID(Long kanbanBoardId) {
-        this.kanbanBoardId = kanbanBoardId;
-    }
 }

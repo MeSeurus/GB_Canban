@@ -16,6 +16,12 @@ import java.time.LocalDateTime;
 @ToString
 public class Task extends AbstractEvent{
 
+    @Column(name = "user_creator")
+    private String userCreator;
+
+    @Column(name = "user_executor")
+    private String userExecutor;
+
     @Column(name = "actual_end_date")
     private LocalDateTime actualEndDate;
 
@@ -38,18 +44,19 @@ public class Task extends AbstractEvent{
     public Task(Long id,
                 String title,
                 String content,
-                String username,
+                String userCreator,
+                String userExecutor,
                 LocalDateTime beginDate,
                 LocalDateTime endDate,
                 LocalDateTime actualEndDate,
                 State state,
                 Priority priority,
                 Long kanbanBoardId ) {
-
         this.id = id;
         this.title = title;
         this.content = content;
-        this.username = username;
+        this.userCreator = userCreator;
+        this.userExecutor = userExecutor;
         this.beginDate = beginDate;
         this.endDate = endDate;
         this.actualEndDate = actualEndDate;
@@ -66,7 +73,8 @@ public class Task extends AbstractEvent{
         private Long id;
         private String title;
         private String content;
-        private String username;
+        private String userCreator;
+        private String userExecutor;
         private LocalDateTime beginDate;
         private LocalDateTime endDate;
         private LocalDateTime actualEndDate;
@@ -92,8 +100,13 @@ public class Task extends AbstractEvent{
             return this;
         }
 
-        public TaskBuilder username(final String username) {
-            this.username = username;
+        public TaskBuilder userCreator(final String userCreator) {
+            this.userCreator = userCreator;
+            return this;
+        }
+
+        public TaskBuilder userExecutor(final String userExecutor) {
+            this.userExecutor = userExecutor;
             return this;
         }
 
@@ -132,7 +145,8 @@ public class Task extends AbstractEvent{
                     this.id,
                     this.title,
                     this.content,
-                    this.username,
+                    this.userCreator,
+                    this.userExecutor,
                     this.beginDate,
                     this.endDate,
                     this.actualEndDate,

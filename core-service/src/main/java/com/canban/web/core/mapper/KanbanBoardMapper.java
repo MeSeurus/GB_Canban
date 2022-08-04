@@ -11,16 +11,15 @@ public class KanbanBoardMapper {
 
     public KanbanBoard dtoToEntity(KanbanBoardDetailsRq kanbanBoardDetailsRq) {
         return KanbanBoard.builder()
-                .name(kanbanBoardDetailsRq.getName())
+                .title(kanbanBoardDetailsRq.getTitle())
                 .build();
     }
 
     public KanbanBoardDetailsRs entityToDto(KanbanBoard kanbanBoard) {
         return KanbanBoardDetailsRs.builder()
                 .id(kanbanBoard.getId())
-                .name(kanbanBoard.getName())
+                .name(kanbanBoard.getTitle())
                 .createdBy(kanbanBoard.getCreatedBy())
-                .users(kanbanBoard.getUsers())
                 .build();
     }
 
