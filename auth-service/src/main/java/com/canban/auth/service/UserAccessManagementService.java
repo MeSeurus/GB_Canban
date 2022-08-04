@@ -36,11 +36,12 @@ public class UserAccessManagementService {
     @Transactional
     public boolean checkActivateKey(String username, String secretCode) {
         UserAwaitActivation userAwaitActivation = activationRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", username)));
-        if (userAwaitActivation.getCodeType() == CodeType.ACTIVATION_CODE && userAwaitActivation.getSecretCode().equals(secretCode)){
-            userService.updateStatus(username,UserStatus.ACTIVE);
+        if (userAwaitActivation.getCodeType() == CodeType.ACTIVATION_CODE && userAwaitActivation.getSecretCode().equals(secretCode)) {
+            userService.updateStatus(username, UserStatus.ACTIVE);
             activationRepository.deleteById(username);
             return true;
-        } return false;
+        }
+        return false;
     }
 
     @Transactional
@@ -51,9 +52,6 @@ public class UserAccessManagementService {
         }
     }
 
-    /**
-     * Проверка на попытку подбора пароля к аккаунту
-     */
     public boolean passwordGuessingProtection(String username) {
 
         boolean isFinded = false;
@@ -75,28 +73,31 @@ public class UserAccessManagementService {
         return false;
     }
 
-    public void stopGuessingPassword(String username){
-        userService.updateStatus(username,UserStatus.SUSPICIOUS);
+    public void stopGuessingPassword(String username) {
+        userService.updateStatus(username, UserStatus.SUSPICIOUS);
         jmsTemplate.setDeliveryDelay(60000L);
         jmsTemplate.convertAndSend(JmsConfig.STATUS_CHANGE, new ChangeStatusEvent(username));
     }
 
-    public void sendRecoverPasswordLink(String username){
-           String userEmail = userService.getEmailByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", username)));
-           String passcode = getRandomNumberString();
-           activationRepository.save(new UserAwaitActivation(username,passcode,CodeType.PASSWORD_REMIND_CODE));
-           jmsTemplate.convertAndSend(JmsConfig.PASSWORD_REMIND,new PasswordRemindEvent(username,passcode,userEmail));
-  //         mailSenderService.sendMail(userEmail,"Canban password recovery link","http://localhost:5555/auth/set/password/?username=" + username + "&passcode=" + passcode);
+    public void sendRecoverPasswordLink(String username) {
+        String userEmail = userService.getEmailByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", username)));
+        String passcode = getRandomNumberString();
+        activationRepository.save(new UserAwaitActivation(username, passcode, CodeType.PASSWORD_REMIND_CODE));
+        jmsTemplate.convertAndSend(JmsConfig.PASSWORD_REMIND, new PasswordRemindEvent(username, passcode, userEmail));
     }
 
-    private String getRandomNumberString (){
+    private String getRandomNumberString() {
         Random random = new Random();
         int number = random.nextInt(999999);
         return String.format("%06d", number);
     }
 
-
     public void createUser(UserAwaitActivation userAwaitActivation) {
         activationRepository.save(userAwaitActivation);
+    }
+
+
+    public boolean userAndCodeExistInDb(String username, String passcode) {
+        return activationRepository.findExistingUserAndCode(username, passcode, CodeType.PASSWORD_REMIND_CODE) == 1;
     }
 }
