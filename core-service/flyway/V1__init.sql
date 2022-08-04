@@ -49,7 +49,8 @@ insert into tasks ( title, content, user_creator, user_executor, begin_date,end_
 values  ( 'Create simple program', 'Hello World!', 'user1', 'user2' , '2022-06-24 01:00:00','2022-08-24 01:00:00', 'COMPLETE', 'HIGH', '1' ),
         ( 'Create simple program2', 'Hello World!', 'user1', '', '2022-06-24 01:00:00','2022-08-24 01:00:00', 'CREATED', 'HIGH', '1' ),
         ( 'Create simple program3', 'Hello World!', 'user2', '', '2022-06-24 01:00:00','2022-08-24 01:00:00', 'CREATED', 'NORMAL', '1' ),
+        ( 'Create simple program3', 'Hello World!', 'user2', '', '2022-06-24 01:00:00','2022-08-24 01:00:00', 'CREATED', 'NORMAL', '2' ),
+        ( 'Create simple program3', 'Hello World!', 'user2', '', '2022-06-24 01:00:00','2022-08-24 01:00:00', 'IN_PROGRESS', 'LOW', '2' ),
         ( 'Create simple program3', 'Hello World!', 'user2', '', '2022-06-24 01:00:00','2022-08-24 01:00:00', 'IN_PROGRESS', 'LOW', '1' ),
         ( 'Create simple program3', 'Hello World!', 'user3', '', '2022-06-24 01:00:00','2022-08-24 01:00:00', 'IN_PROGRESS', 'LOW', '1' ),
         ( 'Create simple program3', 'Hello World!', 'user3', '', '2022-06-24 01:00:00','2022-08-24 01:00:00', 'IN_PROGRESS', 'LOW', '1' );
-

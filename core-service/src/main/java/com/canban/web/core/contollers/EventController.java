@@ -57,7 +57,7 @@ public class EventController {
     }
 
     @Operation(
-            summary = "Запрос на получение страницы продуктов",
+            summary = "Запрос на получение всех ивентов пользователя",
             responses = {
                     @ApiResponse(
                             description = "Успешный ответ", responseCode = "200",

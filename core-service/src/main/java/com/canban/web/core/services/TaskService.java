@@ -5,9 +5,15 @@ import com.canban.api.core.Priority;
 import com.canban.api.core.State;
 import com.canban.api.exceptions.ResourceNotFoundException;
 import com.canban.web.core.dto.TaskDetailsRq;
+import com.canban.web.core.entities.Event;
 import com.canban.web.core.entities.Task;
+import com.canban.web.core.mapper.DateFormatter;
 import com.canban.web.core.repositories.TaskRepository;
+import com.canban.web.core.specification.EventSpecifications;
+import com.canban.web.core.specification.TaskSpecification;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.PropertyValues;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,9 +24,61 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Service
 @RequiredArgsConstructor
 public class TaskService {
+
+    private final DateFormatter dateFormatter;
     private final TaskRepository taskRepository;
 
     private List<Task> tasks = new CopyOnWriteArrayList<>();
+
+    public List<Task> findAll(Long boardId,
+                        String titlePart,
+                        String userCreator,
+                        String userExecutor,
+                        String maxBeginDate,
+                        String minBeginDate,
+                        String maxEndDate,
+                        String minEndDate,
+                        String maxActualEndDate,
+                        String minActualEndDate,
+                        String stateStr,
+                        String priorityStr) {
+        Specification<Task> spec = Specification.where(null);
+        spec = spec.and(TaskSpecification.boardIdEqual(boardId)); // обязательное поле
+        if (titlePart != null) {
+            spec = spec.and(TaskSpecification.titleLike(titlePart));
+        }
+        if (userCreator != null) {
+            spec = spec.and(TaskSpecification.usernameCreatorEqual(userCreator));
+        }
+        if (userExecutor != null) {
+            spec = spec.and(TaskSpecification.usernameExecutorEqual(userExecutor));
+        }
+        if (maxBeginDate != null) {
+            spec = spec.and(TaskSpecification.beginDateLessOrEqualsThen(dateFormatter.stringToDate(maxBeginDate)));
+        }
+        if (minBeginDate != null) {
+            spec = spec.and(TaskSpecification.beginDateGreaterOrEqualsThen(dateFormatter.stringToDate(minBeginDate)));
+        }
+        if (maxEndDate != null) {
+            spec = spec.and(TaskSpecification.endDateLessOrEqualsThen(dateFormatter.stringToDate(maxEndDate)));
+        }
+        if (minEndDate != null) {
+            spec = spec.and(TaskSpecification.endDateGreaterOrEqualsThen(dateFormatter.stringToDate(minEndDate)));
+        }
+        if (maxActualEndDate != null) {
+            spec = spec.and(TaskSpecification.actualEndDateLessOrEqualsThen(dateFormatter.stringToDate(maxEndDate)));
+        }
+        if (minActualEndDate != null) {
+            spec = spec.and(TaskSpecification.actualEndDateGreaterOrEqualsThen(dateFormatter.stringToDate(minEndDate)));
+        }
+        if (stateStr != null) {
+            spec = spec.and(TaskSpecification.stateEquals(State.valueOf(stateStr)));
+        }
+        if (priorityStr != null) {
+            spec = spec.and(TaskSpecification.priorityEquals(Priority.valueOf(priorityStr)));
+        }
+        return taskRepository.findAll(spec);
+    }
 
     public List<Task> findTaskByUsername(String username) {
         return taskRepository.findTasksByUserCreator(username);
@@ -120,6 +178,5 @@ public class TaskService {
     public void clearList() {
         tasks.clear();
     }
-
 
 }
