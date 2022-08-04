@@ -1,4 +1,4 @@
-package com.canban.auth.service;
+package com.canban.mail.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;

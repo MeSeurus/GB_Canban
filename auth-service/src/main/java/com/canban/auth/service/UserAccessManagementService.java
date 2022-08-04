@@ -1,6 +1,7 @@
 package com.canban.auth.service;
 
-import com.canban.auth.activemqevents.ChangeStatusEvent;
+import com.canban.api.activemqevents.ChangeStatusEvent;
+import com.canban.api.activemqevents.PasswordRemindEvent;
 import com.canban.auth.config.JmsConfig;
 import com.canban.auth.entity.User;
 import com.canban.auth.entity.security.CodeType;
@@ -8,8 +9,6 @@ import com.canban.auth.entity.security.UserAwaitActivation;
 import com.canban.auth.entity.security.UserStatus;
 import com.canban.auth.repository.ActivationRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -27,7 +26,6 @@ public class UserAccessManagementService {
     private final UserService userService;
     private final JmsTemplate jmsTemplate;
     private final ActivationRepository activationRepository;
-    private final MailSenderService mailSenderService;
 
     private List<User> users = new CopyOnWriteArrayList<>();
 
@@ -87,7 +85,8 @@ public class UserAccessManagementService {
            String userEmail = userService.getEmailByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", username)));
            String passcode = getRandomNumberString();
            activationRepository.save(new UserAwaitActivation(username,passcode,CodeType.PASSWORD_REMIND_CODE));
-           mailSenderService.sendMail(userEmail,"Canban password recovery link","http://localhost:5555/auth/set/password/?username=" + username + "&passcode=" + passcode);
+           jmsTemplate.convertAndSend(JmsConfig.PASSWORD_REMIND,new PasswordRemindEvent(username,passcode,userEmail));
+  //         mailSenderService.sendMail(userEmail,"Canban password recovery link","http://localhost:5555/auth/set/password/?username=" + username + "&passcode=" + passcode);
     }
 
     private String getRandomNumberString (){
