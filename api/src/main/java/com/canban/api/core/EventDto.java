@@ -50,6 +50,15 @@ public class EventDto {
 
     }
 
+    public EventDto(Long id, String title, String content, String username, LocalDateTime beginDate, LocalDateTime endDate) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.username = username;
+        this.beginDate = beginDate;
+        this.endDate = endDate;
+    }
+
     public EventDto(Long id, String title, String content) {
         this.id = id;
         this.title = title;

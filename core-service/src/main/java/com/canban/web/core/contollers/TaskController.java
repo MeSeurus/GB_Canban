@@ -64,8 +64,8 @@ public class TaskController {
                     )
             }
     )
-    public List<TaskDto> findEventsByUsername(@RequestHeader @Parameter(description = "Имя пользователя", required = true) String username) {
-        return taskService.findTaskByUsername(username).stream().map(taskMapper::entityToDto).collect(Collectors.toList());
+    public List<TaskDto> findTasksByUsername(@RequestHeader @Parameter(description = "Имя пользователя", required = true) String username) {
+        return taskService.findTaskByUsername(username).stream().map(taskMapper::entityToDtoWithCreator).collect(Collectors.toList());
     }
 
     @PostMapping()
@@ -93,10 +93,10 @@ public class TaskController {
         taskService.changeContent(requestBody.getId(), requestBody.getContent());
     }
 
-    @PatchMapping("/change/username")
-    public void changeUsername(@RequestBody TaskDto requestBody) {
+    @PatchMapping("/change/user_executor")
+    public void changeUsernameExecutor(@RequestBody TaskDto requestBody) {
         taskValidator.validateUser(requestBody.getId());
-        taskService.changeUsername(requestBody.getId(), requestBody.getContent());
+        taskService.changeExecutorUsername(requestBody.getId(), requestBody.getContent());
     }
 
     @PatchMapping("/change/begin_date")

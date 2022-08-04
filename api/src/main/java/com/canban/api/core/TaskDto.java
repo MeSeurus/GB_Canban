@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
+@AllArgsConstructor
 public class TaskDto {
 
     @Schema(description = "ID задачи", required = true, example = "1")
@@ -18,11 +19,13 @@ public class TaskDto {
     @Schema(description = "Название задачи", required = true, example = "Создать программу Hello World")
     private String title;
 
-    @Schema(description = "Описание задачи", required = true)
+    @Schema(description = "Описание задачи", required = false    )
     private String content;
 
-    @Schema(description = "Исполнитель задачи", required = true, example = "user1")
-    private String username;
+    @Schema(description = "Создатель задачи", required = true, example = "user1")
+    private String userCreator;
+    @Schema(description = "Исполнитель задачи", required = false, example = "user1")
+    private String userExecutor;
 
     @Schema(description = "Дата начала задачи", required = true)
     private LocalDateTime beginDate;
@@ -30,7 +33,7 @@ public class TaskDto {
     @Schema(description = "Дата выполнения задачи", required = true)
     private LocalDateTime endDate;
 
-    @Schema(description = "Дата фактического выполнения задачи", required = true)
+    @Schema(description = "Дата фактического выполнения задачи", required = false)
     private LocalDateTime actualEndDate;
 
     @Schema(description = "Статус задачи", required = true)
@@ -41,23 +44,12 @@ public class TaskDto {
 
     @Schema(description = "ID канбан-доски", required = true)
     private Long kanbanBoardId;
-    //Конструктор без исполнителя
-    public TaskDto(Long id,
-                   @NotNull
-                   String title,
-                   String content,
-                   String username,
-                   @NotNull
-                   LocalDateTime beginDate,
-                   LocalDateTime endDate,
-                   LocalDateTime actualEndDate,
-                   String state,
-                   String priority,
-                   Long kanbanBoardId) {
+
+    public TaskDto(Long id, String title, String content, String userExecutor, LocalDateTime beginDate, LocalDateTime endDate, LocalDateTime actualEndDate, String state, String priority, Long kanbanBoardId) {
         this.id = id;
-        this.username = username;
         this.title = title;
         this.content = content;
+        this.userExecutor = userExecutor;
         this.beginDate = beginDate;
         this.endDate = endDate;
         this.actualEndDate = actualEndDate;
@@ -66,13 +58,13 @@ public class TaskDto {
         this.kanbanBoardId = kanbanBoardId;
     }
 
-    public TaskDto(Long id, String title, String content, String username, LocalDateTime eventDate, LocalDateTime dueDate, String state, String priority, Long kanbanBoardId) {
+    public TaskDto(Long id, String title, String content, LocalDateTime beginDate, LocalDateTime endDate, LocalDateTime actualEndDate, String state, String priority, Long kanbanBoardId) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.username = username;
-        this.endDate = beginDate;
-        this.beginDate = endDate;
+        this.beginDate = beginDate;
+        this.endDate = endDate;
+        this.actualEndDate = actualEndDate;
         this.state = state;
         this.priority = priority;
         this.kanbanBoardId = kanbanBoardId;

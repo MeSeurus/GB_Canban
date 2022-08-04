@@ -11,13 +11,14 @@ public class TasksAnalyticsMapper {
         return new TasksAnalytics(
                 tasksAnalyticsDto.getTaskId(),
                 tasksAnalyticsDto.getTaskTitle(),
-                tasksAnalyticsDto.getTaskUsername(),
+                tasksAnalyticsDto.getTaskUserCreator(),
+                tasksAnalyticsDto.getTaskUserExecutor(),
                 tasksAnalyticsDto.getTaskBeginDate(),
                 tasksAnalyticsDto.getTaskEndDate(),
                 tasksAnalyticsDto.getTaskActualEndDate(),
                 tasksAnalyticsDto.getTaskState(),
                 tasksAnalyticsDto.getTaskPriority(),
-                tasksAnalyticsDto.getTaskKanbanBoardID()
+                tasksAnalyticsDto.getKanbanBoardId()
                 );
     }
 

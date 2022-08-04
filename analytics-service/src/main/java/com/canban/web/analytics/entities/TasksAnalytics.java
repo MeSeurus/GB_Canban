@@ -31,15 +31,11 @@ public class TasksAnalytics {
     @Column(name = "task_title")
     private String taskTitle;
 
-    @Column(name = "task_username")
-    private String taskUsername;
+    @Column(name = "task_username_creator")
+    private String taskUserCreator;
 
-    // ниже не будущее
-//    @Column(name = "task_username_creator")
-//    private String taskUserCreator;
-//
-//    @Column(name = "task_username_executor")
-//    private String taskUserExecutor;
+    @Column(name = "task_username_executor")
+    private String taskUserExecutor;
 
     @Column(name = "task_begin_date")
     private LocalDateTime taskBeginDate;
@@ -71,18 +67,11 @@ public class TasksAnalytics {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public TasksAnalytics(Long taskId,
-                          String taskTitle,
-                          String taskUsername,
-                          LocalDateTime taskBeginDate,
-                          LocalDateTime taskEndDate,
-                          LocalDateTime taskActualEndDate,
-                          State taskState,
-                          Priority taskPriority,
-                          Long taskKanbanBoardId) {
+    public TasksAnalytics(Long taskId, String taskTitle, String taskUserCreator, String taskUserExecutor, LocalDateTime taskBeginDate, LocalDateTime taskEndDate, LocalDateTime taskActualEndDate, State taskState, Priority taskPriority, Long taskKanbanBoardId) {
         this.taskId = taskId;
         this.taskTitle = taskTitle;
-        this.taskUsername = taskUsername;
+        this.taskUserCreator = taskUserCreator;
+        this.taskUserExecutor = taskUserExecutor;
         this.taskBeginDate = taskBeginDate;
         this.taskEndDate = taskEndDate;
         this.taskActualEndDate = taskActualEndDate;
@@ -90,5 +79,4 @@ public class TasksAnalytics {
         this.taskPriority = taskPriority;
         this.taskKanbanBoardId = taskKanbanBoardId;
     }
-
 }

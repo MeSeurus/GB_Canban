@@ -17,6 +17,9 @@ import java.util.Set;
 @NoArgsConstructor
 public class Event extends AbstractEvent {
 
+    @Column(name = "username")
+    private String username;
+
     @ElementCollection
     @CollectionTable(
             name = "events_users",

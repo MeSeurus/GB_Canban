@@ -12,8 +12,6 @@ import java.util.List;
 @Transactional
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
-    @Query(
-            value = "SELECT e from Task e where e.username = :username"
-    )
-    List<Task> findTasksByUserName(String username);
+
+    List<Task> findTasksByUserCreator(String username);
 }

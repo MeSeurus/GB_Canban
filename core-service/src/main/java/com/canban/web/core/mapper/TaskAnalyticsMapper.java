@@ -11,7 +11,8 @@ public class TaskAnalyticsMapper {
         return new TasksAnalyticsDto(
                 task.getId(),
                 task.getTitle(),
-                task.getUsername(),
+                task.getUserCreator(),
+                task.getUserExecutor(),
                 task.getBeginDate(),
                 task.getEndDate(),
                 task.getActualEndDate(),

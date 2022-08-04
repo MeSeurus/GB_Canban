@@ -16,19 +16,19 @@ public class EventSpecifications {
     }
 
     public static Specification<Event> endDateLessOrEqualsThen(LocalDateTime endDate) {
-        return ((root, query, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get("end_date"), endDate));
+        return ((root, query, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get("endDate"), endDate));
     }
 
     public static Specification<Event> endDateGreaterOrEqualsThen(LocalDateTime endDate) {
-        return ((root, query, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get("end_date"), endDate));
+        return ((root, query, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get("endDate"), endDate));
     }
 
     public static Specification<Event> beginDateGreaterOrEqualsThen(LocalDateTime beginDate) {
-        return ((root, query, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get("begin_date"), beginDate));
+        return ((root, query, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get("beginDate"), beginDate));
     }
 
     public static Specification<Event> beginDateLessOrEqualsThen(LocalDateTime beginDate) {
-        return ((root, query, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get("begin_date"), beginDate));
+        return ((root, query, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get("beginDate"), beginDate));
     }
 
 }

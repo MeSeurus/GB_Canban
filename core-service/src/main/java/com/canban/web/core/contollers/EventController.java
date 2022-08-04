@@ -1,11 +1,9 @@
 package com.canban.web.core.contollers;
 
 import com.canban.api.analytics.EventsAnalyticsDtoWithList;
-import com.canban.api.analytics.EventsAnalyticsDto;
 import com.canban.api.core.EventDto;
 import com.canban.web.core.dto.EventDetailsRq;
 import com.canban.web.core.mapper.EventAnalyticsMapper;
-import com.canban.web.core.entities.Event;
 import com.canban.web.core.mapper.EventMapper;
 import com.canban.web.core.services.EventService;
 import com.canban.web.core.validators.EventValidator;
@@ -16,10 +14,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +25,7 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "http://localhost:3000/")
 @RequiredArgsConstructor
 @Tag(name = "События", description = "Методы работы с событиями")
+@Slf4j
 public class EventController {
 
     private final EventValidator eventValidator;
@@ -63,38 +61,22 @@ public class EventController {
             responses = {
                     @ApiResponse(
                             description = "Успешный ответ", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = Page.class))
+                            content = @Content(schema = @Schema(implementation = List.class))
                     )
             }
     )
-    @GetMapping("/my")
+    @GetMapping()
     public List<EventDto> findAllEventsByUsername(
             @RequestHeader @Parameter(description = "Имя пользователя", required = true) String username,
             @RequestParam(name = "title_part", required = false) String titlePart,
-            @RequestParam(name = "max_begin_date", required = false) LocalDateTime maxBeginDate,
-            @RequestParam(name = "min_begin_date", required = false) LocalDateTime minBeginDate,
-            @RequestParam(name = "max_end_date", required = false) LocalDateTime maxEndDate,
-            @RequestParam(name = "min_end_date", required = false) LocalDateTime minEndDate
+            @RequestParam(name = "max_begin_date", required = false) String maxBeginDate,
+            @RequestParam(name = "min_begin_date", required = false) String minBeginDate,
+            @RequestParam(name = "max_end_date", required = false) String maxEndDate,
+            @RequestParam(name = "min_end_date", required = false) String minEndDate
     ) {
         return eventService.findAll(username, titlePart, maxBeginDate, minBeginDate, maxEndDate, minEndDate)
                 .stream()
                 .map(e -> eventMapper.entityToDto(e))
-                .collect(Collectors.toList());
-    }
-
-    @GetMapping()
-    @Operation(
-            summary = "Запрос на получение всех событий по имени пользователя",
-            responses = {
-                    @ApiResponse(
-                            description = "Успешный ответ", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = EventDto.class))
-                    )
-            }
-    )
-    public List<EventDto> findEventsByUsername(@RequestHeader @Parameter(description = "Имя пользователя", required = true) String username) {
-        return eventService.findEventsByUser(username).stream()
-                .map(eventMapper::entityToDto)
                 .collect(Collectors.toList());
     }
 
@@ -107,7 +89,6 @@ public class EventController {
                     )
             }
     )
-
     public void createEvent(@RequestHeader @Parameter(description = "Список пользователей", required = true) String username, @RequestBody EventDetailsRq eventDetailsRq) {
         eventValidator.validate(eventDetailsRq);
         eventService.createEvent(username, eventDetailsRq);
@@ -155,4 +136,5 @@ public class EventController {
     public void changeEndDate(@RequestBody EventDto requestBody) {
         eventService.changeEndDate(requestBody.getId(), requestBody.getEndDate());
     }
+
 }

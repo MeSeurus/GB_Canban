@@ -23,21 +23,37 @@ public class TaskService {
     private List<Task> tasks = new CopyOnWriteArrayList<>();
 
     public List<Task> findTaskByUsername(String username) {
-        return taskRepository.findTasksByUserName(username);
+        return taskRepository.findTasksByUserCreator(username);
     }
 
     public void createTask(String username, TaskDetailsRq taskDetailsRq) {
-        Task task = Task.taskBuilder()
-                .title(taskDetailsRq.getTitle())
-                .content(taskDetailsRq.getContent())
-                .username(username)
-                .beginDate(taskDetailsRq.getBeginDate())
-                .endDate(taskDetailsRq.getEndDate())
-                .actualEndDate(taskDetailsRq.getActualEndDate())
-                .kanbanBoardId(taskDetailsRq.getKanbanBoardId())
-                .state(taskDetailsRq.getState())
-                .priority(taskDetailsRq.getPriority())
-                .build();
+        Task task = null;
+        if (taskDetailsRq.getUserExecutor() != null || !taskDetailsRq.getUserExecutor().isEmpty()) {
+            task = Task.taskBuilder()
+                    .title(taskDetailsRq.getTitle())
+                    .content(taskDetailsRq.getContent())
+                    .userCreator(username)
+                    .userExecutor(taskDetailsRq.getUserExecutor())
+                    .beginDate(taskDetailsRq.getBeginDate())
+                    .endDate(taskDetailsRq.getEndDate())
+                    .actualEndDate(taskDetailsRq.getActualEndDate())
+                    .kanbanBoardId(taskDetailsRq.getKanbanBoardId())
+                    .state(taskDetailsRq.getState())
+                    .priority(taskDetailsRq.getPriority())
+                    .build();
+        } else {
+            task = Task.taskBuilder()
+                    .title(taskDetailsRq.getTitle())
+                    .content(taskDetailsRq.getContent())
+                    .userCreator(username)
+                    .beginDate(taskDetailsRq.getBeginDate())
+                    .endDate(taskDetailsRq.getEndDate())
+                    .actualEndDate(taskDetailsRq.getActualEndDate())
+                    .kanbanBoardId(taskDetailsRq.getKanbanBoardId())
+                    .state(taskDetailsRq.getState())
+                    .priority(taskDetailsRq.getPriority())
+                    .build();
+        }
         taskRepository.save(task);
         tasks.add(task);
     }
@@ -63,9 +79,9 @@ public class TaskService {
     }
 
     @Transactional
-    public void changeUsername(Long id, String username) {
+    public void changeExecutorUsername(Long id, String username) {
         Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change task's username. Task not found"));
-        task.setUsername(username);
+        task.setUserExecutor(username);
     }
 
     @Transactional
