@@ -29,7 +29,7 @@ public class KanbanBoard {
     @Column(name = "created_by")
     private String createdBy;
 
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection()
     @CollectionTable(
             name = "kanban_boards_users",
             joinColumns = @JoinColumn(name = "kanban_board_id", referencedColumnName = "id")

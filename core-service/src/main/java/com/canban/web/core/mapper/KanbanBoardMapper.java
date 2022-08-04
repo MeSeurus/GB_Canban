@@ -20,7 +20,6 @@ public class KanbanBoardMapper {
                 .id(kanbanBoard.getId())
                 .name(kanbanBoard.getTitle())
                 .createdBy(kanbanBoard.getCreatedBy())
-                .usernameAdded(kanbanBoard.getUsernameAdded())
                 .build();
     }
 

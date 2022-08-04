@@ -7,11 +7,11 @@ create table if not exists kanban_boards
     updated_at      timestamp default current_timestamp
 );
 
-insert into kanban_boards (title, created_by)
-values  ('My Asana', 'user1'),
-        ('My Jira', 'user2'),
-        ('My Canban', 'user3'),
-        ('My Asana2', 'user1');
+insert into kanban_boards (id, title, created_by)
+values  (1, 'My Asana', 'user1'),
+        (2, 'My Jira', 'user2'),
+        (3, 'My Canban', 'user3'),
+        (4, 'My Asana2', 'user1');
 
 create table if not exists kanban_boards_users
 (
