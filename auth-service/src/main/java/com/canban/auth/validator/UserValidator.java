@@ -1,8 +1,10 @@
 package com.canban.auth.validator;
+
 import com.canban.api.auth.RegistrationUserDto;
 import com.canban.api.exceptions.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,13 +14,6 @@ import static com.canban.auth.cnst.RegexConst.VALIDATE_PASSWORD;
 @Component
 @RequiredArgsConstructor
 public class UserValidator {
-
-//    public static boolean patternMatches(String emailAddress) {
-//        String regexPattern = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+(?:\\.[a-zA-Z0-9_!#$%&'* +/=?`{|}~^-]+)*@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$";
-//        return Pattern.compile(regexPattern)
-//                .matcher(emailAddress)
-//                .matches();
-//    }
 
     public void validate(RegistrationUserDto registrationUserDto) {
         List<String> errors = new ArrayList<>();

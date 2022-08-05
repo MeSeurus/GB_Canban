@@ -1,7 +1,6 @@
 package com.canban.auth.repository;
 
 import com.canban.auth.entity.User;
-import com.canban.auth.entity.security.CodeType;
 import com.canban.auth.entity.security.UserStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
