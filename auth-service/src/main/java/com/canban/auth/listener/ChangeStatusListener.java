@@ -1,7 +1,7 @@
 package com.canban.auth.listener;
 
+import com.canban.api.activemqevents.ChangeStatusEvent;
 import com.canban.auth.config.JmsConfig;
-import com.canban.auth.activemqevents.ChangeStatusEvent;
 import com.canban.auth.entity.security.UserStatus;
 import com.canban.auth.service.UserService;
 import lombok.RequiredArgsConstructor;

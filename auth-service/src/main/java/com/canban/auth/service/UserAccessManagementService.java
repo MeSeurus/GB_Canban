@@ -1,11 +1,14 @@
 package com.canban.auth.service;
 
-import com.canban.auth.activemqevents.ChangeStatusEvent;
+import com.canban.api.activemqevents.ActivationEvent;
+import com.canban.api.activemqevents.ChangeStatusEvent;
+import com.canban.api.activemqevents.PasswordRemindEvent;
 import com.canban.auth.config.JmsConfig;
 import com.canban.auth.entity.User;
 import com.canban.auth.entity.security.CodeType;
 import com.canban.auth.entity.security.UserAwaitActivation;
 import com.canban.auth.entity.security.UserStatus;
+import com.canban.auth.exceptions.WrongUserStatusException;
 import com.canban.auth.repository.ActivationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jms.core.JmsTemplate;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -21,31 +25,25 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Service
 @RequiredArgsConstructor
 public class UserAccessManagementService {
-
-    /**
-     * Это нужно для устранения Circular Dependency Exception
-     */
-
-    private UserService userService;
-
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
+    private final UserService userService;
     private final JmsTemplate jmsTemplate;
     private final ActivationRepository activationRepository;
-    private final MailSenderService mailSenderService;
 
     private List<User> users = new CopyOnWriteArrayList<>();
+
+    public Optional<UserAwaitActivation> findByUsername(String username) {
+        return activationRepository.findByUsername(username);
+    }
 
     @Transactional
     public boolean checkActivateKey(String username, String secretCode) {
         UserAwaitActivation userAwaitActivation = activationRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", username)));
-        if (userAwaitActivation.getCodeType() == CodeType.ACTIVATION_CODE && userAwaitActivation.getSecretCode().equals(secretCode)){
-            userService.updateStatus(username,UserStatus.ACTIVE);
+        if (userAwaitActivation.getCodeType() == CodeType.ACTIVATION_CODE && userAwaitActivation.getSecretCode().equals(secretCode)) {
+            userService.updateStatus(username, UserStatus.ACTIVE);
             activationRepository.deleteById(username);
             return true;
-        } return false;
+        }
+        return false;
     }
 
     @Transactional
@@ -53,12 +51,10 @@ public class UserAccessManagementService {
         UserAwaitActivation userAwaitActivation = activationRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", username)));
         if (userAwaitActivation.getCodeType() == CodeType.PASSWORD_REMIND_CODE && userAwaitActivation.getSecretCode().equals(code)) {
             userService.updatePassword(username, password);
+            activationRepository.deleteById(username);
         }
     }
 
-    /**
-     * Проверка на попытку подбора пароля к аккаунту
-     */
     public boolean passwordGuessingProtection(String username) {
 
         boolean isFinded = false;
@@ -80,27 +76,51 @@ public class UserAccessManagementService {
         return false;
     }
 
-    public void stopGuessingPassword(String username){
-        userService.updateStatus(username,UserStatus.SUSPICIOUS);
+    public void stopGuessingPassword(String username) {
+        userService.updateStatus(username, UserStatus.SUSPICIOUS);
         jmsTemplate.setDeliveryDelay(60000L);
         jmsTemplate.convertAndSend(JmsConfig.STATUS_CHANGE, new ChangeStatusEvent(username));
     }
 
-    public void sendRecoverPasswordLink(String username){
-           String userEmail = userService.getEmailByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", username)));
-           String passcode = getRandomNumberString();
-           activationRepository.save(new UserAwaitActivation(username,passcode,CodeType.PASSWORD_REMIND_CODE));
-           mailSenderService.sendMail(userEmail,"Canban password recovery link","http://localhost:5555/auth/set/password/?username=" + username + "&passcode=" + passcode);
+    @Transactional
+    public void sendRecoverPasswordLink(String username) {
+        String userEmail = userService.getEmailByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", username)));
+        String passcode = getRandomNumberString();
+        activationRepository.save(new UserAwaitActivation(username, passcode, CodeType.PASSWORD_REMIND_CODE));
+        jmsTemplate.convertAndSend(JmsConfig.PASSWORD_REMIND, new PasswordRemindEvent(username, passcode, userEmail));
     }
 
-    private String getRandomNumberString (){
+    private String getRandomNumberString() {
         Random random = new Random();
         int number = random.nextInt(999999);
         return String.format("%06d", number);
     }
 
-
+    @Transactional
     public void createUser(UserAwaitActivation userAwaitActivation) {
         activationRepository.save(userAwaitActivation);
+    }
+
+
+    public boolean userAndCodeExistInDb(String username, String passcode) {
+        return activationRepository.findExistingUserAndCode(username, passcode, CodeType.PASSWORD_REMIND_CODE) == 1;
+    }
+
+    public void sendActivationLinkInQueue(String username, String code, String email){
+        jmsTemplate.convertAndSend(JmsConfig.ACTIVATION, new ActivationEvent(username,code, email));
+    }
+
+    @Transactional
+    public void sendNewActivationLink(String username) {
+        if (!userService.getUserStatusByUsername(username).get().equals(UserStatus.NOT_ACTIVE)) {throw new WrongUserStatusException("Вы уже активированы");}
+        String newActivationCode = getRandomNumberString();
+        String email = userService.getEmailByUsername(username).get();
+        if (activationRepository.findExistingUserAndCodeType(username, CodeType.ACTIVATION_CODE) == 1) {
+            activationRepository.updateCodeByUsernameAndCodeType(username,newActivationCode,CodeType.ACTIVATION_CODE);
+        } else {
+            UserAwaitActivation user = new UserAwaitActivation(username,newActivationCode,CodeType.ACTIVATION_CODE);
+            activationRepository.save(user);
+        }
+        sendActivationLinkInQueue(username, newActivationCode, email);
     }
 }

@@ -3,14 +3,16 @@ package com.canban.auth.controller;
 import com.canban.api.auth.NewPasswordDto;
 import com.canban.auth.exceptions.InvalidRegistrationException;
 import com.canban.auth.service.UserAccessManagementService;
+import com.canban.auth.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import static com.canban.auth.cnst.RegexConst.VALIDATE_PASSWORD;
 
 
 @RestController
@@ -22,6 +24,7 @@ public class UserAccessManagementController {
 
     private final UserAccessManagementService userAccessManagementService;
     private final PasswordEncoder passwordEncoder;
+    private final UserService userService;
 
     @GetMapping("/activation")
     @Operation(
@@ -31,9 +34,8 @@ public class UserAccessManagementController {
                     @ApiResponse(description = "Успешный ответ", responseCode = "200")
             }
     )
-    public ResponseEntity<?> activation(@RequestParam(name = "username") String username, @RequestParam (name = "code") String code){
+    public void activation(@RequestParam(name = "username") String username, @RequestParam(name = "code") String code) {
         userAccessManagementService.checkActivateKey(username, code);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/recovery/password")
@@ -43,9 +45,21 @@ public class UserAccessManagementController {
             responses = {
                     @ApiResponse(description = "Успешный ответ", responseCode = "200")
             })
-    public ResponseEntity<?> recoverPassword (@RequestBody String username){
+    public void recoverPassword(@RequestBody String username) {
         userAccessManagementService.sendRecoverPasswordLink(username);
-        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/recovery/activation")
+    @Operation(
+            summary = "Отправка на почту пользователя новой ссылки для активации аккаунта",
+            description = "Позволяет пользователю, потерявшему ссылку на активацию, выслать себе новую",
+            responses = {
+                    @ApiResponse(description = "Успешный ответ", responseCode = "200")
+            }
+    )
+    public void recoverActivationLink(@RequestBody String username) {
+        if (!userService.userExistInDb(username)) throw new UsernameNotFoundException("Пользователь не найден");
+        userAccessManagementService.sendNewActivationLink(username);
     }
 
     @PostMapping("/set/password")
@@ -56,14 +70,20 @@ public class UserAccessManagementController {
                     @ApiResponse(description = "Успешный ответ", responseCode = "200")
             }
     )
-    public ResponseEntity<?> setNewPassword(@RequestBody NewPasswordDto newPasswordDto){
-        if (!newPasswordDto.getNewPassword().equals(newPasswordDto.getConfirmNewPassword())){
-            throw new InvalidRegistrationException("Пароли не совпадают");
+
+    public void setNewPassword(@RequestBody NewPasswordDto newPasswordDto) {
+        String exMessage = "";
+        if (!newPasswordDto.getNewPassword().equals(newPasswordDto.getConfirmNewPassword())) {
+            exMessage = exMessage.concat("Пароли не совпадают; ");
         }
-        if (newPasswordDto.getNewPassword().length() < 8){
-            throw new InvalidRegistrationException("Пароль не должен быть меньше 8 символов");
+        if (!newPasswordDto.getNewPassword().matches(VALIDATE_PASSWORD)) {
+            exMessage = exMessage.concat("Пароль не должен быть меньше 8 символов");
         }
-        userAccessManagementService.setNewPassword(newPasswordDto.getUsername(),passwordEncoder.encode(newPasswordDto.getNewPassword()),newPasswordDto.getPasswordCode());
-        return new ResponseEntity<>(HttpStatus.OK);
+        if (exMessage.length() > 0) throw new InvalidRegistrationException(exMessage);
+        if (!userAccessManagementService.userAndCodeExistInDb(newPasswordDto.getUsername(), newPasswordDto.getPasswordCode())) {
+            throw new InvalidRegistrationException("Некорректная ссылка");
+        }
+        userAccessManagementService.setNewPassword(newPasswordDto.getUsername(), passwordEncoder.encode(newPasswordDto.getNewPassword()), newPasswordDto.getPasswordCode());
     }
+
 }
