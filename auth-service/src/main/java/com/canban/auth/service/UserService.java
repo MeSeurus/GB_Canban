@@ -89,8 +89,14 @@ public class UserService implements UserDetailsService {
         return userRepository.getEmailByUsername(username);
     }
 
+    public Optional<UserStatus> getUserStatusByUsername(String username) {return userRepository.getUserStatusByUsername(username);}
+
     @Transactional
     public void updatePassword(String username, String password) {
         userRepository.updatePassword(username, password);
+    }
+
+    public boolean userExistInDb(String username){
+        return userRepository.findExistingUser(username) == 1;
     }
 }

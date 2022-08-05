@@ -1,6 +1,7 @@
 package com.canban.auth.repository;
 
 import com.canban.auth.entity.User;
+import com.canban.auth.entity.security.CodeType;
 import com.canban.auth.entity.security.UserStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -33,5 +34,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT u.email FROM User u WHERE u.username = :username")
     Optional<String> getEmailByUsername(@Param("username") String username);
+
+    @Query("SELECT u.userStatus FROM User u WHERE u.username = :username")
+    Optional<UserStatus> getUserStatusByUsername(String username);
+
+    @Query("SELECT COUNT (u) FROM User u WHERE u.username = :username")
+    int findExistingUser(String username);
 
 }

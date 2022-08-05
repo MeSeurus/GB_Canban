@@ -3,10 +3,12 @@ package com.canban.auth.controller;
 import com.canban.api.auth.NewPasswordDto;
 import com.canban.auth.exceptions.InvalidRegistrationException;
 import com.canban.auth.service.UserAccessManagementService;
+import com.canban.auth.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +24,7 @@ public class UserAccessManagementController {
 
     private final UserAccessManagementService userAccessManagementService;
     private final PasswordEncoder passwordEncoder;
+    private final UserService userService;
 
     @GetMapping("/activation")
     @Operation(
@@ -46,6 +49,19 @@ public class UserAccessManagementController {
         userAccessManagementService.sendRecoverPasswordLink(username);
     }
 
+    @PostMapping("/recovery/activation")
+    @Operation(
+            summary = "Отправка на почту пользователя новой ссылки для активации аккаунта",
+            description = "Позволяет пользователю, потерявшему ссылку на активацию, выслать себе новую",
+            responses = {
+                    @ApiResponse(description = "Успешный ответ", responseCode = "200")
+            }
+    )
+    public void recoverActivationLink(@RequestBody String username) {
+        if (!userService.userExistInDb(username)) throw new UsernameNotFoundException("Пользователь не найден");
+        userAccessManagementService.sendNewActivationLink(username);
+    }
+
     @PostMapping("/set/password")
     @Operation(
             summary = "Установка нового пароля",
@@ -54,6 +70,7 @@ public class UserAccessManagementController {
                     @ApiResponse(description = "Успешный ответ", responseCode = "200")
             }
     )
+
     public void setNewPassword(@RequestBody NewPasswordDto newPasswordDto) {
         String exMessage = "";
         if (!newPasswordDto.getNewPassword().equals(newPasswordDto.getConfirmNewPassword())) {
