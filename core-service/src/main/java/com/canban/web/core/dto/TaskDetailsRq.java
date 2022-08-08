@@ -1,33 +1,33 @@
 package com.canban.web.core.dto;
 
-import com.canban.web.core.enums.Priority;
-import com.canban.web.core.enums.State;
+import com.canban.api.core.Priority;
+import com.canban.api.core.State;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 
 import java.time.LocalDateTime;
 
-
 @Schema(description = "Модель деталей задачи")
 @Data
-
-
 public class TaskDetailsRq {
+
     @Schema(description = "Название задачи", required = true)
     private String title;
 
     @Schema(description = "Описание задачи", required = true)
     private String content;
 
-    @Schema(description = "Дата начала задачи")
-    LocalDateTime beginDate;
+    @Schema(description = "Имя исполнителя задачи", required = true)
+    private String userExecutor;
 
+    @Schema(description = "Дата начала задачи")
+    private LocalDateTime beginDate;
 
     @Schema(description = "Срок выполнения задачи")
     private LocalDateTime endDate;
 
-    @Schema(description = "Срок выполнения задачи")
+    @Schema(description = "Дата фактического выполнения задачи")
     private LocalDateTime actualEndDate;
 
     @Schema(description = "Статус задачи")
@@ -36,8 +36,8 @@ public class TaskDetailsRq {
     @Schema(description = "Приоритет задачи")
     private Priority priority;
 
-    @Schema(description = "Имя canban доски")
-    private String kanbanName;
+    @Schema(description = "ID kanban доски")
+    private Long kanbanBoardId;
 
 
 }

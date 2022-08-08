@@ -1,4 +1,4 @@
-package com.canban.api.exceptions;
+package com.canban.api.errors;
 
 public class AppError {
     private int statusCode;

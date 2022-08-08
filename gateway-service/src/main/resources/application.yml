@@ -47,6 +47,22 @@ spring:
             - StripPrefix=1
             - PrefixPath=/canban-chat
             - JwtAuthFilter
+        - id: analytics-service
+          uri: lb://analytics-service
+          predicates:
+            - Path=/analytics/**
+          filters:
+            - StripPrefix=1
+            - PrefixPath=/canban-analytics
+            - JwtAuthFilter
+        - id: mail-service
+          uri: lb://mail-service
+          predicates:
+            - Path=/mail/**
+          filters:
+            - StripPrefix=1
+            - PrefixPath=/canban-mail
+            - JwtAuthFilter
 
 jwt:
   secret: h4f8093h4f983yhrt9834hr0934hf0hf493g493gf438rh438th34g34g

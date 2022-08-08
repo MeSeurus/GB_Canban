@@ -2,35 +2,52 @@ package com.canban.web.core.mapper;
 
 import com.canban.api.core.TaskDto;
 import com.canban.web.core.entities.Task;
-import com.canban.web.core.enums.Priority;
-import com.canban.web.core.enums.State;
+import com.canban.api.core.Priority;
+import com.canban.api.core.State;
 import org.springframework.stereotype.Component;
+
 @Component
 public class TaskMapper {
-    public TaskDto entityToDto(Task task) {
+    public TaskDto entityToDtoWithCreator(Task task) {
         return new TaskDto(
                 task.getId(),
                 task.getTitle(),
                 task.getContent(),
-                task.getUsername(),
+                task.getUserCreator(),
+                task.getUserExecutor(),
                 task.getBeginDate(),
-
                 task.getEndDate(),
                 task.getActualEndDate(),
                 task.getState().toString(),
                 task.getPriority().toString(),
-                task.getKanbanName()
+                task.getKanbanBoardId()
         );
     }
-    public Task dtoToEntity(TaskDto taskDto) {
-        return Task.taskBuilder().title(taskDto.getTitle())
+
+    public Task dtoToEntityWithCreator(TaskDto taskDto) {
+        return Task.taskBuilder()
+                .title(taskDto.getTitle())
                 .content(taskDto.getContent())
-                .username(taskDto.getUsername())
+                .userCreator(taskDto.getUserCreator())
+                .userExecutor(taskDto.getUserExecutor())
                 .beginDate(taskDto.getBeginDate())
                 .endDate(taskDto.getEndDate())
                 .actualEndDate(taskDto.getActualEndDate())
                 .state(State.valueOf(taskDto.getState()))
                 .priority(Priority.valueOf(taskDto.getPriority()))
-                .kanbanName(taskDto.getKanbanName()).build();
+                .kanbanBoardId(taskDto.getKanbanBoardId()).build();
+    }
+
+    public Task dtoToEntityWithoutCreator(TaskDto taskDto) {
+        return Task.taskBuilder()
+                .title(taskDto.getTitle())
+                .content(taskDto.getContent())
+                .userExecutor(taskDto.getUserExecutor())
+                .beginDate(taskDto.getBeginDate())
+                .endDate(taskDto.getEndDate())
+                .actualEndDate(taskDto.getActualEndDate())
+                .state(State.valueOf(taskDto.getState()))
+                .priority(Priority.valueOf(taskDto.getPriority()))
+                .kanbanBoardId(taskDto.getKanbanBoardId()).build();
     }
 }

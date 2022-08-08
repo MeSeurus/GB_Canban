@@ -1,7 +1,8 @@
 package com.canban.web.core.exceptions;
 
-import com.canban.api.exceptions.AppError;
-import com.canban.api.exceptions.FieldsValidationError;
+import com.canban.api.errors.AppError;
+import com.canban.api.errors.FieldsValidationError;
+import com.canban.api.exceptions.ForbiddenException;
 import com.canban.api.exceptions.ResourceNotFoundException;
 import com.canban.api.exceptions.ValidationException;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<FieldsValidationError> catchValidationException(ValidationException ex) {
         log.error(ex.getMessage(), ex);
         return new ResponseEntity<>(new FieldsValidationError(ex.getErrorFieldsMessages()),HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<AppError> catchForbiddenException(ForbiddenException ex) {
+        log.error(ex.getMessage(), ex);
+        return new ResponseEntity<>(new AppError(HttpStatus.FORBIDDEN.value(), ex.getMessage()), HttpStatus.FORBIDDEN);
     }
 
 }

@@ -14,6 +14,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUsername(String username);
+    Optional<User> findByEmail(String email);
 
     /**
     * Пришлось поставить тут @Transactional, почему-то несмотря на то, что в методах стоит эта аннотация - без нее выдает TransactionRequiredException
@@ -32,5 +33,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT u.email FROM User u WHERE u.username = :username")
     Optional<String> getEmailByUsername(@Param("username") String username);
+
+    @Query("SELECT u.userStatus FROM User u WHERE u.username = :username")
+    Optional<UserStatus> getUserStatusByUsername(String username);
+
+    @Query("SELECT COUNT (u) FROM User u WHERE u.username = :username")
+    int findExistingUser(String username);
 
 }

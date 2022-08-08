@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -43,13 +44,14 @@ public class RegisterController {
         if (userService.findByUsername(registrationUserDto.getUsername()).isPresent()) {
             throw new InvalidRegistrationException("Пользователь с таким именем уже существует");
         }
+        if (userService.findByEmail(registrationUserDto.getEmail()).isPresent()) {
+            throw new InvalidRegistrationException("Пользователь с таким email уже существует");
+        }
         userValidator.validate(registrationUserDto);
         registrationUserDto.setPassword(passwordEncoder.encode(registrationUserDto.getPassword()));
-        userService.createUser(userMapper.dtoToEntity(registrationUserDto,List.of(roleService.getUserRole())));
+        userService.createUser(userMapper.dtoToEntity(registrationUserDto, List.of(roleService.getUserRole())));
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
 
 
 }

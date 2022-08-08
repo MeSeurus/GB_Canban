@@ -8,10 +8,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface KanbanBoardRepository extends JpaRepository<KanbanBoard, Long> {
 
-    public List<KanbanBoard> findAllByCreator(String creator);
-
+//    @Query(value = "select k from KanbanBoard k join fetch k.usernameAdded where k.usernameAdded =:username") -- это вызывает ошибку, пока осталвю таку
+    List<KanbanBoard> findKanbanBoardsByUsernameAdded(String username);
 }
