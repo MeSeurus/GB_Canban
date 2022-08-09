@@ -27,8 +27,7 @@ public class EventService {
 
     private List<Event> events = new CopyOnWriteArrayList<>();
 
-    public Page<Event> searchAllEvents(String username,
-                                       Integer page,
+    public List<Event> searchAllEvents(String username,
                                        EventDetailsForSearchRq eventDetailsForSearchRq) {
         Specification<Event> spec = Specification.where(null);
         spec = spec.and(EventSpecifications.usernameEqual(username)); // обязательное поле
@@ -47,7 +46,7 @@ public class EventService {
         if (eventDetailsForSearchRq.getMinEndDate() != null) {
             spec = spec.and(EventSpecifications.endDateGreaterOrEqualsThen(dateFormatter.stringToDate(eventDetailsForSearchRq.getMinEndDate())));
         }
-        return eventRepository.findAll(spec, PageRequest.of(page - 1, 50));
+        return eventRepository.findAll(spec);
     }
 
     public List<Event> findEventsByUser(String username) {

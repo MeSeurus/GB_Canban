@@ -68,15 +68,13 @@ public class EventController {
             }
     )
     @PostMapping()
-    public Page<EventDto> searchAllEvents(
+    public List<EventDto> searchAllEvents(
             @RequestHeader @Parameter(description = "Имя пользователя", required = true) String username,
-            @RequestParam(name = "p", defaultValue = "1") Integer page,
-            @RequestBody @Parameter(description = "Дто для филтрации", required = false) EventDetailsForSearchRq eventDetailsForSearchRq) {
-        if (page < 1) {
-            page = 1;
-        }
-        return eventService.searchAllEvents(username, page, eventDetailsForSearchRq)
-                .map(e -> eventMapper.entityToDto(e));
+            @RequestBody @Parameter(description = "Дто для фильтрации", required = false) EventDetailsForSearchRq eventDetailsForSearchRq) {
+        return eventService.searchAllEvents(username, eventDetailsForSearchRq)
+                .stream()
+                .map(e -> eventMapper.entityToDto(e))
+                .collect(Collectors.toList());
     }
 
     @PostMapping("/create")

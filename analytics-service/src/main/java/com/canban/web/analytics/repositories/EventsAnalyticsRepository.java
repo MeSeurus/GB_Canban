@@ -11,7 +11,7 @@ public interface EventsAnalyticsRepository extends JpaRepository<EventsAnalytics
 
     @Query(
             value = "select count(*) from events_analytics " +
-                    "where (CURRENT_DATE -  event_begin_date) < :timeForSearch " +
+                    "where event_begin_date > :timeForSearch " +
                     "and event_username = :username ",
             nativeQuery = true
     )

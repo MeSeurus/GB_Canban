@@ -7,6 +7,6 @@ import java.time.LocalDateTime;
 @Data
 public class DateDto {
 
-    private String startDate;
+    private LocalDateTime startDate;
 
 }
