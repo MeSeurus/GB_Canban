@@ -1,9 +1,11 @@
 package com.canban.api.core;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.*;
-
-
-import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 @Schema(description = "Модель задачи")
@@ -17,6 +19,7 @@ public class TaskDto {
     private Long id;
 
     @Schema(description = "Название задачи", required = true, example = "Создать программу Hello World")
+    @JsonProperty("text")
     private String title;
 
     @Schema(description = "Описание задачи", required = false    )
@@ -28,9 +31,11 @@ public class TaskDto {
     private String userExecutor;
 
     @Schema(description = "Дата начала задачи", required = true)
+    @JsonProperty("start_date")
     private LocalDateTime beginDate;
 
     @Schema(description = "Дата выполнения задачи", required = true)
+    @JsonProperty("end_date")
     private LocalDateTime endDate;
 
     @Schema(description = "Дата фактического выполнения задачи", required = false)

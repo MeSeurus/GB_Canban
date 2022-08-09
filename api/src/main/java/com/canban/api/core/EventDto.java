@@ -1,8 +1,11 @@
 package com.canban.api.core;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -15,6 +18,7 @@ public class EventDto {
     private Long id;
 
     @Schema(description = "Название события", required = true, example = "Создать программу Hello World")
+    @JsonProperty("text")
     private String title;
 
     @Schema(description = "Описание события", required = true)
@@ -24,9 +28,11 @@ public class EventDto {
     private String username;
 
     @Schema(description = "Дата начала события", required = true)
+    @JsonProperty("start_date")
     private LocalDateTime beginDate;
 
     @Schema(description = "Дата окончания события", required = true)
+    @JsonProperty("end_date")
     private LocalDateTime endDate;
 
     private Set<String> users;
