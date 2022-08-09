@@ -96,6 +96,6 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean userExistInDb(String username) {
-        return userRepository.findExistingUser(username) == 1;
+        return userRepository.findExistingUser(username);
     }
 }

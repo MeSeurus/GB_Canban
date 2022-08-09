@@ -108,7 +108,7 @@ public class UserAccessManagementService {
 
 
     public boolean userAndCodeExistInDb(String username, String passcode) {
-        return activationRepository.findExistingUserAndCode(username, passcode, CodeType.PASSWORD_REMIND_CODE) == 1;
+        return activationRepository.findExistingUserAndCode(username, passcode, CodeType.PASSWORD_REMIND_CODE);
     }
 
     public void sendActivationLinkInQueue(String username, String code, String email){
@@ -121,7 +121,7 @@ public class UserAccessManagementService {
         if (!userService.getUserStatusByUsername(username).get().equals(UserStatus.NOT_ACTIVE)) {throw new WrongUserStatusException("Вы уже активированы");}
         String newActivationCode = getRandomNumberString();
         String email = userService.getEmailByUsername(username).get();
-        if (activationRepository.findExistingUserAndCodeType(username, CodeType.ACTIVATION_CODE) == 1) {
+        if (activationRepository.findExistingUserAndCodeType(username, CodeType.ACTIVATION_CODE)) {
             activationRepository.updateCodeByUsernameAndCodeType(username,newActivationCode,CodeType.ACTIVATION_CODE);
         } else {
             UserAwaitActivation user = new UserAwaitActivation(username,newActivationCode,CodeType.ACTIVATION_CODE);

@@ -16,10 +16,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUsername(String username);
     Optional<User> findByEmail(String email);
 
-    /**
-    * Пришлось поставить тут @Transactional, почему-то несмотря на то, что в методах стоит эта аннотация - без нее выдает TransactionRequiredException
-    */
-
     @Transactional
     @Modifying
     @Query("update User u set u.userStatus = ?2 where u.username = ?1")
@@ -37,7 +33,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u.userStatus FROM User u WHERE u.username = :username")
     Optional<UserStatus> getUserStatusByUsername(String username);
 
-    @Query("SELECT COUNT (u) FROM User u WHERE u.username = :username")
-    int findExistingUser(String username);
+    @Query("SELECT new java.lang.Boolean(COUNT(u) > 0) FROM User u WHERE u.username = :username")
+    boolean findExistingUser(String username);
 
 }
