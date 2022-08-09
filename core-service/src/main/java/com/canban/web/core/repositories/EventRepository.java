@@ -12,7 +12,6 @@ import java.util.List;
 @Transactional
 public interface EventRepository extends JpaRepository<Event, Long>, JpaSpecificationExecutor<Event> {
 
-    @Query(value = "SELECT e from Event e left join fetch e.users u where e.username = :username")
     List<Event> findEventsByUsername(String username);
 
 }

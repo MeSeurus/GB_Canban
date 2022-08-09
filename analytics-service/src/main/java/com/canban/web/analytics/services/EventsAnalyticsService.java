@@ -1,24 +1,28 @@
 package com.canban.web.analytics.services;
 
-import com.canban.api.analytics.EventsAnalyticsDto;
 import com.canban.api.analytics.EventsAnalyticsDtoWithList;
-import com.canban.web.analytics.entities.EventsAnalytics;
+import com.canban.api.exceptions.ResourceNotFoundException;
+import com.canban.web.analytics.dtos.AllStatisticsEventsAnalyticsRs;
 import com.canban.web.analytics.integration.CoreIntegration;
+import com.canban.web.analytics.mappers.DateFormatter;
 import com.canban.web.analytics.mappers.EventsAnalyticsMapper;
 import com.canban.web.analytics.repositories.EventsAnalyticsRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class EventsAnalyticsService {
+
+    private final DateFormatter dateFormatter;
 
     private final CoreIntegration coreIntegration;
 
@@ -35,31 +39,15 @@ public class EventsAnalyticsService {
                 .stream().forEach(e -> eventsAnalyticsRepository.save(e));
     }
 
-    public List<EventsAnalytics> findAll() {
-        return eventsAnalyticsRepository.findAll();
+    @Transactional
+    public AllStatisticsEventsAnalyticsRs search(String username, String timeForSearch) {
+        return new AllStatisticsEventsAnalyticsRs(
+                eventsAnalyticsMapper.entityToDto(eventsAnalyticsRepository.searchLongest(username, dateFormatter.stringToDate(timeForSearch))
+                        .orElseThrow(() -> new ResourceNotFoundException("События за данный период времени не найдены"))),
+                eventsAnalyticsMapper.entityToDto(eventsAnalyticsRepository.searchShortest(username, dateFormatter.stringToDate(timeForSearch))
+                        .orElseThrow(() -> new ResourceNotFoundException("События за данный период времени не найдены"))),
+                eventsAnalyticsRepository.getCountOfEvents(username, dateFormatter.stringToDate(timeForSearch))
+        );
     }
 
-    public Optional<EventsAnalytics> getTheLongestEventLastMonth(String username) {
-        return eventsAnalyticsRepository.getTheLongestEventForLastMonth(username);
-    }
-
-    public Optional<EventsAnalytics> getTheLongestEventLastWeek(String username) {
-        return eventsAnalyticsRepository.getTheLongestEventForLastWeek(username);
-    }
-
-    public Optional<EventsAnalytics> getTheShortestEventLastMonth(String username) {
-        return eventsAnalyticsRepository.getTheShortestEventForLastMonth(username);
-    }
-
-    public Optional<EventsAnalytics> getTheShortestEventLastWeek(String username) {
-        return eventsAnalyticsRepository.getTheShortestEventForLastWeek(username);
-    }
-
-    public Integer getCountOfEventsLastWeek(String username) {
-        return eventsAnalyticsRepository.getCountOfEventsForLastWeek(username);
-    }
-
-    public Integer getCountOfEventsLastMonth(String username) {
-        return eventsAnalyticsRepository.getCountOfEventsForLastMonth(username);
-    }
 }

@@ -4,6 +4,9 @@ import com.canban.api.analytics.EventsAnalyticsDto;
 import com.canban.web.analytics.entities.EventsAnalytics;
 import org.springframework.stereotype.Component;
 
+import java.time.Period;
+import java.time.temporal.TemporalUnit;
+
 @Component
 public class EventsAnalyticsMapper {
 

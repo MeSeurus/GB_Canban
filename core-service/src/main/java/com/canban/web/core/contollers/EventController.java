@@ -2,6 +2,7 @@ package com.canban.web.core.contollers;
 
 import com.canban.api.analytics.EventsAnalyticsDtoWithList;
 import com.canban.api.core.EventDto;
+import com.canban.web.core.dto.EventDetailsForSearchRq;
 import com.canban.web.core.dto.EventDetailsRq;
 import com.canban.web.core.mapper.EventAnalyticsMapper;
 import com.canban.web.core.mapper.EventMapper;
@@ -15,6 +16,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -61,26 +63,23 @@ public class EventController {
             responses = {
                     @ApiResponse(
                             description = "Успешный ответ", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = List.class))
+                            content = @Content(schema = @Schema(implementation = Page.class))
                     )
             }
     )
-    @GetMapping()
-    public List<EventDto> findAllEventsByUsername(
+    @PostMapping()
+    public Page<EventDto> searchAllEvents(
             @RequestHeader @Parameter(description = "Имя пользователя", required = true) String username,
-            @RequestParam(name = "title_part", required = false) String titlePart,
-            @RequestParam(name = "max_begin_date", required = false) String maxBeginDate,
-            @RequestParam(name = "min_begin_date", required = false) String minBeginDate,
-            @RequestParam(name = "max_end_date", required = false) String maxEndDate,
-            @RequestParam(name = "min_end_date", required = false) String minEndDate
-    ) {
-        return eventService.findAll(username, titlePart, maxBeginDate, minBeginDate, maxEndDate, minEndDate)
-                .stream()
-                .map(e -> eventMapper.entityToDto(e))
-                .collect(Collectors.toList());
+            @RequestParam(name = "p", defaultValue = "1") Integer page,
+            @RequestBody @Parameter(description = "Дто для филтрации", required = false) EventDetailsForSearchRq eventDetailsForSearchRq) {
+        if (page < 1) {
+            page = 1;
+        }
+        return eventService.searchAllEvents(username, page, eventDetailsForSearchRq)
+                .map(e -> eventMapper.entityToDto(e));
     }
 
-    @PostMapping()
+    @PostMapping("/create")
     @Operation(
             summary = "Запрос на создание нового события",
             responses = {
@@ -89,7 +88,8 @@ public class EventController {
                     )
             }
     )
-    public void createEvent(@RequestHeader @Parameter(description = "Список пользователей", required = true) String username, @RequestBody EventDetailsRq eventDetailsRq) {
+    public void createEvent(@RequestHeader @Parameter(description = "Список пользователей", required = true) String username,
+                            @RequestBody @Parameter(description = "Дто для создания ивента", required = true) EventDetailsRq eventDetailsRq) {
         eventValidator.validate(eventDetailsRq);
         eventService.createEvent(username, eventDetailsRq);
     }
@@ -107,15 +107,15 @@ public class EventController {
         eventService.deleteById(id);
     }
 
-    @PostMapping("/{id}/{username}")
-    public void addUserToEvent(@RequestHeader String username, @PathVariable("id") Long id, @PathVariable("username") String usernameToAdd) {
-        eventService.addUserToEvent(usernameToAdd, id);
-    }
+//    @PostMapping("/{id}/{username}")
+//    public void addUserToEvent(@RequestHeader String username, @PathVariable("id") Long id, @PathVariable("username") String usernameToAdd) {
+//        eventService.addUserToEvent(usernameToAdd, id);
+//    }
 
-    @DeleteMapping("/{id}/{username}")
-    public void removeUserFromEvent(@RequestHeader String username, @PathVariable("id") Long id, @PathVariable("username") String usernameToRemove) {
-        eventService.removeUserFromEvent(usernameToRemove, id);
-    }
+//    @DeleteMapping("/{id}/{username}")
+//    public void removeUserFromEvent(@RequestHeader String username, @PathVariable("id") Long id, @PathVariable("username") String usernameToRemove) {
+//        eventService.removeUserFromEvent(usernameToRemove, id);
+//    }
 
     @PatchMapping("/change/title")
     public void changeTitle(@RequestBody EventDto requestBody) {

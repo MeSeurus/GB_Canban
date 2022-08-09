@@ -1,4 +1,4 @@
-package com.canban.web.core.mapper;
+package com.canban.web.analytics.mappers;
 
 import org.springframework.stereotype.Component;
 
@@ -7,7 +7,6 @@ import java.time.format.DateTimeFormatter;
 
 @Component
 public class DateFormatter {
-
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public LocalDateTime stringToDate(String strDate) {

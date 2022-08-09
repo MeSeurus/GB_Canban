@@ -1,6 +1,8 @@
 package com.canban.web.analytics.services;
 import com.canban.api.analytics.EventsAnalyticsDtoWithList;
 import com.canban.api.analytics.TasksAnalyticsDtoWithList;
+import com.canban.web.analytics.dtos.AllStatisticsEventsAnalyticsRs;
+import com.canban.web.analytics.dtos.AllStatisticsTasksAnalyticsRs;
 import com.canban.web.analytics.integration.CoreIntegration;
 import com.canban.web.analytics.mappers.TasksAnalyticsMapper;
 import com.canban.web.analytics.repositories.TasksAnalyticsRepository;
@@ -9,6 +11,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,4 +34,7 @@ public class TasksAnalyticsService {
     }
 
 
+//    public AllStatisticsTasksAnalyticsRs search(String username, LocalDateTime timeForSearch) {
+//
+//    }
 }

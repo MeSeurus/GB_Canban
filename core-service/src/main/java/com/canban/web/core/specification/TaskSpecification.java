@@ -52,12 +52,12 @@ public class TaskSpecification {
         return ((root, query, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get("actualEndDate"), actualEndDate));
     }
 
-    public static Specification<Task> stateEquals(State title) {
-        return ((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("state"), title));
+    public static Specification<Task> stateEquals(State state) {
+        return ((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("state"), state));
     }
 
-    public static Specification<Task> priorityEquals(Priority title) {
-        return ((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("priority"), title));
+    public static Specification<Task> priorityEquals(Priority priority) {
+        return ((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("priority"), priority));
     }
 
 

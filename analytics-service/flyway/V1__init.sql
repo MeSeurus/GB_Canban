@@ -34,6 +34,6 @@ values (1, 'Create simple program', 'user3', '2022-06-24 01:00:00', '2022-06-28 
        (5, 'Create hard program', 'user3', '2022-07-10 01:00:00', '2022-08-02 07:00:00');
 
 insert into tasks_analytics (task_id, task_title, task_user_creator, task_user_executor, task_begin_date, task_end_date,task_actual_end_date, task_state, task_priority, task_kanban_name)
-values  (1, 'Create simple program', 'user3', '', '2022-06-24 01:00:00','2022-06-30 01:00:00', '2022-08-26 01:00:00', 'COMPLETE', 'HIGH', 'kanban1' ),
+values  (1, 'Create simple program', 'user3', '', '2022-06-24 01:00:00','2022-06-30 01:00:00', '2022-08-26 01:00:00' , 'COMPLETE', 'HIGH', 'kanban1' ),
         (2, 'Create simple program2', 'user1', 'user1', '2022-06-24 01:00:00', '2022-06-30 01:00:00', '2022-06-29 01:00:00', 'CREATED', 'HIGH', 'kanban1' );
 

@@ -4,12 +4,15 @@ package com.canban.web.core.services;
 import com.canban.api.core.Priority;
 import com.canban.api.core.State;
 import com.canban.api.exceptions.ResourceNotFoundException;
+import com.canban.web.core.dto.TaskDetailsForSearchRq;
 import com.canban.web.core.dto.TaskDetailsRq;
 import com.canban.web.core.entities.Task;
 import com.canban.web.core.mapper.DateFormatter;
 import com.canban.web.core.repositories.TaskRepository;
 import com.canban.web.core.specification.TaskSpecification;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,54 +30,43 @@ public class TaskService {
 
     private List<Task> tasks = new CopyOnWriteArrayList<>();
 
-    public List<Task> findAll(Long boardId,
-                        String titlePart,
-                        String userCreator,
-                        String userExecutor,
-                        String maxBeginDate,
-                        String minBeginDate,
-                        String maxEndDate,
-                        String minEndDate,
-                        String maxActualEndDate,
-                        String minActualEndDate,
-                        String stateStr,
-                        String priorityStr) {
+    public Page<Task> searchAllTasksByBoardId(Integer page, TaskDetailsForSearchRq taskDetailsForSearchRq) {
         Specification<Task> spec = Specification.where(null);
-        spec = spec.and(TaskSpecification.boardIdEqual(boardId)); // обязательное поле
-        if (titlePart != null) {
-            spec = spec.and(TaskSpecification.titleLike(titlePart));
+        spec = spec.and(TaskSpecification.boardIdEqual(taskDetailsForSearchRq.getBoardId())); // обязательное поле
+        if (taskDetailsForSearchRq.getTitlePart() != null) {
+            spec = spec.and(TaskSpecification.titleLike(taskDetailsForSearchRq.getTitlePart()));
         }
-        if (userCreator != null) {
-            spec = spec.and(TaskSpecification.usernameCreatorEqual(userCreator));
+        if (taskDetailsForSearchRq.getUserCreator() != null) {
+            spec = spec.and(TaskSpecification.usernameCreatorEqual(taskDetailsForSearchRq.getUserCreator()));
         }
-        if (userExecutor != null) {
-            spec = spec.and(TaskSpecification.usernameExecutorEqual(userExecutor));
+        if (taskDetailsForSearchRq.getUserExecutor() != null) {
+            spec = spec.and(TaskSpecification.usernameExecutorEqual(taskDetailsForSearchRq.getUserExecutor()));
         }
-        if (maxBeginDate != null) {
-            spec = spec.and(TaskSpecification.beginDateLessOrEqualsThen(dateFormatter.stringToDate(maxBeginDate)));
+        if (taskDetailsForSearchRq.getMaxBeginDate() != null) {
+            spec = spec.and(TaskSpecification.beginDateLessOrEqualsThen(dateFormatter.stringToDate(taskDetailsForSearchRq.getMaxBeginDate())));
         }
-        if (minBeginDate != null) {
-            spec = spec.and(TaskSpecification.beginDateGreaterOrEqualsThen(dateFormatter.stringToDate(minBeginDate)));
+        if (taskDetailsForSearchRq.getMinBeginDate() != null) {
+            spec = spec.and(TaskSpecification.beginDateGreaterOrEqualsThen(dateFormatter.stringToDate(taskDetailsForSearchRq.getMinBeginDate())));
         }
-        if (maxEndDate != null) {
-            spec = spec.and(TaskSpecification.endDateLessOrEqualsThen(dateFormatter.stringToDate(maxEndDate)));
+        if (taskDetailsForSearchRq.getMaxEndDate() != null) {
+            spec = spec.and(TaskSpecification.endDateLessOrEqualsThen(dateFormatter.stringToDate(taskDetailsForSearchRq.getMaxEndDate())));
         }
-        if (minEndDate != null) {
-            spec = spec.and(TaskSpecification.endDateGreaterOrEqualsThen(dateFormatter.stringToDate(minEndDate)));
+        if (taskDetailsForSearchRq.getMinEndDate() != null) {
+            spec = spec.and(TaskSpecification.endDateGreaterOrEqualsThen(dateFormatter.stringToDate(taskDetailsForSearchRq.getMinEndDate())));
         }
-        if (maxActualEndDate != null) {
-            spec = spec.and(TaskSpecification.actualEndDateLessOrEqualsThen(dateFormatter.stringToDate(maxEndDate)));
+        if (taskDetailsForSearchRq.getMaxActualEndDate() != null) {
+            spec = spec.and(TaskSpecification.actualEndDateLessOrEqualsThen(dateFormatter.stringToDate(taskDetailsForSearchRq.getMaxActualEndDate())));
         }
-        if (minActualEndDate != null) {
-            spec = spec.and(TaskSpecification.actualEndDateGreaterOrEqualsThen(dateFormatter.stringToDate(minEndDate)));
+        if (taskDetailsForSearchRq.getMinActualEndDate() != null) {
+            spec = spec.and(TaskSpecification.actualEndDateGreaterOrEqualsThen(dateFormatter.stringToDate(taskDetailsForSearchRq.getMinActualEndDate())));
         }
-        if (stateStr != null) {
-            spec = spec.and(TaskSpecification.stateEquals(State.valueOf(stateStr)));
+        if (taskDetailsForSearchRq.getState() != null) {
+            spec = spec.and(TaskSpecification.stateEquals(taskDetailsForSearchRq.getState()));
         }
-        if (priorityStr != null) {
-            spec = spec.and(TaskSpecification.priorityEquals(Priority.valueOf(priorityStr)));
+        if (taskDetailsForSearchRq.getPriority() != null) {
+            spec = spec.and(TaskSpecification.priorityEquals(taskDetailsForSearchRq.getPriority()));
         }
-        return taskRepository.findAll(spec);
+        return taskRepository.findAll(spec,  PageRequest.of(page - 1, 50));
     }
 
     public void createTask(String username, TaskDetailsRq taskDetailsRq) {

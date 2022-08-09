@@ -1,7 +1,9 @@
 package com.canban.web.analytics.exceptions;
 
+import com.canban.api.errors.AppError;
 import com.canban.api.errors.ServerNotWorkingError;
-import com.canban.api.exceptions.ServerNotWorkingException;
+import com.canban.api.exceptions.IntegrationException;
+import com.canban.api.exceptions.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,11 +13,16 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
+    @ExceptionHandler
+    public ResponseEntity<ServerNotWorkingError> catchResourceNotFoundException(IntegrationException ex) {
+        log.error(ex.getMessage(), ex);
+        return new ResponseEntity<>(new ServerNotWorkingError(HttpStatus.SERVICE_UNAVAILABLE.value(), ex.getMessage()), HttpStatus.SERVICE_UNAVAILABLE);
+    }
 
     @ExceptionHandler
-    public ResponseEntity<ServerNotWorkingError> catchResourceNotFoundException(ServerNotWorkingException ex) {
+    public ResponseEntity<AppError> catchResourceNotFoundException(ResourceNotFoundException ex) {
         log.error(ex.getMessage(), ex);
-        return new ResponseEntity<>(new ServerNotWorkingError(HttpStatus.REQUEST_TIMEOUT.value(), ex.getMessage()), HttpStatus.REQUEST_TIMEOUT);
+        return new ResponseEntity<>(new AppError(HttpStatus.NOT_FOUND.value(), ex.getMessage()), HttpStatus.NOT_FOUND);
     }
 
 }

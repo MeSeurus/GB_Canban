@@ -1,12 +1,14 @@
 package com.canban.web.core.services;
 
 import com.canban.api.exceptions.ResourceNotFoundException;
+import com.canban.web.core.dto.EventDetailsForSearchRq;
 import com.canban.web.core.dto.EventDetailsRq;
 import com.canban.web.core.entities.Event;
 import com.canban.web.core.mapper.DateFormatter;
 import com.canban.web.core.repositories.EventRepository;
 import com.canban.web.core.specification.EventSpecifications;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -14,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
@@ -26,30 +27,27 @@ public class EventService {
 
     private List<Event> events = new CopyOnWriteArrayList<>();
 
-    public List<Event> findAll(String username,
-                               String titlePart,
-                               String maxBeginDate,
-                               String minBeginDate,
-                               String maxEndDate,
-                               String minEndDate) {
+    public Page<Event> searchAllEvents(String username,
+                                       Integer page,
+                                       EventDetailsForSearchRq eventDetailsForSearchRq) {
         Specification<Event> spec = Specification.where(null);
         spec = spec.and(EventSpecifications.usernameEqual(username)); // обязательное поле
-        if (titlePart != null) {
-            spec = spec.and(EventSpecifications.titleLike(titlePart));
+        if (eventDetailsForSearchRq.getTitlePart() != null) {
+            spec = spec.and(EventSpecifications.titleLike(eventDetailsForSearchRq.getTitlePart()));
         }
-        if (maxBeginDate != null) {
-            spec = spec.and(EventSpecifications.beginDateLessOrEqualsThen(dateFormatter.stringToDate(maxBeginDate)));
+        if (eventDetailsForSearchRq.getMaxBeginDate() != null) {
+            spec = spec.and(EventSpecifications.beginDateLessOrEqualsThen(dateFormatter.stringToDate(eventDetailsForSearchRq.getMaxBeginDate())));
         }
-        if (minBeginDate != null) {
-            spec = spec.and(EventSpecifications.beginDateGreaterOrEqualsThen(dateFormatter.stringToDate(minBeginDate)));
+        if (eventDetailsForSearchRq.getMinBeginDate() != null) {
+            spec = spec.and(EventSpecifications.beginDateGreaterOrEqualsThen(dateFormatter.stringToDate(eventDetailsForSearchRq.getMinBeginDate())));
         }
-        if (maxEndDate != null) {
-            spec = spec.and(EventSpecifications.endDateLessOrEqualsThen(dateFormatter.stringToDate(maxEndDate)));
+        if (eventDetailsForSearchRq.getMaxEndDate() != null) {
+            spec = spec.and(EventSpecifications.endDateLessOrEqualsThen(dateFormatter.stringToDate(eventDetailsForSearchRq.getMaxEndDate())));
         }
-        if (minEndDate != null) {
-            spec = spec.and(EventSpecifications.endDateGreaterOrEqualsThen(dateFormatter.stringToDate(minEndDate)));
+        if (eventDetailsForSearchRq.getMinEndDate() != null) {
+            spec = spec.and(EventSpecifications.endDateGreaterOrEqualsThen(dateFormatter.stringToDate(eventDetailsForSearchRq.getMinEndDate())));
         }
-        return eventRepository.findAll(spec);
+        return eventRepository.findAll(spec, PageRequest.of(page - 1, 50));
     }
 
     public List<Event> findEventsByUser(String username) {
@@ -63,7 +61,6 @@ public class EventService {
                 .username(username)
                 .beginDate(eventDetailsRq.getBeginDate())
                 .endDate(eventDetailsRq.getEndDate())
-                .users(Set.of(username))
                 .build();
         eventRepository.save(event);
         events.add(event);
@@ -81,29 +78,29 @@ public class EventService {
         eventRepository.deleteById(id);
     }
 
-    @Transactional
-    public void addUserToEvent(String username, Long id) {
-        Event event = eventRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Не найдено событие с ID %d", id)));
-        Set<String> users = event.getUsers();
-        users.add(username);
-        event.setUsers(users);
-        eventRepository.save(event);
-        events.add(event);
-    }
+//    @Transactional
+//    public void addUserToEvent(String username, Long id) {
+//        Event event = eventRepository.findById(id)
+//                .orElseThrow(() -> new ResourceNotFoundException(String.format("Не найдено событие с ID %d", id)));
+//        Set<String> users = event.getUsers();
+//        users.add(username);
+//        event.setUsers(users);
+//        eventRepository.save(event);
+//        events.add(event);
+//    }
 
-    @Transactional
-    public void removeUserFromEvent(String username, Long id) {
-        Event event = eventRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Не найдено событие с ID %d", id)));
-        Set<String> users = event.getUsers();
-        if (!users.remove(username)) {
-            return;
-        }
-        event.setUsers(users);
-        eventRepository.save(event);
-        events.add(event);
-    }
+//    @Transactional
+//    public void removeUserFromEvent(String username, Long id) {
+//        Event event = eventRepository.findById(id)
+//                .orElseThrow(() -> new ResourceNotFoundException(String.format("Не найдено событие с ID %d", id)));
+//        Set<String> users = event.getUsers();
+//        if (!users.remove(username)) {
+//            return;
+//        }
+//        event.setUsers(users);
+//        eventRepository.save(event);
+//        events.add(event);
+//    }
 
     @Transactional
     public void changeTitle(Long id, String title) {
