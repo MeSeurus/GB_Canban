@@ -8,6 +8,8 @@ import com.canban.web.core.dto.EventDetailsRq;
 import com.canban.web.core.dto.TaskDetailsRq;
 import com.canban.web.core.entities.Task;
 import com.canban.web.core.repositories.TaskRepository;
+import com.canban.web.core.services.TaskService;
+import lombok.RequiredArgsConstructor;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -16,10 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class TaskValidator {
 
-    private TaskRepository taskRepository;
+    private final TaskService taskService;
 
     public void validate(TaskDetailsRq taskDetailsRq) {
         List<String> errors = new ArrayList<>();
@@ -48,10 +50,9 @@ public class TaskValidator {
         }
     }
 
-    public void validateUser(Long id, TaskDto taskDetailsRq) {
+    public void validateUser(Long id) {
         List<String> errors = new ArrayList<>();
-
-        Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change task's username."));
+        Task task = taskService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change task's username."));
         if (task.getState() != State.CREATED && !task.getUserExecutor().equals(taskDetailsRq.getUserExecutor())) {
             errors.add("ERROR. The performer can be changed only in the CREATED state");
         }

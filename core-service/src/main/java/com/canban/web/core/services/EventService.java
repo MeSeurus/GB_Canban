@@ -1,63 +1,61 @@
 package com.canban.web.core.services;
 
 import com.canban.api.exceptions.ResourceNotFoundException;
+import com.canban.web.core.dto.EventDetailsForSearchRq;
 import com.canban.web.core.dto.EventDetailsRq;
 import com.canban.web.core.entities.Event;
 import com.canban.web.core.mapper.DateFormatter;
+import com.canban.web.core.mapper.EventAnalyticsMapper;
 import com.canban.web.core.repositories.EventRepository;
 import com.canban.web.core.specification.EventSpecifications;
+import com.canban.web.core.validators.EventValidator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
 @RequiredArgsConstructor
 public class EventService {
     private final EventRepository eventRepository;
 
+    private final EventAnalyticsMapper eventAnalyticsMapper;
+
     private final DateFormatter dateFormatter;
 
-    private List<Event> events = new CopyOnWriteArrayList<>();
+    private final EventForAnalyticsService eventForAnalyticsService;
 
-    public List<Event> findAll(String username,
-                               String titlePart,
-                               String maxBeginDate,
-                               String minBeginDate,
-                               String maxEndDate,
-                               String minEndDate) {
+    private final EventValidator eventValidator;
+
+    public List<Event> searchAllEvents(String username,
+                                       EventDetailsForSearchRq eventDetailsForSearchRq) {
         Specification<Event> spec = Specification.where(null);
-        spec = spec.and(EventSpecifications.usernameEqual(username)); // обязательное поле
+        spec = spec.and(EventSpecifications.usernameEqual(username));
         spec = spec.or(EventSpecifications.userInUsersAdded(username));
-        if (titlePart != null) {
-            spec = spec.and(EventSpecifications.titleLike(titlePart));
+        if (eventDetailsForSearchRq.getTitlePart() != null) {
+            spec = spec.and(EventSpecifications.titleLike(eventDetailsForSearchRq.getTitlePart()));
         }
-        if (maxBeginDate != null) {
-            spec = spec.and(EventSpecifications.beginDateLessOrEqualsThen(dateFormatter.stringToDate(maxBeginDate)));
+        if (eventDetailsForSearchRq.getMaxBeginDate() != null) {
+            spec = spec.and(EventSpecifications.beginDateLessOrEqualsThen(dateFormatter.stringToDate(eventDetailsForSearchRq.getMaxBeginDate())));
         }
-        if (minBeginDate != null) {
-            spec = spec.and(EventSpecifications.beginDateGreaterOrEqualsThen(dateFormatter.stringToDate(minBeginDate)));
+        if (eventDetailsForSearchRq.getMinBeginDate() != null) {
+            spec = spec.and(EventSpecifications.beginDateGreaterOrEqualsThen(dateFormatter.stringToDate(eventDetailsForSearchRq.getMinBeginDate())));
         }
-        if (maxEndDate != null) {
-            spec = spec.and(EventSpecifications.endDateLessOrEqualsThen(dateFormatter.stringToDate(maxEndDate)));
+        if (eventDetailsForSearchRq.getMaxEndDate() != null) {
+            spec = spec.and(EventSpecifications.endDateLessOrEqualsThen(dateFormatter.stringToDate(eventDetailsForSearchRq.getMaxEndDate())));
         }
-        if (minEndDate != null) {
-            spec = spec.and(EventSpecifications.endDateGreaterOrEqualsThen(dateFormatter.stringToDate(minEndDate)));
+        if (eventDetailsForSearchRq.getMinEndDate() != null) {
+            spec = spec.and(EventSpecifications.endDateGreaterOrEqualsThen(dateFormatter.stringToDate(eventDetailsForSearchRq.getMinEndDate())));
         }
         return eventRepository.findAll(spec);
     }
 
-    public List<Event> findEventsByUser(String username) {
-        return eventRepository.findEventsByUsername(username);
-    }
-
+    @Transactional
     public void createEvent(String username, EventDetailsRq eventDetailsRq) {
+        eventValidator.validate(eventDetailsRq);
         Event event = Event.builder()
                 .title(eventDetailsRq.getTitle())
                 .content(eventDetailsRq.getContent())
@@ -67,15 +65,7 @@ public class EventService {
                 .users(Set.of(username))
                 .build();
         eventRepository.save(event);
-        events.add(event);
-    }
-
-    public List<Event> findAllForAnalytics() {
-        return events;
-    }
-
-    public void clearList() {
-        events.clear();
+        eventForAnalyticsService.createEventForAnalytics(eventAnalyticsMapper.eventToEventForAnalytics(event));
     }
 
     public void deleteById(Long id) {
@@ -110,23 +100,27 @@ public class EventService {
     public void changeTitle(Long id, String title) {
         Event event = eventRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change Event's title. Event not found"));
         event.setTitle(title);
+        eventForAnalyticsService.createEventForAnalytics(eventAnalyticsMapper.eventToEventForAnalytics(event));
     }
 
     @Transactional
     public void changeContent(Long id, String content) {
         Event event = eventRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change Event's content. Event not found"));
         event.setContent(content);
+        eventForAnalyticsService.createEventForAnalytics(eventAnalyticsMapper.eventToEventForAnalytics(event));
     }
 
     @Transactional
     public void changeBeginDate(Long id, LocalDateTime beginDate) {
         Event event = eventRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change Event's begin date. Event not found"));
         event.setBeginDate(beginDate);
+        eventForAnalyticsService.createEventForAnalytics(eventAnalyticsMapper.eventToEventForAnalytics(event));
     }
 
     @Transactional
     public void changeEndDate(Long id, LocalDateTime endDate) {
         Event event = eventRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change Event's end date. Event not found"));
         event.setBeginDate(endDate);
+        eventForAnalyticsService.createEventForAnalytics(eventAnalyticsMapper.eventToEventForAnalytics(event));
     }
 }

@@ -8,8 +8,9 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class DateFormatter {
 
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
     public LocalDateTime stringToDate(String strDate) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return LocalDateTime.parse(strDate, formatter);
     }
 

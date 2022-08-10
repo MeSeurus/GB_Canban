@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tasks_analytics")
-public class TasksAnalytics {
+public class TaskAnalytics {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -31,10 +31,10 @@ public class TasksAnalytics {
     @Column(name = "task_title")
     private String taskTitle;
 
-    @Column(name = "task_username_creator")
+    @Column(name = "task_user_creator")
     private String taskUserCreator;
 
-    @Column(name = "task_username_executor")
+    @Column(name = "task_user_executor")
     private String taskUserExecutor;
 
     @Column(name = "task_begin_date")
@@ -56,7 +56,7 @@ public class TasksAnalytics {
     @DefaultValue("NORMAL")
     private Priority taskPriority;
 
-    @Column(name = "task_kanban_name")
+    @Column(name = "task_kanban_board_id")
     private Long taskKanbanBoardId;
 
     @CreationTimestamp
@@ -67,7 +67,7 @@ public class TasksAnalytics {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public TasksAnalytics(Long taskId, String taskTitle, String taskUserCreator, String taskUserExecutor, LocalDateTime taskBeginDate, LocalDateTime taskEndDate, LocalDateTime taskActualEndDate, State taskState, Priority taskPriority, Long taskKanbanBoardId) {
+    public TaskAnalytics(Long taskId, String taskTitle, String taskUserCreator, String taskUserExecutor, LocalDateTime taskBeginDate, LocalDateTime taskEndDate, LocalDateTime taskActualEndDate, State taskState, Priority taskPriority, Long taskKanbanBoardId) {
         this.taskId = taskId;
         this.taskTitle = taskTitle;
         this.taskUserCreator = taskUserCreator;

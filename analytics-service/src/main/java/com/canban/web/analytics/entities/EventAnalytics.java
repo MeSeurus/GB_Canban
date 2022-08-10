@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "events_analytics")
-public class EventsAnalytics {
+public class EventAnalytics {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -45,7 +45,7 @@ public class EventsAnalytics {
     @Column(name = "updated_at")
     LocalDateTime updatedAt;
 
-    public EventsAnalytics(Long eventId, String eventTitle, String eventUsername, LocalDateTime eventBeginDate, LocalDateTime eventEndDate) {
+    public EventAnalytics(Long eventId, String eventTitle, String eventUsername, LocalDateTime eventBeginDate, LocalDateTime eventEndDate) {
         this.eventId = eventId;
         this.eventTitle = eventTitle;
         this.eventUsername = eventUsername;

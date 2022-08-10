@@ -1,9 +1,6 @@
 package com.canban.api.analytics;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -11,20 +8,20 @@ import java.util.List;
 public class TasksAnalyticsDtoWithList {
 
     @Schema(description = "Список TasksAnalyticsDto", required = true)
-    private List<TasksAnalyticsDto> tasksAnalyticsDtoList;
+    private List<TaskAnalyticsDto> taskAnalyticsDtoList;
 
-    public TasksAnalyticsDtoWithList(List<TasksAnalyticsDto> tasksAnalyticsDtoList) {
-        this.tasksAnalyticsDtoList = tasksAnalyticsDtoList;
+    public TasksAnalyticsDtoWithList(List<TaskAnalyticsDto> taskAnalyticsDtoList) {
+        this.taskAnalyticsDtoList = taskAnalyticsDtoList;
     }
 
     public TasksAnalyticsDtoWithList() {
     }
 
-    public List<TasksAnalyticsDto> getTasksAnalyticsDtoList() {
-        return tasksAnalyticsDtoList;
+    public List<TaskAnalyticsDto> getTasksAnalyticsDtoList() {
+        return taskAnalyticsDtoList;
     }
 
-    public void setTasksAnalyticsDtoList(List<TasksAnalyticsDto> tasksAnalyticsDtoList) {
-        this.tasksAnalyticsDtoList = tasksAnalyticsDtoList;
+    public void setTasksAnalyticsDtoList(List<TaskAnalyticsDto> taskAnalyticsDtoList) {
+        this.taskAnalyticsDtoList = taskAnalyticsDtoList;
     }
 }

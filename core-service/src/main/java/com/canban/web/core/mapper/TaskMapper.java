@@ -18,8 +18,8 @@ public class TaskMapper {
                 task.getBeginDate(),
                 task.getEndDate(),
                 task.getActualEndDate(),
-                task.getState().toString(),
-                task.getPriority().toString(),
+                task.getState(),
+                task.getPriority(),
                 task.getKanbanBoardId()
         );
     }
@@ -33,8 +33,8 @@ public class TaskMapper {
                 .beginDate(taskDto.getBeginDate())
                 .endDate(taskDto.getEndDate())
                 .actualEndDate(taskDto.getActualEndDate())
-                .state(State.valueOf(taskDto.getState()))
-                .priority(Priority.valueOf(taskDto.getPriority()))
+                .state(taskDto.getState())
+                .priority(taskDto.getPriority())
                 .kanbanBoardId(taskDto.getKanbanBoardId()).build();
     }
 
@@ -46,8 +46,8 @@ public class TaskMapper {
                 .beginDate(taskDto.getBeginDate())
                 .endDate(taskDto.getEndDate())
                 .actualEndDate(taskDto.getActualEndDate())
-                .state(State.valueOf(taskDto.getState()))
-                .priority(Priority.valueOf(taskDto.getPriority()))
+                .state(taskDto.getState())
+                .priority(taskDto.getPriority())
                 .kanbanBoardId(taskDto.getKanbanBoardId()).build();
     }
 }
