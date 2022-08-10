@@ -1,5 +1,6 @@
 package com.canban.web.core.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,14 +13,17 @@ import java.time.LocalDateTime;
 public class EventDetailsRq {
 
     @Schema(description = "Название события", required = true)
+    @JsonProperty("text")
     private String title;
 
     @Schema(description = "Описание события", required = true)
     private String content;
 
     @Schema(description = "Дата назначения события")
+    @JsonProperty("start_date")
     private LocalDateTime beginDate;
 
     @Schema(description = "Дата окончания события")
+    @JsonProperty("end_date")
     private LocalDateTime endDate;
 }
