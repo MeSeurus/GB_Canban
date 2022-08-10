@@ -10,10 +10,10 @@ import java.util.Optional;
 public interface EventsAnalyticsRepository extends JpaRepository<EventsAnalytics, Long> {
 
     @Query(
-            value = "select count(*) from events_analytics " +
+            value = "select count(DISTINCT event_id) from events_analytics " +
                     "where event_begin_date > :timeForSearch " +
                     "and event_end_date < CURRENT_DATE " +
-                    "and event_username = :username ",
+                    "and event_username = :username",
             nativeQuery = true
     )
     Integer getCountOfCompletedEvents(String username, LocalDateTime timeForSearch);

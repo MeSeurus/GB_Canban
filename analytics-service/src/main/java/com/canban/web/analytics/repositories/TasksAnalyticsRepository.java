@@ -12,10 +12,10 @@ import java.util.Optional;
 public interface TasksAnalyticsRepository extends JpaRepository<TasksAnalytics, Long> {
 
     @Query(
-            value = "select count(*) from tasks_analytics " +
+            value = "select count(DISTINCT task_id) from tasks_analytics " +
                     "where task_begin_date > :timeForSearch " +
                     "and task_actual_end_date < CURRENT_DATE " +
-                    "and task_user_executor = :username ",
+                    "and task_user_executor = :username",
             nativeQuery = true
     )
     Integer getCountOfCompletedTasks(String username, LocalDateTime timeForSearch);
