@@ -18,6 +18,15 @@ import java.util.Set;
 public class Event extends AbstractEvent {
     @Column(name = "username")
     private String username;
+
+    @ElementCollection
+    @CollectionTable(
+            name = "events_users",
+            joinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id")
+    )
+    @Column(name = "username_added")
+    private Set<String> users;
+
     public static EventBuilder builder() {
         return new Event.EventBuilder();
     }
@@ -27,7 +36,8 @@ public class Event extends AbstractEvent {
                  String content,
                  String username,
                  LocalDateTime beginDate,
-                 LocalDateTime endDate
+                 LocalDateTime endDate,
+                 Set<String> users
     ) {
         this.id = id;
         this.title = title;
@@ -35,6 +45,7 @@ public class Event extends AbstractEvent {
         this.username = username;
         this.beginDate = beginDate;
         this.endDate = endDate;
+        this.users = users;
     }
 
     public static class EventBuilder {
@@ -44,6 +55,7 @@ public class Event extends AbstractEvent {
         private String username;
         private LocalDateTime beginDate;
         private LocalDateTime endDate;
+        private Set<String> users;
 
         EventBuilder() {
         }
@@ -78,8 +90,13 @@ public class Event extends AbstractEvent {
             return this;
         }
 
+        public Event.EventBuilder users(final Set<String> users) {
+            this.users = users;
+            return this;
+        }
+
         public Event build() {
-            return new Event(this.id, this.title, this.content, this.username, this.beginDate, this.endDate);
+            return new Event(this.id, this.title, this.content, this.username, this.beginDate, this.endDate, this.users);
         }
     }
 }

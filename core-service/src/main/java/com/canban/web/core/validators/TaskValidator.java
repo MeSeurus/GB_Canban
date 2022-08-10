@@ -53,7 +53,7 @@ public class TaskValidator {
     public void validateUser(Long id) {
         List<String> errors = new ArrayList<>();
         Task task = taskService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change task's username."));
-        if (task.getState() != State.CREATED && !task.getUserExecutor().equals(taskDetailsRq.getUserExecutor())) {
+        if (task.getState() != State.CREATED) {
             errors.add("ERROR. The performer can be changed only in the CREATED state");
         }
         if (!errors.isEmpty()) {

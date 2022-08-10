@@ -118,6 +118,10 @@ public class TaskController {
                     @ApiResponse(
                             description = "Задача не найдена", responseCode = "404"
                     )
+                    ,
+                    @ApiResponse(
+                            description = "Нельзя изменить исполнителя", responseCode = "403"
+                    )
             }
     )
     public void changeUsernameExecutor(@RequestBody @Parameter(description = "Модель задачи", required = true) TaskDto requestBody) {

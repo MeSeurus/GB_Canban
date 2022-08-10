@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -80,7 +81,6 @@ public class EventService {
         users.add(username);
         event.setUsers(users);
         eventRepository.save(event);
-        events.add(event);
     }
 
     @Transactional
@@ -93,7 +93,6 @@ public class EventService {
         }
         event.setUsers(users);
         eventRepository.save(event);
-        events.add(event);
     }
 
     @Transactional

@@ -82,15 +82,33 @@ public class EventController {
         eventService.deleteById(id);
     }
 
-//    @PostMapping("/{id}/{username}")
-//    public void addUserToEvent(@RequestHeader String username, @PathVariable("id") Long id, @PathVariable("username") String usernameToAdd) {
-//        eventService.addUserToEvent(usernameToAdd, id);
-//    }
+    @PostMapping("/{id}/{username}")
+    @Operation(
+            summary = "Запрос на добавление пользователя к ивенту",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200"
+                    )
+            }
+    )
+    public void addUserToEvent(@PathVariable("id") @Parameter(description = "ID события", required = true) Long id,
+                               @PathVariable("username") @Parameter(description = "Имя пользователя для добавления", required = true) String usernameToAdd) {
+        eventService.addUserToEvent(usernameToAdd, id);
+    }
 
-//    @DeleteMapping("/{id}/{username}")
-//    public void removeUserFromEvent(@RequestHeader String username, @PathVariable("id") Long id, @PathVariable("username") String usernameToRemove) {
-//        eventService.removeUserFromEvent(usernameToRemove, id);
-//    }
+    @DeleteMapping("/{id}/{username}")
+    @Operation(
+            summary = "Запрос на удаления доступа пользователя к ивенту",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200"
+                    )
+            }
+    )
+    public void removeUserFromEvent(@PathVariable("id") @Parameter(description = "ID события", required = true) Long id,
+                                    @PathVariable("username") @Parameter(description = "Имя пользователя для добавления", required = true) String usernameToRemove) {
+        eventService.removeUserFromEvent(usernameToRemove, id);
+    }
 
     @PatchMapping("/change/title")
     @Operation(
