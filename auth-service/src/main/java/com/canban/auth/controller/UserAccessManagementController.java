@@ -30,7 +30,7 @@ public class UserAccessManagementController {
                     @ApiResponse(description = "Успешный ответ", responseCode = "200")
             }
     )
-    public void activation(@RequestParam(name = "username") @Parameter(description = "Имя пользователя запросившего ссылку на активацию")  String username,
+    public void activation(@RequestParam(name = "username") @Parameter(description = "Имя пользователя, запросившего ссылку на активацию")  String username,
                            @RequestParam(name = "code") @Parameter(description = "Код, необходимый для активации аккаунта пользователя") String code) {
         userAccessManagementService.checkActivateKey(username, code);
     }
@@ -42,7 +42,7 @@ public class UserAccessManagementController {
             responses = {
                     @ApiResponse(description = "Успешный ответ", responseCode = "200")
             })
-    public void recoveryPassword(@RequestBody @Parameter(description = "Имя пользователя запросившего ссылку на смену пароля") String username) {
+    public void recoveryPassword(@RequestBody @Parameter(description = "Имя пользователя, запросившего ссылку на смену пароля") String username) {
         userAccessManagementService.sendRecoverPasswordLink(username);
     }
 
