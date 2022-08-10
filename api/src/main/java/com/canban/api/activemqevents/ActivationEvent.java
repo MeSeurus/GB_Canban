@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "Событие, которое происходит в момент активации пользователя и передается брокеру сообщений " +
+@Schema(description = "Событие, которое происходит в момент момент запроса ссылки на активацию пользователя и передается брокеру сообщений " +
         "для отправки в mail-service, чтобы сервис отправил этому пользователю ссылку на активацию аккаунта по email")
 public class ActivationEvent {
     @Schema(description = "Никнейм пользователя")
