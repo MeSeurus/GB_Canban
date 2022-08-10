@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 public class TaskDetailsRq {
 
     @Schema(description = "Название задачи", required = true)
-    @JsonProperty("text")
     private String title;
 
     @Schema(description = "Описание задачи", required = true)
