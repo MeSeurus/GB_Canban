@@ -7,11 +7,10 @@ import com.canban.auth.service.RoleService;
 import com.canban.auth.service.UserService;
 import com.canban.auth.validator.UserValidator;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,21 +36,10 @@ public class RegisterController {
                     @ApiResponse(description = "Успешный ответ", responseCode = "200")
             }
     )
-    public ResponseEntity<?> registerNewUser(@RequestBody RegistrationUserDto registrationUserDto) {
-        if (!registrationUserDto.getPassword().equals(registrationUserDto.getConfirmPassword())) {
-            throw new InvalidRegistrationException("Пароли не совпадают");
-        }
-        if (userService.findByUsername(registrationUserDto.getUsername()).isPresent()) {
-            throw new InvalidRegistrationException("Пользователь с таким именем уже существует");
-        }
-        if (userService.findByEmail(registrationUserDto.getEmail()).isPresent()) {
-            throw new InvalidRegistrationException("Пользователь с таким email уже существует");
-        }
+    public void registerNewUser(@RequestBody @Parameter(description = "Модель регистрирующегося пользователя") RegistrationUserDto registrationUserDto) {
+        if (!registrationUserDto.getPassword().equals(registrationUserDto.getConfirmPassword())) {throw new InvalidRegistrationException("Пароли не совпадают");}
         userValidator.validate(registrationUserDto);
         registrationUserDto.setPassword(passwordEncoder.encode(registrationUserDto.getPassword()));
         userService.createUser(userMapper.dtoToEntity(registrationUserDto, List.of(roleService.getUserRole())));
-        return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
 }

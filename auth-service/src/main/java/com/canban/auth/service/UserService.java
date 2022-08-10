@@ -8,6 +8,7 @@ import com.canban.auth.entity.security.CodeType;
 import com.canban.auth.entity.security.UserAwaitActivation;
 import com.canban.auth.entity.security.UserStatus;
 import com.canban.auth.exceptions.InvalidAuthorizationException;
+import com.canban.auth.exceptions.InvalidRegistrationException;
 import com.canban.auth.exceptions.UserNotActiveException;
 import com.canban.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -39,13 +40,9 @@ public class UserService implements UserDetailsService {
         this.userAccessManagementService = userAccessManagementService;
     }
 
-    public Optional<User> findByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
+    public Optional<User> findByUsername(String username) {return userRepository.findByUsername(username);}
 
-    public Optional<User> findByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
+    public Optional<User> findByEmail(String email) {return userRepository.findByEmail(email);}
 
     @Override
     @Transactional
@@ -64,6 +61,8 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public void createUser(User user) {
+        if (findByUsername(user.getUsername()).isPresent()) {throw new InvalidRegistrationException("Пользователь с таким именем уже существует");}
+        if (findByEmail(user.getEmail()).isPresent()) {throw new InvalidRegistrationException("Пользователь с таким email уже существует");}
         user.setUserStatus(UserStatus.NOT_ACTIVE);
         userRepository.save(user);
         UserAwaitActivation userAwaitActivation = new UserAwaitActivation();
@@ -89,9 +88,7 @@ public class UserService implements UserDetailsService {
         return userRepository.getEmailByUsername(username);
     }
 
-    public Optional<UserStatus> getUserStatusByUsername(String username) {
-        return userRepository.getUserStatusByUsername(username);
-    }
+    public Optional<UserStatus> getUserStatusByUsername(String username) {return userRepository.getUserStatusByUsername(username);}
 
     @Transactional
     public void updatePassword(String username, String password) {
@@ -99,6 +96,6 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean userExistInDb(String username) {
-        return userRepository.findExistingUser(username) == 1;
+        return userRepository.findExistingUser(username);
     }
 }
