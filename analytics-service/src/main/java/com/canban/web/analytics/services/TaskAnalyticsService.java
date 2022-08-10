@@ -26,7 +26,7 @@ public class TaskAnalyticsService {
 
     private final CoreIntegration coreIntegration;
 
-    @Scheduled(fixedRate = 30000) // 3600000 - час, время в миллисекундах
+    @Scheduled(cron = "0 0 4 * * *")
     @Transactional
     public void askCoreForEventsAnalytics() {
         TasksAnalyticsDtoWithList tasksAnalyticsDtoWithList = coreIntegration.getTasksAnalyticsFromCore();
