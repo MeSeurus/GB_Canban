@@ -4,6 +4,7 @@ import com.canban.api.auth.NewPasswordDto;
 import com.canban.auth.exceptions.InvalidRegistrationException;
 import com.canban.auth.service.UserAccessManagementService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,8 @@ public class UserAccessManagementController {
                     @ApiResponse(description = "Успешный ответ", responseCode = "200")
             }
     )
-    public void activation(@RequestParam(name = "username") String username, @RequestParam(name = "code") String code) {
+    public void activation(@RequestParam(name = "username") @Parameter(description = "Имя пользователя запросившего ссылку на активацию")  String username,
+                           @RequestParam(name = "code") @Parameter(description = "Код, необходимый для активации аккаунта пользователя") String code) {
         userAccessManagementService.checkActivateKey(username, code);
     }
 
@@ -40,7 +42,9 @@ public class UserAccessManagementController {
             responses = {
                     @ApiResponse(description = "Успешный ответ", responseCode = "200")
             })
-    public void recoveryPassword(@RequestBody String username) {userAccessManagementService.sendRecoverPasswordLink(username);}
+    public void recoveryPassword(@RequestBody @Parameter(description = "Имя пользователя запросившего ссылку на смену пароля") String username) {
+        userAccessManagementService.sendRecoverPasswordLink(username);
+    }
 
     @PostMapping("activation/recovery")
     @Operation(
@@ -50,7 +54,9 @@ public class UserAccessManagementController {
                     @ApiResponse(description = "Успешный ответ", responseCode = "200")
             }
     )
-    public void recoverActivationLink(@RequestBody String username) {userAccessManagementService.sendNewActivationLink(username);}
+    public void recoverActivationLink(@RequestBody @Parameter(description = "Имя пользователя, повторно запросившего ссылку на активацию") String username) {
+        userAccessManagementService.sendNewActivationLink(username);
+    }
 
     @PostMapping("/password/set")
     @Operation(
@@ -60,8 +66,7 @@ public class UserAccessManagementController {
                     @ApiResponse(description = "Успешный ответ", responseCode = "200")
             }
     )
-
-    public void setNewPassword(@RequestBody NewPasswordDto newPasswordDto) {
+    public void setNewPassword(@RequestBody @Parameter(description = "Модель данных, необходимых для восстановления пароля") NewPasswordDto newPasswordDto) {
         if (!newPasswordDto.getNewPassword().equals(newPasswordDto.getConfirmNewPassword())) {throw new InvalidRegistrationException("Пароли не совпадают");}
         userAccessManagementService.setNewPassword(newPasswordDto.getUsername(), passwordEncoder.encode(newPasswordDto.getNewPassword()), newPasswordDto.getPasswordCode());
     }

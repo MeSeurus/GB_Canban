@@ -7,6 +7,7 @@ import com.canban.auth.service.RoleService;
 import com.canban.auth.service.UserService;
 import com.canban.auth.validator.UserValidator;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,7 @@ public class RegisterController {
                     @ApiResponse(description = "Успешный ответ", responseCode = "200")
             }
     )
-    public void registerNewUser(@RequestBody RegistrationUserDto registrationUserDto) {
+    public void registerNewUser(@RequestBody @Parameter(description = "Модель регистрирующегося пользователя") RegistrationUserDto registrationUserDto) {
         if (!registrationUserDto.getPassword().equals(registrationUserDto.getConfirmPassword())) {throw new InvalidRegistrationException("Пароли не совпадают");}
         userValidator.validate(registrationUserDto);
         registrationUserDto.setPassword(passwordEncoder.encode(registrationUserDto.getPassword()));

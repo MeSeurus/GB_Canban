@@ -7,6 +7,7 @@ import com.canban.auth.service.UserAccessManagementService;
 import com.canban.auth.service.UserService;
 import com.canban.auth.util.JwtTokenUtil;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +40,7 @@ public class AuthController {
                     @ApiResponse(description = "Успешный ответ", responseCode = "200")
             }
     )
-    public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest) {
+    public ResponseEntity<?> createAuthToken(@RequestBody @Parameter(description = "JWT-запрос") JwtRequest authRequest) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
         } catch (BadCredentialsException e) {
