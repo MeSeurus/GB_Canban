@@ -8,18 +8,16 @@ import com.canban.web.core.dto.TaskDetailsForSearchRq;
 import com.canban.web.core.dto.TaskDetailsRq;
 import com.canban.web.core.entities.Task;
 import com.canban.web.core.mapper.DateFormatter;
+import com.canban.web.core.mapper.TaskAnalyticsMapper;
 import com.canban.web.core.repositories.TaskRepository;
 import com.canban.web.core.specification.TaskSpecification;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
 @RequiredArgsConstructor
@@ -28,9 +26,11 @@ public class TaskService {
     private final DateFormatter dateFormatter;
     private final TaskRepository taskRepository;
 
-    private List<Task> tasks = new CopyOnWriteArrayList<>();
+    private final TaskForAnalyticsService taskForAnalyticsService;
 
-    public Page<Task> searchAllTasksByBoardId(Integer page, TaskDetailsForSearchRq taskDetailsForSearchRq) {
+    private final TaskAnalyticsMapper taskAnalyticsMapper;
+
+    public List<Task> searchAllTasksByBoardId(TaskDetailsForSearchRq taskDetailsForSearchRq) {
         Specification<Task> spec = Specification.where(null);
         spec = spec.and(TaskSpecification.boardIdEqual(taskDetailsForSearchRq.getBoardId())); // обязательное поле
         if (taskDetailsForSearchRq.getTitlePart() != null) {
@@ -66,41 +66,25 @@ public class TaskService {
         if (taskDetailsForSearchRq.getPriority() != null) {
             spec = spec.and(TaskSpecification.priorityEquals(taskDetailsForSearchRq.getPriority()));
         }
-        return taskRepository.findAll(spec,  PageRequest.of(page - 1, 50));
+        return taskRepository.findAll(spec);
     }
 
+    @Transactional
     public void createTask(String username, TaskDetailsRq taskDetailsRq) {
-        Task task = null;
-        if (taskDetailsRq.getUserExecutor() != null || !taskDetailsRq.getUserExecutor().isEmpty()) {
-            task = Task.taskBuilder()
-                    .title(taskDetailsRq.getTitle())
-                    .content(taskDetailsRq.getContent())
-                    .userCreator(username)
-                    .userExecutor(taskDetailsRq.getUserExecutor())
-                    .beginDate(taskDetailsRq.getBeginDate())
-                    .endDate(taskDetailsRq.getEndDate())
-                    .kanbanBoardId(taskDetailsRq.getKanbanBoardId())
-                    .state(taskDetailsRq.getState())
-                    .priority(taskDetailsRq.getPriority())
-                    .build();
-        } else {
-            task = Task.taskBuilder()
-                    .title(taskDetailsRq.getTitle())
-                    .content(taskDetailsRq.getContent())
-                    .userCreator(username)
-                    .beginDate(taskDetailsRq.getBeginDate())
-                    .endDate(taskDetailsRq.getEndDate())
-                    .kanbanBoardId(taskDetailsRq.getKanbanBoardId())
-                    .state(taskDetailsRq.getState())
-                    .priority(taskDetailsRq.getPriority())
-                    .build();
-        }
+        Task task = Task.taskBuilder()
+                .title(taskDetailsRq.getTitle())
+                .content(taskDetailsRq.getContent())
+                .userCreator(username)
+                .userExecutor(taskDetailsRq.getUserExecutor())
+                .actualEndDate(taskDetailsRq.getActualEndDate())
+                .beginDate(taskDetailsRq.getBeginDate())
+                .endDate(taskDetailsRq.getEndDate())
+                .kanbanBoardId(taskDetailsRq.getKanbanBoardId())
+                .state(taskDetailsRq.getState())
+                .priority(taskDetailsRq.getPriority())
+                .build();
         taskRepository.save(task);
-        tasks.add(task);
-    }
-
-    public List<Task> findAll() {
-        return taskRepository.findAll();
+        taskForAnalyticsService.createTaskForAnalytics(taskAnalyticsMapper.taskToTaskForAnalytics(task));
     }
 
     public void deleteById(Long id) {
@@ -111,55 +95,56 @@ public class TaskService {
     public void changeTitle(Long id, String title) {
         Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change task's title. Task not found"));
         task.setTitle(title);
+        taskForAnalyticsService.createTaskForAnalytics(taskAnalyticsMapper.taskToTaskForAnalytics(task));
     }
 
     @Transactional
     public void changeContent(Long id, String content) {
         Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change task's content. Task not found"));
         task.setContent(content);
+        taskForAnalyticsService.createTaskForAnalytics(taskAnalyticsMapper.taskToTaskForAnalytics(task));
     }
 
     @Transactional
     public void changeExecutorUsername(Long id, String username) {
         Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change task's username. Task not found"));
         task.setUserExecutor(username);
+        taskForAnalyticsService.createTaskForAnalytics(taskAnalyticsMapper.taskToTaskForAnalytics(task));
     }
 
     @Transactional
     public void changeBeginDate(Long id, LocalDateTime beginDate) {
         Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change task's begin date. Task not found"));
         task.setBeginDate(beginDate);
+        taskForAnalyticsService.createTaskForAnalytics(taskAnalyticsMapper.taskToTaskForAnalytics(task));
     }
 
     @Transactional
     public void changeEndDate(Long id, LocalDateTime endDate) {
         Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change task's end date. Task not found"));
         task.setBeginDate(endDate);
+        taskForAnalyticsService.createTaskForAnalytics(taskAnalyticsMapper.taskToTaskForAnalytics(task));
     }
 
     @Transactional
     public void changeState(Long id, State state) {
         Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change task's state. Task not found"));
         task.setState(state);
+        taskForAnalyticsService.createTaskForAnalytics(taskAnalyticsMapper.taskToTaskForAnalytics(task));
     }
 
     @Transactional
     public void changePriority(Long id, Priority priority) {
         Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change task's priority. Task not found"));
         task.setPriority(priority);
+        taskForAnalyticsService.createTaskForAnalytics(taskAnalyticsMapper.taskToTaskForAnalytics(task));
     }
 
     @Transactional
     public void changeActualEndDate(Long id, LocalDateTime actualEndDate) {
         Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change task's actual end date. Task not found"));
         task.setActualEndDate(actualEndDate);
-    }
-    public List<Task> findAllForAnalytics() {
-        return tasks;
-    }
-
-    public void clearList() {
-        tasks.clear();
+        taskForAnalyticsService.createTaskForAnalytics(taskAnalyticsMapper.taskToTaskForAnalytics(task));
     }
 
 }

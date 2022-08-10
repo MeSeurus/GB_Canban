@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "Модель события для сервиса аналитики")
-public class TasksAnalyticsDto {
+public class TaskAnalyticsDto {
 
     @Schema(description = "ID задачи", required = true, example = "1")
     private Long taskId;

@@ -31,31 +31,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Tag(name = "Задачи", description = "Методы работы с задачами")
 public class TaskController {
+
     private final TaskService taskService;
+
     private final TaskMapper taskMapper;
 
     private final TaskValidator taskValidator;
-    private final TaskAnalyticsMapper taskAnalyticsMapper;
-
-    @GetMapping("/analytics")
-    @Operation(
-            summary = "Запрос на получение всех задач всех пользователей для микросервиса аналитики за текущее время работы Core-MC",
-            responses = {
-                    @ApiResponse(
-                            description = "Успешный ответ", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = EventsAnalyticsDtoWithList.class))
-                    )
-            }
-    )
-    public TasksAnalyticsDtoWithList findAllTasksForAnalytics() {
-        TasksAnalyticsDtoWithList tasksAnalyticsDtoWithList =
-                new TasksAnalyticsDtoWithList(taskService.findAllForAnalytics()
-                        .stream()
-                        .map(taskAnalyticsMapper::entityToDto)
-                        .collect(Collectors.toList()));
-        taskService.clearList();
-        return tasksAnalyticsDtoWithList;
-    }
 
     @Operation(
             summary = "Запрос на получение всех задач по Id доски",
@@ -67,15 +48,13 @@ public class TaskController {
             }
     )
     @PostMapping
-    public Page<TaskDto> searchAllTasksByBoardId(
-            @RequestParam(name = "p", defaultValue = "1") Integer page,
-            @RequestBody @Parameter(description = "Дто для филтрации", required = false) TaskDetailsForSearchRq taskDetailsForSearchRq
+    public List<TaskDto> searchAllTasksByBoardId(
+            @RequestBody @Parameter(description = "Дто для фильтрации", required = true) TaskDetailsForSearchRq taskDetailsForSearchRq
             ) {
-        if (page < 1) {
-            page = 1;
-        }
-        return taskService.searchAllTasksByBoardId(page,taskDetailsForSearchRq)
-                .map(e -> taskMapper.entityToDtoWithCreator(e));
+        return taskService.searchAllTasksByBoardId(taskDetailsForSearchRq)
+                .stream()
+                .map(e -> taskMapper.entityToDtoWithCreator(e))
+                .collect(Collectors.toList());
     }
 
     @PostMapping("/create")

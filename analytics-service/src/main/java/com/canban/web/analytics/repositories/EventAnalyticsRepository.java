@@ -1,13 +1,13 @@
 package com.canban.web.analytics.repositories;
 
-import com.canban.web.analytics.entities.EventsAnalytics;
+import com.canban.web.analytics.entities.EventAnalytics;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-public interface EventsAnalyticsRepository extends JpaRepository<EventsAnalytics, Long> {
+public interface EventAnalyticsRepository extends JpaRepository<EventAnalytics, Long> {
 
     @Query(
             value = "select count(DISTINCT event_id) from events_analytics " +
@@ -26,6 +26,6 @@ public interface EventsAnalyticsRepository extends JpaRepository<EventsAnalytics
                     "order by :orderType * (event_end_date - event_begin_date) limit 1",
             nativeQuery = true
     )
-    Optional<EventsAnalytics> searchTheLongestAndTheShortestCompletedEventByUsernameAndByTimePeriod(String username, LocalDateTime timeForSearch, Integer orderType);
+    Optional<EventAnalytics> searchTheLongestAndTheShortestCompletedEventByUsernameAndByTimePeriod(String username, LocalDateTime timeForSearch, Integer orderType);
 
 }

@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tasks_analytics")
-public class TasksAnalytics {
+public class TaskAnalytics {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -67,7 +67,7 @@ public class TasksAnalytics {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public TasksAnalytics(Long taskId, String taskTitle, String taskUserCreator, String taskUserExecutor, LocalDateTime taskBeginDate, LocalDateTime taskEndDate, LocalDateTime taskActualEndDate, State taskState, Priority taskPriority, Long taskKanbanBoardId) {
+    public TaskAnalytics(Long taskId, String taskTitle, String taskUserCreator, String taskUserExecutor, LocalDateTime taskBeginDate, LocalDateTime taskEndDate, LocalDateTime taskActualEndDate, State taskState, Priority taskPriority, Long taskKanbanBoardId) {
         this.taskId = taskId;
         this.taskTitle = taskTitle;
         this.taskUserCreator = taskUserCreator;

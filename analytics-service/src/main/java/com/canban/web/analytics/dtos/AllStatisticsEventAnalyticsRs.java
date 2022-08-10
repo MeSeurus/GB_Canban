@@ -1,6 +1,6 @@
 package com.canban.web.analytics.dtos;
 
-import com.canban.api.analytics.EventsAnalyticsDto;
+import com.canban.api.analytics.EventAnalyticsDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,13 +12,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Schema(description = "Модель общей статистики ивентов сервиса аналитики")
-public class AllStatisticsEventsAnalyticsRs {
+public class AllStatisticsEventAnalyticsRs {
 
     @Schema(description = "Самый длинный ивент", required = true)
-    private EventsAnalyticsDto longestEvent;
+    private EventAnalyticsDto longestEvent;
 
     @Schema(description = "Самый короткий ивент", required = true)
-    private EventsAnalyticsDto shortestEvent;
+    private EventAnalyticsDto shortestEvent;
 
     @Schema(description = "Количество ивентов", required = true)
     private Integer countOfEvents;

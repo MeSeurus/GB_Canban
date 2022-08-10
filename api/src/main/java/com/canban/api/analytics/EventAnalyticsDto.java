@@ -1,15 +1,11 @@
 package com.canban.api.analytics;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Schema(description = "Модель события для сервиса аналитики")
-public class EventsAnalyticsDto {
+public class EventAnalyticsDto {
 
     @Schema(description = "ID события", required = true, example = "1")
     private Long eventId;
@@ -26,10 +22,10 @@ public class EventsAnalyticsDto {
     @Schema(description = "Дата окончания события", required = true, example = "2022-06-24 18:00:00")
     private LocalDateTime eventEndDate;
 
-    public EventsAnalyticsDto() {
+    public EventAnalyticsDto() {
     }
 
-    public EventsAnalyticsDto(Long eventId, String eventTitle, String eventUsername, LocalDateTime eventBeginDate, LocalDateTime eventEndDate) {
+    public EventAnalyticsDto(Long eventId, String eventTitle, String eventUsername, LocalDateTime eventBeginDate, LocalDateTime eventEndDate) {
         this.eventId = eventId;
         this.eventTitle = eventTitle;
         this.eventUsername = eventUsername;

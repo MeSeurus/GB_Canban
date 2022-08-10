@@ -9,7 +9,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.time.Period;
 
 @Entity
 @Builder
@@ -17,7 +16,7 @@ import java.time.Period;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "events_analytics")
-public class EventsAnalytics {
+public class EventAnalytics {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -46,7 +45,7 @@ public class EventsAnalytics {
     @Column(name = "updated_at")
     LocalDateTime updatedAt;
 
-    public EventsAnalytics(Long eventId, String eventTitle, String eventUsername, LocalDateTime eventBeginDate, LocalDateTime eventEndDate) {
+    public EventAnalytics(Long eventId, String eventTitle, String eventUsername, LocalDateTime eventBeginDate, LocalDateTime eventEndDate) {
         this.eventId = eventId;
         this.eventTitle = eventTitle;
         this.eventUsername = eventUsername;

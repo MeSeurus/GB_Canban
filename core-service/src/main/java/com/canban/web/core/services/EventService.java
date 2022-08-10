@@ -5,27 +5,27 @@ import com.canban.web.core.dto.EventDetailsForSearchRq;
 import com.canban.web.core.dto.EventDetailsRq;
 import com.canban.web.core.entities.Event;
 import com.canban.web.core.mapper.DateFormatter;
+import com.canban.web.core.mapper.EventAnalyticsMapper;
 import com.canban.web.core.repositories.EventRepository;
 import com.canban.web.core.specification.EventSpecifications;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
 @RequiredArgsConstructor
 public class EventService {
     private final EventRepository eventRepository;
 
+    private final EventAnalyticsMapper eventAnalyticsMapper;
+
     private final DateFormatter dateFormatter;
 
-    private List<Event> events = new CopyOnWriteArrayList<>();
+    private final EventForAnalyticsService eventForAnalyticsService;
 
     public List<Event> searchAllEvents(String username,
                                        EventDetailsForSearchRq eventDetailsForSearchRq) {
@@ -49,10 +49,7 @@ public class EventService {
         return eventRepository.findAll(spec);
     }
 
-    public List<Event> findEventsByUser(String username) {
-        return eventRepository.findEventsByUsername(username);
-    }
-
+    @Transactional
     public void createEvent(String username, EventDetailsRq eventDetailsRq) {
         Event event = Event.builder()
                 .title(eventDetailsRq.getTitle())
@@ -62,15 +59,7 @@ public class EventService {
                 .endDate(eventDetailsRq.getEndDate())
                 .build();
         eventRepository.save(event);
-        events.add(event);
-    }
-
-    public List<Event> findAllForAnalytics() {
-        return events;
-    }
-
-    public void clearList() {
-        events.clear();
+        eventForAnalyticsService.createEventForAnalytics(eventAnalyticsMapper.eventToEventForAnalytics(event));
     }
 
     public void deleteById(Long id) {
@@ -105,23 +94,27 @@ public class EventService {
     public void changeTitle(Long id, String title) {
         Event event = eventRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change Event's title. Event not found"));
         event.setTitle(title);
+        eventForAnalyticsService.createEventForAnalytics(eventAnalyticsMapper.eventToEventForAnalytics(event));
     }
 
     @Transactional
     public void changeContent(Long id, String content) {
         Event event = eventRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change Event's content. Event not found"));
         event.setContent(content);
+        eventForAnalyticsService.createEventForAnalytics(eventAnalyticsMapper.eventToEventForAnalytics(event));
     }
 
     @Transactional
     public void changeBeginDate(Long id, LocalDateTime beginDate) {
         Event event = eventRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change Event's begin date. Event not found"));
         event.setBeginDate(beginDate);
+        eventForAnalyticsService.createEventForAnalytics(eventAnalyticsMapper.eventToEventForAnalytics(event));
     }
 
     @Transactional
     public void changeEndDate(Long id, LocalDateTime endDate) {
         Event event = eventRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change Event's end date. Event not found"));
         event.setBeginDate(endDate);
+        eventForAnalyticsService.createEventForAnalytics(eventAnalyticsMapper.eventToEventForAnalytics(event));
     }
 }

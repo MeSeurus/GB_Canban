@@ -36,28 +36,6 @@ public class EventController {
 
     private final EventMapper eventMapper;
 
-    private final EventAnalyticsMapper eventAnalyticsMapper;
-
-    @GetMapping("/analytics")
-    @Operation(
-            summary = "Запрос на получение всех событий всех пользователей для микросервиса аналитики за текущее время работы Core-MC",
-            responses = {
-                    @ApiResponse(
-                            description = "Успешный ответ", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = EventsAnalyticsDtoWithList.class))
-                    )
-            }
-    )
-    public EventsAnalyticsDtoWithList findAllEventsForAnalytics() {
-        EventsAnalyticsDtoWithList eventsAnalyticsDtoWithList =
-                new EventsAnalyticsDtoWithList(eventService.findAllForAnalytics()
-                        .stream()
-                        .map(eventAnalyticsMapper::entityToDto)
-                        .collect(Collectors.toList()));
-        eventService.clearList();
-        return eventsAnalyticsDtoWithList;
-    }
-
     @Operation(
             summary = "Запрос на получение всех ивентов пользователя",
             responses = {
