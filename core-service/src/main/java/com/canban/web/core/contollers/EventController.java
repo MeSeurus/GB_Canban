@@ -76,7 +76,7 @@ public class EventController {
     ) {
         return eventService.findAll(username, titlePart, maxBeginDate, minBeginDate, maxEndDate, minEndDate)
                 .stream()
-                .map(e -> eventMapper.entityToDto(e))
+                .map(eventMapper::entityToDto)
                 .collect(Collectors.toList());
     }
 
