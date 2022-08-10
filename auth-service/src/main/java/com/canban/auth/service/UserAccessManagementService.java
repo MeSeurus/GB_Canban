@@ -112,7 +112,7 @@ public class UserAccessManagementService {
 
     @Transactional
     public void sendNewActivationLink(String username) {
-        if (!userService.getUserStatusByUsername(username).get().equals(UserStatus.NOT_ACTIVE)) {throw new WrongUserStatusException("Вы уже активированы");}
+        if (!userService.getUserStatusByUsername(username).get().equals(UserStatus.NOT_ACTIVE)) {throw new WrongUserStatusException("You are already activated");}
         String newActivationCode = getRandomNumberString();
         String email = userService.getEmailByUsername(username).get();
         if (activationRepository.findExistingUserAndCodeType(username, CodeType.ACTIVATION_CODE) == 1) {

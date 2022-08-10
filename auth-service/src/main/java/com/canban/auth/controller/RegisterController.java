@@ -39,13 +39,13 @@ public class RegisterController {
     )
     public ResponseEntity<?> registerNewUser(@RequestBody RegistrationUserDto registrationUserDto) {
         if (!registrationUserDto.getPassword().equals(registrationUserDto.getConfirmPassword())) {
-            throw new InvalidRegistrationException("Пароли не совпадают");
+            throw new InvalidRegistrationException("Passwords don't match");
         }
         if (userService.findByUsername(registrationUserDto.getUsername()).isPresent()) {
-            throw new InvalidRegistrationException("Пользователь с таким именем уже существует");
+            throw new InvalidRegistrationException("A user with this name already exists");
         }
         if (userService.findByEmail(registrationUserDto.getEmail()).isPresent()) {
-            throw new InvalidRegistrationException("Пользователь с таким email уже существует");
+            throw new InvalidRegistrationException("A user with this email already exists");
         }
         userValidator.validate(registrationUserDto);
         registrationUserDto.setPassword(passwordEncoder.encode(registrationUserDto.getPassword()));
