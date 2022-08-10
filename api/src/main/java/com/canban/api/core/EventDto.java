@@ -1,8 +1,10 @@
 package com.canban.api.core;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
 import java.time.LocalDateTime;
 import java.util.Set;
 

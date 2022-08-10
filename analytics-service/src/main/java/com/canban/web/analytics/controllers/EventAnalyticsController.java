@@ -4,7 +4,6 @@ import com.canban.api.analytics.EventsAnalyticsDtoWithList;
 import com.canban.api.errors.AppError;
 import com.canban.web.analytics.dtos.AllStatisticsEventAnalyticsRs;
 import com.canban.web.analytics.dtos.DateDto;
-import com.canban.web.analytics.entities.EventAnalytics;
 import com.canban.web.analytics.services.EventAnalyticsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -16,8 +15,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 
 @RestController
 @RequestMapping("/api/v1/events/analytics")
@@ -28,11 +25,6 @@ import java.util.List;
 public class EventAnalyticsController {
 
     private final EventAnalyticsService eventAnalyticsService;
-
-    @GetMapping
-    public List<EventAnalytics> findAll() {
-        return eventAnalyticsService.findAll();
-    }
 
     @PostMapping
     @Operation(
@@ -49,8 +41,8 @@ public class EventAnalyticsController {
             }
     )
     public AllStatisticsEventAnalyticsRs searchAllAnalyticsByUsernameAndByDate(
-            @RequestHeader @Parameter(description = "Имя пользователя", required = true) String username,
-            @RequestBody @Parameter(description = "Дата начала отсчета аналитики", required = true) DateDto dateDto) {
+            @RequestHeader @Parameter(description = "Имя пользователя по которому выбирается аналитика", required = true) String username,
+            @RequestBody @Parameter(description = "Дто для выборки аналитики", required = true) DateDto dateDto) {
         return eventAnalyticsService.search(username, dateDto.getStartDate());
     }
 

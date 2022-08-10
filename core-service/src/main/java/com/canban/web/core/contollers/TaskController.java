@@ -6,6 +6,7 @@ import com.canban.api.core.EventDto;
 import com.canban.api.core.Priority;
 import com.canban.api.core.State;
 import com.canban.api.core.TaskDto;
+import com.canban.api.errors.FieldsValidationError;
 import com.canban.web.core.dto.TaskDetailsForSearchRq;
 import com.canban.web.core.dto.TaskDetailsRq;
 import com.canban.web.core.mapper.TaskAnalyticsMapper;
@@ -39,7 +40,7 @@ public class TaskController {
     private final TaskValidator taskValidator;
 
     @Operation(
-            summary = "Запрос на получение всех задач по Id доски",
+            summary = "Запрос на получение всех задач по Id доски с возможностью фильтрации",
             responses = {
                     @ApiResponse(
                             description = "Успешный ответ", responseCode = "200",
@@ -49,7 +50,7 @@ public class TaskController {
     )
     @PostMapping
     public List<TaskDto> searchAllTasksByBoardId(
-            @RequestBody @Parameter(description = "Дто для фильтрации", required = true) TaskDetailsForSearchRq taskDetailsForSearchRq
+            @RequestBody @Parameter(description = "Модель для поиска задач", required = true) TaskDetailsForSearchRq taskDetailsForSearchRq
             ) {
         return taskService.searchAllTasksByBoardId(taskDetailsForSearchRq)
                 .stream()
@@ -63,51 +64,145 @@ public class TaskController {
             responses = {
                     @ApiResponse(
                             description = "Успешный ответ", responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Ошибка валидации", responseCode = "400",
+                            content = @Content(schema = @Schema(implementation = FieldsValidationError.class))
                     )
             }
     )
-    public void createTask(@RequestHeader @Parameter(description = "Список пользователей", required = true) String username, @RequestBody TaskDetailsRq taskDetailsRq) {
+    public void createTask(@RequestHeader @Parameter(description = "Список пользователей", required = true) String username,
+                           @RequestBody @Parameter(description = "Модель деталей задачи", required = true) TaskDetailsRq taskDetailsRq) {
         taskValidator.validate(taskDetailsRq);
         taskService.createTask(username, taskDetailsRq);
     }
 
     @PatchMapping("/change/title")
-    public void changeTitle(@RequestBody TaskDto requestBody) {
+    @Operation(
+            summary = "Запрос на изменения названия задачи по id",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Задача не найдена", responseCode = "404"
+                    )
+            }
+    )
+    public void changeTitle(@RequestBody @Parameter(description = "Модель задачи", required = true) TaskDto requestBody) {
         taskService.changeTitle(requestBody.getId(), requestBody.getContent());
     }
 
     @PatchMapping("/change/content")
-    public void changeContent(@RequestBody TaskDto requestBody) {
+    @Operation(
+            summary = "Запрос на изменения описания задачи по id",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Задача не найдена", responseCode = "404"
+                    )
+            }
+    )
+    public void changeContent(@RequestBody @Parameter(description = "Модель задачи", required = true) TaskDto requestBody) {
         taskService.changeContent(requestBody.getId(), requestBody.getContent());
     }
 
-    @PatchMapping("/change/user_executor")
-    public void changeUsernameExecutor(@RequestBody TaskDto requestBody) {
+    @PatchMapping("/change/user/executor")
+    @Operation(
+            summary = "Запрос на изменения исполнителя задачи по id",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Задача не найдена", responseCode = "404"
+                    )
+            }
+    )
+    public void changeUsernameExecutor(@RequestBody @Parameter(description = "Модель задачи", required = true) TaskDto requestBody) {
         taskValidator.validateUser(requestBody.getId());
         taskService.changeExecutorUsername(requestBody.getId(), requestBody.getContent());
     }
 
-    @PatchMapping("/change/begin_date")
-    public void changeBeginDate(@RequestBody TaskDto requestBody) {
+    @PatchMapping("/change/date/begin")
+    @Operation(
+            summary = "Запрос на изменения даты начала задачи по id",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Задача не найдена", responseCode = "404"
+                    )
+            }
+    )
+    public void changeBeginDate(@RequestBody @Parameter(description = "Модель задачи", required = true) TaskDto requestBody) {
         taskService.changeBeginDate(requestBody.getId(), requestBody.getBeginDate());
     }
-    @PatchMapping("/change/end_date")
-    public void changeEndDate(@RequestBody TaskDto requestBody) {
+
+    @PatchMapping("/change/date/end")
+    @Operation(
+            summary = "Запрос на изменения срока исполнения задачи по id",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Задача не найдена", responseCode = "404"
+                    )
+            }
+    )
+    public void changeEndDate(@RequestBody @Parameter(description = "Модель задачи", required = true) TaskDto requestBody) {
         taskService.changeEndDate(requestBody.getId(), requestBody.getEndDate());
     }
 
     @PatchMapping("/change/state")
-    public void changeState(@RequestBody TaskDto requestBody) {
-        taskService.changeState(requestBody.getId(), State.valueOf(requestBody.getState()));
+    @Operation(
+            summary = "Запрос на изменение статуса задачи по id",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Задача не найдена", responseCode = "404"
+                    )
+            }
+    )
+    public void changeState(@RequestBody @Parameter(description = "Модель задачи", required = true) TaskDto requestBody) {
+        taskService.changeState(requestBody.getId(), requestBody.getState());
     }
 
     @PatchMapping("/change/priority")
-    public void changePriority(@RequestBody TaskDto requestBody) {
-        taskService.changePriority(requestBody.getId(), Priority.valueOf(requestBody.getPriority()));
+    @Operation(
+            summary = "Запрос на изменение приоритета задачи по id",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Задача не найдена", responseCode = "404"
+                    )
+            }
+    )
+    public void changePriority(@RequestBody @Parameter(description = "Модель задачи", required = true) TaskDto requestBody) {
+        taskService.changePriority(requestBody.getId(), requestBody.getPriority());
     }
 
-    @PatchMapping("/change/actual_end_date")
-    public void changeActualEndDate(@RequestBody TaskDto requestBody) {
+    @PatchMapping("/change/date/actual_end")
+    @Operation(
+            summary = "Запрос на изменение фактической даты выполнения задачи по id",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Задача не найдена", responseCode = "404"
+                    )
+            }
+    )
+    public void changeActualEndDate(@RequestBody @Parameter(description = "Модель задачи", required = true) TaskDto requestBody) {
         taskService.changeActualEndDate(requestBody.getId(), requestBody.getBeginDate());
     }
 

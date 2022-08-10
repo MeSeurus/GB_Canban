@@ -3,7 +3,6 @@ package com.canban.web.analytics.services;
 import com.canban.api.analytics.TasksAnalyticsDtoWithList;
 import com.canban.api.exceptions.ResourceNotFoundException;
 import com.canban.web.analytics.dtos.AllStatisticsTaskAnalyticsRs;
-import com.canban.web.analytics.entities.EventAnalytics;
 import com.canban.web.analytics.entities.TaskAnalytics;
 import com.canban.web.analytics.integration.CoreIntegration;
 import com.canban.web.analytics.mappers.TaskAnalyticsMapper;

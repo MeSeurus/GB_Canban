@@ -6,6 +6,8 @@ import com.canban.api.exceptions.ValidationException;
 import com.canban.web.core.dto.TaskDetailsRq;
 import com.canban.web.core.entities.Task;
 import com.canban.web.core.repositories.TaskRepository;
+import com.canban.web.core.services.TaskService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -13,9 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class TaskValidator {
 
-    TaskRepository taskRepository;
+    private final TaskService taskService;
 
     public void validate(TaskDetailsRq taskDetailsRq) {
         List<String> errors = new ArrayList<>();
@@ -46,8 +49,7 @@ public class TaskValidator {
 
     public void validateUser(Long id) {
         List<String> errors = new ArrayList<>();
-
-        Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change task's username."));
+        Task task = taskService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change task's username."));
         if (task.getState() != State.CREATED) {
             errors.add("Ошибка. Исполнитель может быть изменен только в статусе СОЗДАНО ");
         }

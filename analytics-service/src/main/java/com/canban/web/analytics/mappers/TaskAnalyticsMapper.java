@@ -19,7 +19,7 @@ public class TaskAnalyticsMapper {
                 taskAnalyticsDto.getTaskState(),
                 taskAnalyticsDto.getTaskPriority(),
                 taskAnalyticsDto.getKanbanBoardId()
-                );
+        );
     }
 
     public TaskAnalyticsDto entityToDto(TaskAnalytics taskAnalytics) {

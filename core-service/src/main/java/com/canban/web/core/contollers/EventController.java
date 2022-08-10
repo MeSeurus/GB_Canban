@@ -1,13 +1,11 @@
 package com.canban.web.core.contollers;
 
-import com.canban.api.analytics.EventsAnalyticsDtoWithList;
 import com.canban.api.core.EventDto;
+import com.canban.api.errors.FieldsValidationError;
 import com.canban.web.core.dto.EventDetailsForSearchRq;
 import com.canban.web.core.dto.EventDetailsRq;
-import com.canban.web.core.mapper.EventAnalyticsMapper;
 import com.canban.web.core.mapper.EventMapper;
 import com.canban.web.core.services.EventService;
-import com.canban.web.core.validators.EventValidator;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -30,14 +28,12 @@ import java.util.stream.Collectors;
 @Slf4j
 public class EventController {
 
-    private final EventValidator eventValidator;
-
     private final EventService eventService;
 
     private final EventMapper eventMapper;
 
     @Operation(
-            summary = "Запрос на получение всех ивентов пользователя",
+            summary = "Запрос на получение всех ивентов пользователя с возможностью фильтрации",
             responses = {
                     @ApiResponse(
                             description = "Успешный ответ", responseCode = "200",
@@ -48,7 +44,7 @@ public class EventController {
     @PostMapping()
     public List<EventDto> searchAllEvents(
             @RequestHeader @Parameter(description = "Имя пользователя", required = true) String username,
-            @RequestBody @Parameter(description = "Дто для фильтрации", required = false) EventDetailsForSearchRq eventDetailsForSearchRq) {
+            @RequestBody @Parameter(description = "Модель для поиска событий", required = false) EventDetailsForSearchRq eventDetailsForSearchRq) {
         return eventService.searchAllEvents(username, eventDetailsForSearchRq)
                 .stream()
                 .map(e -> eventMapper.entityToDto(e))
@@ -61,12 +57,15 @@ public class EventController {
             responses = {
                     @ApiResponse(
                             description = "Успешный ответ", responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Ошибка валидации", responseCode = "400",
+                            content = @Content(schema = @Schema(implementation = FieldsValidationError.class))
                     )
             }
     )
     public void createEvent(@RequestHeader @Parameter(description = "Список пользователей", required = true) String username,
-                            @RequestBody @Parameter(description = "Дто для создания ивента", required = true) EventDetailsRq eventDetailsRq) {
-        eventValidator.validate(eventDetailsRq);
+                            @RequestBody @Parameter(description = "Модель деталей события", required = true) EventDetailsRq eventDetailsRq) {
         eventService.createEvent(username, eventDetailsRq);
     }
 
@@ -94,22 +93,66 @@ public class EventController {
 //    }
 
     @PatchMapping("/change/title")
-    public void changeTitle(@RequestBody EventDto requestBody) {
+    @Operation(
+            summary = "Запрос на изменения названия события по id",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Событие не найдено", responseCode = "404"
+                    )
+            }
+    )
+    public void changeTitle(@RequestBody @Parameter(description = "Модель события", required = true) EventDto requestBody) {
         eventService.changeTitle(requestBody.getId(), requestBody.getTitle());
     }
 
     @PatchMapping("/change/content")
-    public void changeContent(@RequestBody EventDto requestBody) {
+    @Operation(
+            summary = "Запрос на изменения описания события по id",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Событие не найдено", responseCode = "404"
+                    )
+            }
+    )
+    public void changeContent(@RequestBody @Parameter(description = "Модель события", required = true) EventDto requestBody) {
         eventService.changeContent(requestBody.getId(), requestBody.getContent());
     }
 
     @PatchMapping("/change/begin_date")
-    public void changeBeginDate(@RequestBody EventDto requestBody) {
+    @Operation(
+            summary = "Запрос на изменения начала события по id",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Событие не найдено", responseCode = "404"
+                    )
+            }
+    )
+    public void changeBeginDate(@RequestBody @Parameter(description = "Модель события", required = true) EventDto requestBody) {
         eventService.changeBeginDate(requestBody.getId(), requestBody.getBeginDate());
     }
 
     @PatchMapping("/change/end_date")
-    public void changeEndDate(@RequestBody EventDto requestBody) {
+    @Operation(
+            summary = "Запрос на изменения окончания события по id",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Событие не найдено", responseCode = "404"
+                    )
+            }
+    )
+    public void changeEndDate(@RequestBody @Parameter(description = "Модель события", required = true) EventDto requestBody) {
         eventService.changeEndDate(requestBody.getId(), requestBody.getEndDate());
     }
 

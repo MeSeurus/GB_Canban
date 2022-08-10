@@ -4,8 +4,6 @@ import com.canban.api.analytics.EventsAnalyticsDtoWithList;
 import com.canban.api.errors.AppError;
 import com.canban.web.analytics.dtos.AllStatisticsTaskAnalyticsRs;
 import com.canban.web.analytics.dtos.DateDto;
-import com.canban.web.analytics.entities.EventAnalytics;
-import com.canban.web.analytics.entities.TaskAnalytics;
 import com.canban.web.analytics.services.TaskAnalyticsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -16,8 +14,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/v1/tasks/analytics")
 @CrossOrigin(origins = "http://localhost:3000/")
@@ -26,11 +22,6 @@ import java.util.List;
 public class TaskAnalyticsController {
 
     private final TaskAnalyticsService taskAnalyticsService;
-
-    @GetMapping
-    public List<TaskAnalytics> findAll() {
-        return taskAnalyticsService.findAll();
-    }
 
     @PostMapping
     @Operation(
@@ -47,8 +38,8 @@ public class TaskAnalyticsController {
             }
     )
     public AllStatisticsTaskAnalyticsRs searchAllAnalyticsByUsernameAndByDate(
-            @RequestHeader @Parameter(description = "Имя пользователя", required = true) String username,
-            @RequestBody @Parameter(description = "Дата начала отсчета аналитики", required = true) DateDto dateDto) {
+            @RequestHeader @Parameter(description = "Имя пользователя по которому выбирается аналитика", required = true) String username,
+            @RequestBody @Parameter(description = "Дто для выборки аналитики", required = true) DateDto dateDto) {
         return taskAnalyticsService.search(username, dateDto.getStartDate());
     }
 

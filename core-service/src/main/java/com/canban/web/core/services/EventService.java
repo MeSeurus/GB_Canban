@@ -8,6 +8,7 @@ import com.canban.web.core.mapper.DateFormatter;
 import com.canban.web.core.mapper.EventAnalyticsMapper;
 import com.canban.web.core.repositories.EventRepository;
 import com.canban.web.core.specification.EventSpecifications;
+import com.canban.web.core.validators.EventValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,8 @@ public class EventService {
     private final DateFormatter dateFormatter;
 
     private final EventForAnalyticsService eventForAnalyticsService;
+
+    private final EventValidator eventValidator;
 
     public List<Event> searchAllEvents(String username,
                                        EventDetailsForSearchRq eventDetailsForSearchRq) {
@@ -51,6 +54,7 @@ public class EventService {
 
     @Transactional
     public void createEvent(String username, EventDetailsRq eventDetailsRq) {
+        eventValidator.validate(eventDetailsRq);
         Event event = Event.builder()
                 .title(eventDetailsRq.getTitle())
                 .content(eventDetailsRq.getContent())

@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -85,6 +86,10 @@ public class TaskService {
                 .build();
         taskRepository.save(task);
         taskForAnalyticsService.createTaskForAnalytics(taskAnalyticsMapper.taskToTaskForAnalytics(task));
+    }
+
+    public Optional<Task> findById(Long id) {
+        return taskRepository.findById(id);
     }
 
     public void deleteById(Long id) {

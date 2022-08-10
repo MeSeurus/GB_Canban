@@ -5,6 +5,7 @@ import lombok.Data;
 
 
 @Data
+@Schema(description = "Модель для создания канбан-доски")
 public class KanbanBoardDetailsRq {
 
     @Schema(description = "Название канбан-доски", required = true)

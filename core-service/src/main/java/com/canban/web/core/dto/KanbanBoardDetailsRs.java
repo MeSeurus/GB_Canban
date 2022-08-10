@@ -9,7 +9,9 @@ import java.util.Set;
 
 @Data
 @Builder
+@Schema(description = "Модель канбан-доски")
 public class KanbanBoardDetailsRs {
+
     @Schema(description = "Id канбан-доски", required = true)
     private Long id;
 

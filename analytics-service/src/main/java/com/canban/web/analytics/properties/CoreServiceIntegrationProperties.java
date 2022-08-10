@@ -1,7 +1,6 @@
 package com.canban.web.analytics.properties;
 
 import lombok.Data;
-import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConstructorBinding;
 
@@ -19,7 +18,6 @@ public class CoreServiceIntegrationProperties {
         private Integer write;
         private Integer connection;
     }
-
 
 
 }

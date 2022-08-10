@@ -14,7 +14,7 @@ public class EventAnalyticsMapper {
                 eventAnalyticsDto.getEventUsername(),
                 eventAnalyticsDto.getEventBeginDate(),
                 eventAnalyticsDto.getEventEndDate()
-                );
+        );
     }
 
     public EventAnalyticsDto entityToDto(EventAnalytics eventAnalytics) {

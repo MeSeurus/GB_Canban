@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "Модель события для сервиса аналитики")
+@Schema(description = "Модель задачи для сервиса аналитики")
 public class TaskAnalyticsDto {
 
     @Schema(description = "ID задачи", required = true, example = "1")
@@ -42,7 +42,7 @@ public class TaskAnalyticsDto {
     @Schema(description = "Приоритет задачи", required = true, example = "HIGH")
     private Priority taskPriority;
 
-    @Schema(description = "Имя канбан-доски задачи", required = true, example = "HIGH")
+    @Schema(description = "Id канбан-доски задачи", required = true, example = "1")
     private Long kanbanBoardId;
 
 }
