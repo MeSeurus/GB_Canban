@@ -34,6 +34,7 @@ public class EventService {
                                String minEndDate) {
         Specification<Event> spec = Specification.where(null);
         spec = spec.and(EventSpecifications.usernameEqual(username)); // обязательное поле
+        spec = spec.or(EventSpecifications.userInUsersAdded(username));
         if (titlePart != null) {
             spec = spec.and(EventSpecifications.titleLike(titlePart));
         }
