@@ -37,7 +37,15 @@ public class RegisterController {
             }
     )
     public void registerNewUser(@RequestBody @Parameter(description = "Модель регистрирующегося пользователя") RegistrationUserDto registrationUserDto) {
-        if (!registrationUserDto.getPassword().equals(registrationUserDto.getConfirmPassword())) {throw new InvalidRegistrationException("Пароли не совпадают");}
+        if (!registrationUserDto.getPassword().equals(registrationUserDto.getConfirmPassword())) {
+            throw new InvalidRegistrationException("Passwords don't match");
+        }
+        if (userService.findByUsername(registrationUserDto.getUsername()).isPresent()) {
+            throw new InvalidRegistrationException("A user with this name already exists");
+        }
+        if (userService.findByEmail(registrationUserDto.getEmail()).isPresent()) {
+            throw new InvalidRegistrationException("A user with this email already exists");
+        }
         userValidator.validate(registrationUserDto);
         registrationUserDto.setPassword(passwordEncoder.encode(registrationUserDto.getPassword()));
         userService.createUser(userMapper.dtoToEntity(registrationUserDto, List.of(roleService.getUserRole())));

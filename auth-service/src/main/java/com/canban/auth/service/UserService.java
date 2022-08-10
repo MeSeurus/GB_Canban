@@ -47,11 +47,11 @@ public class UserService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("Пользователь '%s' не найден", username)));
+        User user = findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", username)));
         if (user.getUserStatus() == UserStatus.NOT_ACTIVE)
-            throw new UserNotActiveException(String.format("Пользователь '%s' не активирован", username));
+            throw new UserNotActiveException(String.format("User '%s' is inactive", username));
         if (user.getUserStatus() == UserStatus.SUSPICIOUS)
-            throw new InvalidAuthorizationException(String.format("Пользователь '%s' превысил количество попыток ввода пароля", username));
+            throw new InvalidAuthorizationException(String.format("User '%s' exceeded the number of password attempts", username));
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
     }
 

@@ -1,11 +1,14 @@
 package com.canban.web.core.validators;
 
 import com.canban.api.core.State;
+import com.canban.api.core.TaskDto;
 import com.canban.api.exceptions.ResourceNotFoundException;
 import com.canban.api.exceptions.ValidationException;
+import com.canban.web.core.dto.EventDetailsRq;
 import com.canban.web.core.dto.TaskDetailsRq;
 import com.canban.web.core.entities.Task;
 import com.canban.web.core.repositories.TaskRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -13,30 +16,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@AllArgsConstructor
 public class TaskValidator {
 
-    TaskRepository taskRepository;
+    private TaskRepository taskRepository;
 
     public void validate(TaskDetailsRq taskDetailsRq) {
         List<String> errors = new ArrayList<>();
         if (taskDetailsRq.getTitle() != null && taskDetailsRq.getTitle().isBlank()) {
-            errors.add("Название задачи должно быть указано.");
+            errors.add("Title  must be filled in.");
         }
         if (taskDetailsRq.getKanbanBoardId() == null || taskDetailsRq.getKanbanBoardId().equals(0L)) {
-            errors.add("Рабочее пространство задачи должно быть указано.");
+            errors.add("The work space must be filled in.");
         }
         if (taskDetailsRq.getBeginDate() == null) {
-            errors.add("Дата начала задачи должна быть указана.");
+            errors.add("Begin date must be filled in.");
         }
         if (taskDetailsRq.getEndDate() == null) {
-            errors.add("Дата завершения задачи должна быть указана.");
+            errors.add("End date must be filled in.");
         }
         if (taskDetailsRq.getBeginDate().compareTo(taskDetailsRq.getEndDate()) >= 0) {
-            errors.add("Дата начала задачи должна быть раньше даты окончания.");
+            errors.add("The begin date of the task must be earlier than the end date.");
         }
         LocalDateTime now = LocalDateTime.now();
         if (now.compareTo(taskDetailsRq.getEndDate()) >= 0) {
-            errors.add("Дата завершения задачи должна быть позже текущего времени.");
+            errors.add("The task completion date must be later than the current time.");
         }
 
         if (!errors.isEmpty()) {
@@ -44,12 +48,12 @@ public class TaskValidator {
         }
     }
 
-    public void validateUser(Long id) {
+    public void validateUser(Long id, TaskDto taskDetailsRq) {
         List<String> errors = new ArrayList<>();
 
         Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change task's username."));
-        if (task.getState() != State.CREATED) {
-            errors.add("Ошибка. Исполнитель может быть изменен только в статусе СОЗДАНО ");
+        if (task.getState() != State.CREATED && !task.getUserExecutor().equals(taskDetailsRq.getUserExecutor())) {
+            errors.add("ERROR. The performer can be changed only in the CREATED state");
         }
         if (!errors.isEmpty()) {
             throw new ValidationException(errors);

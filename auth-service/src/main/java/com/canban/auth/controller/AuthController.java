@@ -46,7 +46,7 @@ public class AuthController {
         } catch (BadCredentialsException e) {
             if (userAccessManagementService.passwordGuessingProtection(authRequest.getUsername())) {
                 userAccessManagementService.stopGuessingPassword(authRequest.getUsername());
-                log.warn("Пользователь " + authRequest.getUsername() + " пытается подобрать пароль");
+                log.warn("User " + authRequest.getUsername() + " is trying to find a password");
             }
             throw new InvalidAuthorizationException("Incorrect username or password");
         }

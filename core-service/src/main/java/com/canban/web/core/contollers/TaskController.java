@@ -122,7 +122,7 @@ public class TaskController {
 
     @PatchMapping("/change/user_executor")
     public void changeUsernameExecutor(@RequestBody TaskDto requestBody) {
-        taskValidator.validateUser(requestBody.getId());
+        taskValidator.validateUser(requestBody.getId(), requestBody);
         taskService.changeExecutorUsername(requestBody.getId(), requestBody.getContent());
     }
 

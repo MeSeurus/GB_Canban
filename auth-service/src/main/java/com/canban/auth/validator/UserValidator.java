@@ -18,25 +18,25 @@ public class UserValidator {
     public void validate(RegistrationUserDto registrationUserDto) {
         List<String> errors = new ArrayList<>();
         if (registrationUserDto.getUsername().isEmpty()) {
-            errors.add("Поле никнейм не должно быть пустым");
+            errors.add("User name must be filled in.");
         }
         if (registrationUserDto.getUsername().length() < 4) {
-            errors.add("Никнейм должен содержать минимум 4 символа");
+            errors.add("The nickname must contain at least 4 characters");
         }
         if (registrationUserDto.getFirstName().isEmpty()) {
-            errors.add("Поле имя не должно быть пустым");
+            errors.add("Name must be filled in.");
         }
         if (registrationUserDto.getLastName().isEmpty()) {
-            errors.add("Поле фамилия не должно быть пустым");
+            errors.add("Last name must be filled in.");
         }
         if (!registrationUserDto.getPassword().matches(VALIDATE_PASSWORD)) {
-            errors.add("Пароль должен содержать минимум 8 символов");
+            errors.add("The password must contain at least 8 characters");
         }
         if (registrationUserDto.getPassword().equals(registrationUserDto.getUsername())) {
-            errors.add("Пароль не должен совпадать с именем пользователя");
+            errors.add("The password must not match the user name");
         }
         if (!registrationUserDto.getEmail().matches(VALIDATE_EMAIL)) {
-            errors.add("Введите корректный адрес электронной почты");
+            errors.add("Enter the correct email address");
         }
         if (!errors.isEmpty()) {
             throw new ValidationException(errors);
