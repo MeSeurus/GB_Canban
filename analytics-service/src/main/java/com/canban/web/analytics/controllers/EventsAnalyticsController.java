@@ -1,6 +1,7 @@
 package com.canban.web.analytics.controllers;
 
 import com.canban.api.analytics.EventsAnalyticsDtoWithList;
+import com.canban.api.errors.AppError;
 import com.canban.api.exceptions.ResourceNotFoundException;
 import com.canban.web.analytics.dtos.AllStatisticsEventsAnalyticsRs;
 import com.canban.web.analytics.dtos.DateDto;
@@ -29,9 +30,9 @@ public class EventsAnalyticsController {
 
     private final EventsAnalyticsService eventsAnalyticsService;
 
-    @GetMapping
+    @PostMapping
     @Operation(
-            summary = "Запрос на получение всей аналитики событий по имени пользователя за определенный срок",
+            summary = "Запрос на получение аналитики завершенных событий по имени пользователя за определенный срок",
             responses = {
                     @ApiResponse(
                             description = "Успешный ответ", responseCode = "200",
@@ -39,11 +40,11 @@ public class EventsAnalyticsController {
                     ),
                     @ApiResponse(
                             description = "Аналитика событий не найдена", responseCode = "404",
-                            content = @Content(schema = @Schema(implementation = ResourceNotFoundException.class))
+                            content = @Content(schema = @Schema(implementation = AppError.class))
                     )
             }
     )
-    public AllStatisticsEventsAnalyticsRs searchByUsernameByDate(
+    public AllStatisticsEventsAnalyticsRs searchAllAnalyticsByUsernameAndByDate(
             @RequestHeader @Parameter(description = "Имя пользователя", required = true) String username,
             @RequestBody @Parameter(description = "Дата начала отсчета аналитики", required = true) DateDto dateDto) {
         return eventsAnalyticsService.search(username, dateDto.getStartDate());

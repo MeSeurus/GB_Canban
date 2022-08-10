@@ -1,8 +1,11 @@
 package com.canban.web.analytics.controllers;
 
 import com.canban.api.analytics.EventsAnalyticsDtoWithList;
+import com.canban.api.errors.AppError;
 import com.canban.api.exceptions.ResourceNotFoundException;
 import com.canban.web.analytics.dtos.AllStatisticsEventsAnalyticsRs;
+import com.canban.web.analytics.dtos.AllStatisticsTasksAnalyticsRs;
+import com.canban.web.analytics.dtos.DateDto;
 import com.canban.web.analytics.services.TasksAnalyticsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -24,25 +27,25 @@ public class TasksAnalyticsController {
 
     private final TasksAnalyticsService tasksAnalyticsService;
 
-//    @GetMapping
-//    @Operation(
-//            summary = "Запрос на получение всей аналитики событий по имени пользователя за определенный срок",
-//            responses = {
-//                    @ApiResponse(
-//                            description = "Успешный ответ", responseCode = "200",
-//                            content = @Content(schema = @Schema(implementation = EventsAnalyticsDtoWithList.class))
-//                    ),
-//                    @ApiResponse(
-//                            description = "Аналитика задач не найдена", responseCode = "404",
-//                            content = @Content(schema = @Schema(implementation = ResourceNotFoundException.class))
-//                    )
-//            }
-//    )
-//    public AllStatisticsEventsAnalyticsRs searchByUsernameByDate(
-//            @RequestHeader @Parameter(description = "Имя пользователя", required = true) String username,
-//            @RequestParam @Parameter(description = "Дата начала отсчета аналитики", required = true) LocalDateTime timeForSearch) {
-//        return tasksAnalyticsService.search(username, timeForSearch);
-//    }
+    @PostMapping
+    @Operation(
+            summary = "Запрос на получение всей аналитики завершенных задач по имени пользователя за определенный срок",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = EventsAnalyticsDtoWithList.class))
+                    ),
+                    @ApiResponse(
+                            description = "Аналитика задач не найдена", responseCode = "404",
+                            content = @Content(schema = @Schema(implementation = AppError.class))
+                    )
+            }
+    )
+    public AllStatisticsTasksAnalyticsRs searchAllAnalyticsByUsernameAndByDate(
+            @RequestHeader @Parameter(description = "Имя пользователя", required = true) String username,
+            @RequestBody @Parameter(description = "Дата начала отсчета аналитики", required = true) DateDto dateDto) {
+        return tasksAnalyticsService.search(username, dateDto.getStartDate());
+    }
 
 
 }

@@ -22,4 +22,19 @@ public class TasksAnalyticsMapper {
                 );
     }
 
+    public TasksAnalyticsDto entityToDto(TasksAnalytics tasksAnalytics) {
+        return new TasksAnalyticsDto(
+                tasksAnalytics.getTaskId(),
+                tasksAnalytics.getTaskTitle(),
+                tasksAnalytics.getTaskUserCreator(),
+                tasksAnalytics.getTaskUserExecutor(),
+                tasksAnalytics.getTaskBeginDate(),
+                tasksAnalytics.getTaskEndDate(),
+                tasksAnalytics.getTaskActualEndDate(),
+                tasksAnalytics.getTaskState(),
+                tasksAnalytics.getTaskPriority(),
+                tasksAnalytics.getTaskKanbanBoardId()
+        );
+    }
+
 }

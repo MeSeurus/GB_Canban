@@ -1,6 +1,7 @@
 package com.canban.web.analytics.services;
-import com.canban.api.analytics.EventsAnalyticsDtoWithList;
+
 import com.canban.api.analytics.TasksAnalyticsDtoWithList;
+import com.canban.api.exceptions.ResourceNotFoundException;
 import com.canban.web.analytics.dtos.AllStatisticsEventsAnalyticsRs;
 import com.canban.web.analytics.dtos.AllStatisticsTasksAnalyticsRs;
 import com.canban.web.analytics.integration.CoreIntegration;
@@ -34,7 +35,14 @@ public class TasksAnalyticsService {
     }
 
 
-//    public AllStatisticsTasksAnalyticsRs search(String username, LocalDateTime timeForSearch) {
-//
-//    }
+    @Transactional
+    public AllStatisticsTasksAnalyticsRs search(String username, LocalDateTime timeForSearch) {
+        return new AllStatisticsTasksAnalyticsRs(
+                tasksAnalyticsMapper.entityToDto(tasksAnalyticsRepository.searchTheLongestAndTheShortestCompletedTaskByUsernameAndByTimePeriod(username, timeForSearch, -1)
+                        .orElseThrow(() -> new ResourceNotFoundException("Выполненные задачи за данный период времени не найдены"))),
+                tasksAnalyticsMapper.entityToDto(tasksAnalyticsRepository.searchTheLongestAndTheShortestCompletedTaskByUsernameAndByTimePeriod(username, timeForSearch, 1)
+                        .orElseThrow(() -> new ResourceNotFoundException("Выполненные задачи за данный период времени не найдены"))),
+                tasksAnalyticsRepository.getCountOfCompletedTasks(username, timeForSearch)
+        );
+    }
 }

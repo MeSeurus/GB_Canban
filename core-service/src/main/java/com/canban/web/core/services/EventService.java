@@ -87,7 +87,7 @@ public class EventService {
 //        eventRepository.save(event);
 //        events.add(event);
 //    }
-
+//
 //    @Transactional
 //    public void removeUserFromEvent(String username, Long id) {
 //        Event event = eventRepository.findById(id)

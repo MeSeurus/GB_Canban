@@ -12,27 +12,20 @@ public interface EventsAnalyticsRepository extends JpaRepository<EventsAnalytics
     @Query(
             value = "select count(*) from events_analytics " +
                     "where event_begin_date > :timeForSearch " +
+                    "and event_end_date < CURRENT_DATE " +
                     "and event_username = :username ",
             nativeQuery = true
     )
-    Integer getCountOfEvents(String username, LocalDateTime timeForSearch);
+    Integer getCountOfCompletedEvents(String username, LocalDateTime timeForSearch);
 
     @Query(
             value = "select * from events_analytics " +
                     "where event_begin_date > :timeForSearch " +
+                    "and event_end_date < CURRENT_DATE " +
                     "and event_username = :username " +
-                    "order by (event_end_date - event_begin_date) desc limit 1",
+                    "order by :orderType * (event_end_date - event_begin_date) limit 1",
             nativeQuery = true
     )
-    Optional<EventsAnalytics> searchLongest(String username, LocalDateTime timeForSearch);
-
-    @Query(
-            value = "select * from events_analytics " +
-                    "where event_begin_date > :timeForSearch  " +
-                    "and event_username = :username " +
-                    "order by (event_end_date - event_begin_date) asc limit 1",
-            nativeQuery = true
-    )
-    Optional<EventsAnalytics> searchShortest(String username, LocalDateTime timeForSearch);
+    Optional<EventsAnalytics> searchTheLongestAndTheShortestCompletedEventByUsernameAndByTimePeriod(String username, LocalDateTime timeForSearch, Integer orderType);
 
 }

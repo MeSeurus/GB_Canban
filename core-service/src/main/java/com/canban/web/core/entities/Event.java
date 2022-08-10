@@ -35,7 +35,6 @@ public class Event extends AbstractEvent {
         this.username = username;
         this.beginDate = beginDate;
         this.endDate = endDate;
-
     }
 
     public static class EventBuilder {

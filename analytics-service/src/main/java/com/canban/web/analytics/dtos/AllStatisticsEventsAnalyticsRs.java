@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Schema(description = "Модель общей статистики ивентов сервиса аналитики")
 public class AllStatisticsEventsAnalyticsRs {
 
     @Schema(description = "Самый длинный ивент", required = true)

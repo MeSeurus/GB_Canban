@@ -4,7 +4,6 @@ import com.canban.api.analytics.EventsAnalyticsDtoWithList;
 import com.canban.api.exceptions.ResourceNotFoundException;
 import com.canban.web.analytics.dtos.AllStatisticsEventsAnalyticsRs;
 import com.canban.web.analytics.integration.CoreIntegration;
-import com.canban.web.analytics.mappers.DateFormatter;
 import com.canban.web.analytics.mappers.EventsAnalyticsMapper;
 import com.canban.web.analytics.repositories.EventsAnalyticsRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +20,6 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 public class EventsAnalyticsService {
-
-    private final DateFormatter dateFormatter;
 
     private final CoreIntegration coreIntegration;
 
@@ -41,13 +38,12 @@ public class EventsAnalyticsService {
 
     @Transactional
     public AllStatisticsEventsAnalyticsRs search(String username, LocalDateTime timeForSearch) {
-        log.warn(timeForSearch.toString());
         return new AllStatisticsEventsAnalyticsRs(
-                eventsAnalyticsMapper.entityToDto(eventsAnalyticsRepository.searchLongest(username, timeForSearch)
-                        .orElseThrow(() -> new ResourceNotFoundException("События за данный период времени не найдены"))),
-                eventsAnalyticsMapper.entityToDto(eventsAnalyticsRepository.searchShortest(username, timeForSearch)
-                        .orElseThrow(() -> new ResourceNotFoundException("События за данный период времени не найдены"))),
-                eventsAnalyticsRepository.getCountOfEvents(username, timeForSearch)
+                eventsAnalyticsMapper.entityToDto(eventsAnalyticsRepository.searchTheLongestAndTheShortestCompletedEventByUsernameAndByTimePeriod(username, timeForSearch, -1)
+                        .orElseThrow(() -> new ResourceNotFoundException("Выполненные события за данный период времени не найдены"))),
+                eventsAnalyticsMapper.entityToDto(eventsAnalyticsRepository.searchTheLongestAndTheShortestCompletedEventByUsernameAndByTimePeriod(username, timeForSearch, 1)
+                        .orElseThrow(() -> new ResourceNotFoundException("Выполненные события за данный период времени не найдены"))),
+                eventsAnalyticsRepository.getCountOfCompletedEvents(username, timeForSearch)
         );
     }
 
