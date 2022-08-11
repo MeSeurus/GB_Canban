@@ -40,7 +40,7 @@ public class UserAccessManagementService {
 
     @Transactional
     public boolean checkActivateKey(String username, String secretCode) {
-        UserAwaitActivation userAwaitActivation = activationRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", username)));
+        UserAwaitActivation userAwaitActivation = activationRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("Пользователь '%s' не найден", username)));
         if (userAwaitActivation.getCodeType() == CodeType.ACTIVATION_CODE && userAwaitActivation.getSecretCode().equals(secretCode)) {
             userService.updateStatus(username, UserStatus.ACTIVE);
             activationRepository.deleteById(username);
@@ -53,7 +53,7 @@ public class UserAccessManagementService {
     public void setNewPassword(String username, String password, String code) {
         if (!password.matches(VALIDATE_PASSWORD)) {throw new InvalidRegistrationException("Пароль не должен быть меньше 8 символов");}
         if (!userAndCodeExistInDb(username, code)) {throw new InvalidRegistrationException("Некорректная ссылка");}
-        UserAwaitActivation userAwaitActivation = activationRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", username)));
+        UserAwaitActivation userAwaitActivation = activationRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("Пользователь '%s' не найден", username)));
         if (userAwaitActivation.getCodeType() == CodeType.PASSWORD_REMIND_CODE && userAwaitActivation.getSecretCode().equals(code)) {
             userService.updatePassword(username, password);
             activationRepository.deleteById(username);
@@ -89,7 +89,7 @@ public class UserAccessManagementService {
 
     @Transactional
     public void sendRecoverPasswordLink(String username) {
-        String userEmail = userService.getEmailByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", username)));
+        String userEmail = userService.getEmailByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("Пользователь '%s' не найден", username)));
         String passcode = getRandomNumberString();
         activationRepository.save(new UserAwaitActivation(username, passcode, CodeType.PASSWORD_REMIND_CODE));
         jmsTemplate.convertAndSend(JmsConfig.PASSWORD_REMIND, new PasswordRemindEvent(username, passcode, userEmail));
@@ -117,7 +117,7 @@ public class UserAccessManagementService {
 
     @Transactional
     public void sendNewActivationLink(String username) {
-        if (!userService.getUserStatusByUsername(username).get().equals(UserStatus.NOT_ACTIVE)) {throw new WrongUserStatusException("You are already activated");}
+        if (!userService.getUserStatusByUsername(username).get().equals(UserStatus.NOT_ACTIVE)) {throw new WrongUserStatusException("Вы уже активированы");}
         String newActivationCode = getRandomNumberString();
         String email = userService.getEmailByUsername(username).get();
         if (activationRepository.findExistingUserAndCodeType(username, CodeType.ACTIVATION_CODE)) {

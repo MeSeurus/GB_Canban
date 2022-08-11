@@ -26,23 +26,23 @@ public class TaskValidator {
     public void validate(TaskDetailsRq taskDetailsRq) {
         List<String> errors = new ArrayList<>();
         if (taskDetailsRq.getTitle() != null && taskDetailsRq.getTitle().isBlank()) {
-            errors.add("Title  must be filled in.");
+            errors.add("Название задачи должно быть указано.");
         }
         if (taskDetailsRq.getKanbanBoardId() == null || taskDetailsRq.getKanbanBoardId().equals(0L)) {
-            errors.add("The work space must be filled in.");
+            errors.add("Рабочее пространство задачи должно быть указано.");
         }
         if (taskDetailsRq.getBeginDate() == null) {
-            errors.add("Begin date must be filled in.");
+            errors.add("Дата начала задачи должна быть указана.");
         }
         if (taskDetailsRq.getEndDate() == null) {
-            errors.add("End date must be filled in.");
+            errors.add("Дата завершения задачи должна быть указана.");
         }
         if (taskDetailsRq.getBeginDate().compareTo(taskDetailsRq.getEndDate()) >= 0) {
-            errors.add("The begin date of the task must be earlier than the end date.");
+            errors.add("Дата начала задачи должна быть раньше даты окончания.");
         }
         LocalDateTime now = LocalDateTime.now();
         if (now.compareTo(taskDetailsRq.getEndDate()) >= 0) {
-            errors.add("The task completion date must be later than the current time.");
+            errors.add("Дата завершения задачи должна быть позже текущего времени.");
         }
 
         if (!errors.isEmpty()) {
@@ -52,9 +52,9 @@ public class TaskValidator {
 
     public void validateUser(Long id) {
         List<String> errors = new ArrayList<>();
-        Task task = taskService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change task's username."));
+        Task task = taskService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Невозможно поменять исполнителя задачи"));
         if (task.getState() != State.CREATED) {
-            errors.add("ERROR. The performer can be changed only in the CREATED state");
+            errors.add("Ошибка! Исполнитель может быть изменён только при создании задачи");
         }
         if (!errors.isEmpty()) {
             throw new ValidationException(errors);

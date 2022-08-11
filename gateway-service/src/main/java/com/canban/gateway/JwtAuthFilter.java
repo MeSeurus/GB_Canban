@@ -29,14 +29,14 @@ public class JwtAuthFilter extends AbstractGatewayFilterFactory<JwtAuthFilter.Co
             ServerHttpRequest request = exchange.getRequest();
             if (request.getHeaders().containsKey("username")) {
                 log.error("Ошибка хеддера username");
-                return this.onError(exchange, "Invalid header username", HttpStatus.BAD_REQUEST);
+                return this.onError(exchange, "Ошибка хеддера username", HttpStatus.BAD_REQUEST);
             }
 
             if (!isAuthMissing(request)) {
                 final String token = getAuthHeader(request);
                 if (jwtUtil.isInvalid(token)) {
                     log.error("Время жизни токена вышло");
-                    return this.onError(exchange, "Authorization header is invalid", HttpStatus.UNAUTHORIZED);
+                    return this.onError(exchange, "Время жизни токена вышло", HttpStatus.UNAUTHORIZED);
                 }
                 populateRequestWithHeaders(exchange, token);
             }

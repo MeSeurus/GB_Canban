@@ -19,7 +19,7 @@ public class CoreIntegration {
         return coreServiceWebClient.get()
                 .uri("/api/v1/events/analytics")
                 .retrieve()
-                .onStatus(HttpStatus::is5xxServerError, clientResponse -> Mono.error(new IntegrationException("Core-MS not working")))
+                .onStatus(HttpStatus::is5xxServerError, clientResponse -> Mono.error(new IntegrationException("Core-микросервис не отвечает")))
                 .bodyToMono(EventsAnalyticsDtoWithList.class)
                 .block();
     }
@@ -28,7 +28,7 @@ public class CoreIntegration {
         return coreServiceWebClient.get()
                 .uri("/api/v1/tasks/analytics")
                 .retrieve()
-                .onStatus(HttpStatus::is5xxServerError, clientResponse -> Mono.error(new IntegrationException("Core-MS not working")))
+                .onStatus(HttpStatus::is5xxServerError, clientResponse -> Mono.error(new IntegrationException("Core-микросервис не отвечает")))
                 .bodyToMono(TasksAnalyticsDtoWithList.class)
                 .block();
     }

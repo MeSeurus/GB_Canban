@@ -17,7 +17,7 @@ public class ActivationListener {
 
     @JmsListener(destination = JmsConfig.ACTIVATION)
     public void listen(@Payload ActivationEvent activationEvent) {
-        mailSenderService.sendMail(activationEvent.getEmail(), "Canban activation link", "http://localhost:5555/auth/api/v1/user/access/management/activation/?username=" + activationEvent.getUsername() + "&code=" + activationEvent.getCode());
+        mailSenderService.sendMail(activationEvent.getEmail(), "Ссылка на активацию аккаунта в Canban", "http://localhost:5555/auth/api/v1/user/access/management/activation/?username=" + activationEvent.getUsername() + "&code=" + activationEvent.getCode());
 
     }
 }

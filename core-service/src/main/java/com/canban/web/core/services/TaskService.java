@@ -98,56 +98,56 @@ public class TaskService {
 
     @Transactional
     public void changeTitle(Long id, String title) {
-        Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change task's title. Task not found"));
+        Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Невозможно поменять название задачи. Задача не найдена"));
         task.setTitle(title);
         taskForAnalyticsService.createTaskForAnalytics(taskAnalyticsMapper.taskToTaskForAnalytics(task));
     }
 
     @Transactional
     public void changeContent(Long id, String content) {
-        Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change task's content. Task not found"));
+        Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Невозможно поменять содержимое задачи. Задача не найдена"));
         task.setContent(content);
         taskForAnalyticsService.createTaskForAnalytics(taskAnalyticsMapper.taskToTaskForAnalytics(task));
     }
 
     @Transactional
     public void changeExecutorUsername(Long id, String username) {
-        Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change task's username. Task not found"));
+        Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Невозможно поменять исполнителя задачи. Задача не найдена"));
         task.setUserExecutor(username);
         taskForAnalyticsService.createTaskForAnalytics(taskAnalyticsMapper.taskToTaskForAnalytics(task));
     }
 
     @Transactional
     public void changeBeginDate(Long id, LocalDateTime beginDate) {
-        Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change task's begin date. Task not found"));
+        Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Невозможно поменять дату начала задачи. Задача не найдена"));
         task.setBeginDate(beginDate);
         taskForAnalyticsService.createTaskForAnalytics(taskAnalyticsMapper.taskToTaskForAnalytics(task));
     }
 
     @Transactional
     public void changeEndDate(Long id, LocalDateTime endDate) {
-        Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change task's end date. Task not found"));
+        Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Невозможно поменять дату окончания задачи. Задача не найдена"));
         task.setBeginDate(endDate);
         taskForAnalyticsService.createTaskForAnalytics(taskAnalyticsMapper.taskToTaskForAnalytics(task));
     }
 
     @Transactional
     public void changeState(Long id, State state) {
-        Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change task's state. Task not found"));
+        Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Невозможно поменять состояние задачи. Задача не найдена"));
         task.setState(state);
         taskForAnalyticsService.createTaskForAnalytics(taskAnalyticsMapper.taskToTaskForAnalytics(task));
     }
 
     @Transactional
     public void changePriority(Long id, Priority priority) {
-        Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change task's priority. Task not found"));
+        Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Невозможно поменять приоритет задачи. Задача не найдена"));
         task.setPriority(priority);
         taskForAnalyticsService.createTaskForAnalytics(taskAnalyticsMapper.taskToTaskForAnalytics(task));
     }
 
     @Transactional
     public void changeActualEndDate(Long id, LocalDateTime actualEndDate) {
-        Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change task's actual end date. Task not found"));
+        Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Невозможно поменять дату окончания задачи. Задача не найдена"));
         task.setActualEndDate(actualEndDate);
         taskForAnalyticsService.createTaskForAnalytics(taskAnalyticsMapper.taskToTaskForAnalytics(task));
     }
