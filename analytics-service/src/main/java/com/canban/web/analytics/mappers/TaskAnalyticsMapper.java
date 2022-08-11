@@ -1,5 +1,6 @@
 package com.canban.web.analytics.mappers;
 
+import com.canban.api.analytics.AnalyticsTitleDto;
 import com.canban.api.analytics.TaskAnalyticsDto;
 import com.canban.web.analytics.entities.TaskAnalytics;
 import org.springframework.stereotype.Component;
@@ -37,8 +38,8 @@ public class TaskAnalyticsMapper {
         );
     }
 
-    public TaskAnalyticsDto entityToDtoOnlyTitle(TaskAnalytics taskAnalytics) {
-        return new TaskAnalyticsDto(
+    public AnalyticsTitleDto entityToDtoOnlyTitle(TaskAnalytics taskAnalytics) {
+        return new AnalyticsTitleDto(
                 taskAnalytics.getTaskTitle()
         );
     }

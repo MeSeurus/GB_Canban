@@ -1,5 +1,6 @@
 package com.canban.web.analytics.mappers;
 
+import com.canban.api.analytics.AnalyticsTitleDto;
 import com.canban.api.analytics.EventAnalyticsDto;
 import com.canban.web.analytics.entities.EventAnalytics;
 import org.springframework.stereotype.Component;
@@ -27,8 +28,8 @@ public class EventAnalyticsMapper {
         );
     }
 
-    public EventAnalyticsDto entityToDtoOnlyTitle(EventAnalytics eventAnalytics) {
-        return new EventAnalyticsDto(
+    public AnalyticsTitleDto entityToDtoOnlyTitle(EventAnalytics eventAnalytics) {
+        return new AnalyticsTitleDto(
                 eventAnalytics.getEventTitle()
         );
     }
