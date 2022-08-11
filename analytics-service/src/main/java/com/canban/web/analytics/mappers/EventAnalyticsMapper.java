@@ -27,4 +27,10 @@ public class EventAnalyticsMapper {
         );
     }
 
+    public EventAnalyticsDto entityToDtoOnlyTitle(EventAnalytics eventAnalytics) {
+        return new EventAnalyticsDto(
+                eventAnalytics.getEventTitle()
+        );
+    }
+
 }

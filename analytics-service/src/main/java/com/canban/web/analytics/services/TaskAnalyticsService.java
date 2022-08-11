@@ -38,9 +38,9 @@ public class TaskAnalyticsService {
     @Transactional
     public AllStatisticsTaskAnalyticsRs search(String username, LocalDateTime timeForSearch) {
         return new AllStatisticsTaskAnalyticsRs(
-                taskAnalyticsMapper.entityToDto(taskAnalyticsRepository.searchTheLongestAndTheShortestCompletedTaskByUsernameAndByTimePeriod(username, timeForSearch, -1)
+                taskAnalyticsMapper.entityToDtoOnlyTitle(taskAnalyticsRepository.searchTheLongestAndTheShortestCompletedTaskByUsernameAndByTimePeriod(username, timeForSearch, -1)
                         .orElseThrow(() -> new ResourceNotFoundException("Выполненные задачи за данный период времени не найдены"))),
-                taskAnalyticsMapper.entityToDto(taskAnalyticsRepository.searchTheLongestAndTheShortestCompletedTaskByUsernameAndByTimePeriod(username, timeForSearch, 1)
+                taskAnalyticsMapper.entityToDtoOnlyTitle(taskAnalyticsRepository.searchTheLongestAndTheShortestCompletedTaskByUsernameAndByTimePeriod(username, timeForSearch, 1)
                         .orElseThrow(() -> new ResourceNotFoundException("Выполненные задачи за данный период времени не найдены"))),
                 taskAnalyticsRepository.getCountOfCompletedTasks(username, timeForSearch)
         );

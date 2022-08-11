@@ -45,4 +45,7 @@ public class TaskAnalyticsDto {
     @Schema(description = "Id канбан-доски задачи", required = true, example = "1")
     private Long kanbanBoardId;
 
+    public TaskAnalyticsDto(String taskTitle) {
+        this.taskTitle = taskTitle;
+    }
 }
