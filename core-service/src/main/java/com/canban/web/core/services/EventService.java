@@ -97,28 +97,28 @@ public class EventService {
 
     @Transactional
     public void changeTitle(Long id, String title) {
-        Event event = eventRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change Event's title. Event not found"));
+        Event event = eventRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Невозможно поменять название события. Событие не найдено"));
         event.setTitle(title);
         eventForAnalyticsService.createEventForAnalytics(eventAnalyticsMapper.eventToEventForAnalytics(event));
     }
 
     @Transactional
     public void changeContent(Long id, String content) {
-        Event event = eventRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change Event's content. Event not found"));
+        Event event = eventRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Невозможно поменять содержимое события. Событие не найдено"));
         event.setContent(content);
         eventForAnalyticsService.createEventForAnalytics(eventAnalyticsMapper.eventToEventForAnalytics(event));
     }
 
     @Transactional
     public void changeBeginDate(Long id, LocalDateTime beginDate) {
-        Event event = eventRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change Event's begin date. Event not found"));
+        Event event = eventRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Невозможно поменять дату начала события. Событие не найдено"));
         event.setBeginDate(beginDate);
         eventForAnalyticsService.createEventForAnalytics(eventAnalyticsMapper.eventToEventForAnalytics(event));
     }
 
     @Transactional
     public void changeEndDate(Long id, LocalDateTime endDate) {
-        Event event = eventRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Unable to change Event's end date. Event not found"));
+        Event event = eventRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Невозможно поменять дату окончания события. Событие не найдено"));
         event.setBeginDate(endDate);
         eventForAnalyticsService.createEventForAnalytics(eventAnalyticsMapper.eventToEventForAnalytics(event));
     }

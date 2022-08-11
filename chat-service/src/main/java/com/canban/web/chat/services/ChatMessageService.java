@@ -53,7 +53,7 @@ public class ChatMessageService {
                     return repository.save(chatMessage);
                 })
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("can't find message (" + id + ")"));
+                        new ResourceNotFoundException("сообщение (" + id + ") не найдено"));
     }
 
     public void updateStatuses(String senderId, String recipientId, MessageStatus status) {
