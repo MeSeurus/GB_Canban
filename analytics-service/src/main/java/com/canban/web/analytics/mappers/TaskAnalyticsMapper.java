@@ -37,10 +37,5 @@ public class TaskAnalyticsMapper {
         );
     }
 
-    public AnalyticsTitleDto entityToDtoOnlyTitle(TaskAnalytics taskAnalytics) {
-        return new AnalyticsTitleDto(
-                taskAnalytics.getTaskTitle()
-        );
-    }
 
 }
