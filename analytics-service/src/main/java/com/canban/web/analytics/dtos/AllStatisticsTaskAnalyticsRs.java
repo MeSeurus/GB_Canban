@@ -1,7 +1,5 @@
 package com.canban.web.analytics.dtos;
 
-import com.canban.api.analytics.AnalyticsTitleDto;
-import com.canban.api.analytics.TaskAnalyticsDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,11 +11,11 @@ import lombok.NoArgsConstructor;
 @Schema(description = "Модель общей статистики задач сервиса аналитики")
 public class AllStatisticsTaskAnalyticsRs {
 
-    @Schema(description = "Самая длинная задача", required = true)
-    private AnalyticsTitleDto longestTask;
+    @Schema(description = "Название самой длинной задачи", required = true)
+    private String longestTaskTitle;
 
-    @Schema(description = "Самая короткая задача", required = true)
-    private AnalyticsTitleDto shortestTask;
+    @Schema(description = "Название самого короткой задачи", required = true)
+    private String shortestTaskTitle;
 
     @Schema(description = "Количество задач", required = true)
     private Integer countOfTasks;

@@ -38,10 +38,12 @@ public class TaskAnalyticsService {
     @Transactional
     public AllStatisticsTaskAnalyticsRs search(String username, LocalDateTime timeForSearch) {
         return new AllStatisticsTaskAnalyticsRs(
-                taskAnalyticsMapper.entityToDtoOnlyTitle(taskAnalyticsRepository.searchTheLongestAndTheShortestCompletedTaskByUsernameAndByTimePeriod(username, timeForSearch, -1)
-                        .orElseThrow(() -> new ResourceNotFoundException("Выполненные задачи за данный период времени не найдены"))),
-                taskAnalyticsMapper.entityToDtoOnlyTitle(taskAnalyticsRepository.searchTheLongestAndTheShortestCompletedTaskByUsernameAndByTimePeriod(username, timeForSearch, 1)
-                        .orElseThrow(() -> new ResourceNotFoundException("Выполненные задачи за данный период времени не найдены"))),
+                taskAnalyticsRepository.searchTheLongestAndTheShortestCompletedTaskByUsernameAndByTimePeriod(username, timeForSearch, -1)
+                        .orElseThrow(() -> new ResourceNotFoundException("Выполненные задачи за данный период времени не найдены"))
+                        .getTaskTitle(),
+                taskAnalyticsRepository.searchTheLongestAndTheShortestCompletedTaskByUsernameAndByTimePeriod(username, timeForSearch, 1)
+                        .orElseThrow(() -> new ResourceNotFoundException("Выполненные задачи за данный период времени не найдены"))
+                        .getTaskTitle(),
                 taskAnalyticsRepository.getCountOfCompletedTasks(username, timeForSearch)
         );
     }
