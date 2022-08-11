@@ -15,9 +15,9 @@ public class PasswordRemindListener {
 
     @JmsListener(destination = JmsConfig.PASSWORD_REMIND)
     public void listen(@Payload PasswordRemindEvent passwordRemindEventEvent) {
-        mailSenderService.sendMail(passwordRemindEventEvent.getEmail(), "Код для восстановления пароля аккаунта в Canban", " Уважаемый " + passwordRemindEventEvent.getUsername() + "!\n" +
+        mailSenderService.sendMail(passwordRemindEventEvent.getEmail(), "Код для восстановление пароля аккаунта в Canban", " Уважаемый " + passwordRemindEventEvent.getUsername() + "!\n" +
                 " Высылаем Вам код, который необходимо ввести для сброса пароля вашего аккаунта.\n Код: "
-                + passwordRemindEventEvent.getPasscode() + "\n Если Вы не запрашивали смену пароля, то просто проигнорируйте это письмо.");
+                + passwordRemindEventEvent.getPasscode() + "\n Если Вы не отправляли это письмо, просто проигнорируйте его.");
 
     }
 }
