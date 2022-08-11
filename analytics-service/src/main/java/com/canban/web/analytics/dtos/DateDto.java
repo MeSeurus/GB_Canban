@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Schema(description = "Модель для запроса аналитики")
 public class DateDto {
 
-    @Schema(description = "Время начала поиска", required = true)
+    @Schema(description = "Поиск по времени начала", required = true)
     private LocalDateTime startDate;
 
 }

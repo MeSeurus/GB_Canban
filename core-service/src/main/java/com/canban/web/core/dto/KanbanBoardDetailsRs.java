@@ -15,7 +15,7 @@ public class KanbanBoardDetailsRs {
     @Schema(description = "Id канбан-доски", required = true)
     private Long id;
 
-    @Schema(description = "Имя канбан-доски", required = true)
+    @Schema(description = "Наименование канбан-доски", required = true)
     private String name;
 
     @Schema(description = "Создатель канбан-доски", required = true)

@@ -11,16 +11,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Schema(description = "Модель общей статистики ивентов сервиса аналитики")
+@Schema(description = "Модель общей статистики событий сервиса аналитики")
 public class AllStatisticsEventAnalyticsRs {
 
-    @Schema(description = "Самый длинный ивент", required = true)
+    @Schema(description = "Самое длинное событие", required = true)
     private EventAnalyticsDto longestEvent;
 
-    @Schema(description = "Самый короткий ивент", required = true)
+    @Schema(description = "Самое короткое событие", required = true)
     private EventAnalyticsDto shortestEvent;
 
-    @Schema(description = "Количество ивентов", required = true)
+    @Schema(description = "Количество событий", required = true)
     private Integer countOfEvents;
 
 }

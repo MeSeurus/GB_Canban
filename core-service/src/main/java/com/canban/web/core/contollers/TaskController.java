@@ -59,7 +59,7 @@ public class TaskController {
 
     @PostMapping("/create")
     @Operation(
-            summary = "Запрос на создание нового задания",
+            summary = "Запрос на создание новой задачи",
             responses = {
                     @ApiResponse(
                             description = "Успешный ответ", responseCode = "200"
@@ -70,7 +70,7 @@ public class TaskController {
                     )
             }
     )
-    public void createTask(@RequestHeader @Parameter(description = "Список пользователей", required = true) String username,
+    public void createTask(@RequestHeader @Parameter(description = "Пользователь создатель", required = true) String username,
                            @RequestBody @Parameter(description = "Модель деталей задачи", required = true) TaskDetailsRq taskDetailsRq) {
         taskValidator.validate(taskDetailsRq);
         taskService.createTask(username, taskDetailsRq);

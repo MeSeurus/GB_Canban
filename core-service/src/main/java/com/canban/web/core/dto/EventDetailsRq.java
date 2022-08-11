@@ -19,7 +19,7 @@ public class EventDetailsRq {
     @Schema(description = "Описание события", required = true)
     private String content;
 
-    @Schema(description = "Дата назначения события")
+    @Schema(description = "Дата начала события")
     @JsonProperty("start_date")
     private LocalDateTime beginDate;
 
