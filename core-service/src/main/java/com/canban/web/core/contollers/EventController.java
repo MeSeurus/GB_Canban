@@ -33,7 +33,7 @@ public class EventController {
     private final EventMapper eventMapper;
 
     @Operation(
-            summary = "Запрос на получение всех ивентов пользователя с возможностью фильтрации",
+            summary = "Запрос на получение всех событий пользователя с возможностью фильтрации",
             responses = {
                     @ApiResponse(
                             description = "Успешный ответ", responseCode = "200",
@@ -43,7 +43,7 @@ public class EventController {
     )
     @PostMapping()
     public List<EventDto> searchAllEvents(
-            @RequestHeader @Parameter(description = "Имя пользователя", required = true) String username,
+            @RequestHeader @Parameter(description = "Имя пользователя создателя", required = true) String username,
             @RequestBody @Parameter(description = "Модель для поиска событий", required = false) EventDetailsForSearchRq eventDetailsForSearchRq) {
         return eventService.searchAllEvents(username, eventDetailsForSearchRq)
                 .stream()
@@ -64,7 +64,7 @@ public class EventController {
                     )
             }
     )
-    public void createEvent(@RequestHeader @Parameter(description = "Список пользователей", required = true) String username,
+    public void createEvent(@RequestHeader @Parameter(description = "Пользователь создатель", required = true) String username,
                             @RequestBody @Parameter(description = "Модель деталей события", required = true) EventDetailsRq eventDetailsRq) {
         eventService.createEvent(username, eventDetailsRq);
     }
@@ -84,7 +84,7 @@ public class EventController {
 
     @PostMapping("/{id}/{username}")
     @Operation(
-            summary = "Запрос на добавление пользователя к ивенту",
+            summary = "Запрос на доступ пользователя к событию",
             responses = {
                     @ApiResponse(
                             description = "Успешный ответ", responseCode = "200"
@@ -92,13 +92,13 @@ public class EventController {
             }
     )
     public void addUserToEvent(@PathVariable("id") @Parameter(description = "ID события", required = true) Long id,
-                               @PathVariable("username") @Parameter(description = "Имя пользователя для добавления", required = true) String usernameToAdd) {
+                               @PathVariable("username") @Parameter(description = "Имя пользователя для получающего доступ", required = true) String usernameToAdd) {
         eventService.addUserToEvent(usernameToAdd, id);
     }
 
     @DeleteMapping("/{id}/{username}")
     @Operation(
-            summary = "Запрос на удаления доступа пользователя к ивенту",
+            summary = "Запрос на удаления доступа пользователя к событию",
             responses = {
                     @ApiResponse(
                             description = "Успешный ответ", responseCode = "200"
@@ -106,7 +106,7 @@ public class EventController {
             }
     )
     public void removeUserFromEvent(@PathVariable("id") @Parameter(description = "ID события", required = true) Long id,
-                                    @PathVariable("username") @Parameter(description = "Имя пользователя для добавления", required = true) String usernameToRemove) {
+                                    @PathVariable("username") @Parameter(description = "Имя пользователя удаляемого из события", required = true) String usernameToRemove) {
         eventService.removeUserFromEvent(usernameToRemove, id);
     }
 

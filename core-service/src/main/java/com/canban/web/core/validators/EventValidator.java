@@ -15,24 +15,24 @@ public class EventValidator {
         List<String> errors = new ArrayList<>();
 
         if (eventDetailsRq.getTitle() == null || eventDetailsRq.getTitle().isBlank()) {
-            errors.add("Title  must be filled in.");
+            errors.add("Название события должно быть указано.");
         }
 
         if (eventDetailsRq.getBeginDate() == null) {
-            errors.add("Begin date  must be filled in.");
+            errors.add("Дата проведения события должна быть указана.");
         }
 
         if (eventDetailsRq.getEndDate() == null) {
-            errors.add("End date must be filled in.");
+            errors.add("Дата окончания события должна быть указана.");
         }
 
         if (eventDetailsRq.getBeginDate().compareTo(eventDetailsRq.getEndDate()) >= 0) {
-            errors.add("The begin date of the event must be earlier than the end date.");
+            errors.add("Дата начала события должна быть раньше даты окончания.");
         }
 
         LocalDateTime now = LocalDateTime.now();
         if (now.compareTo(eventDetailsRq.getEndDate()) >= 0) {
-            errors.add("The event completion date must be later than the current time.");
+            errors.add("Дата завершения события должна быть позже текущего времени.");
         }
 
         if (!errors.isEmpty()) {

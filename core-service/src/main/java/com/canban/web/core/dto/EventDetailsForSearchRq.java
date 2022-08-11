@@ -7,19 +7,19 @@ import lombok.Data;
 @Schema(description = "Модель для поиска событий")
 public class EventDetailsForSearchRq {
 
-    @Schema(description = "Полное или частичное название ивента", required = false)
+    @Schema(description = "Полное или частичное название события", required = false)
     private String titlePart;
 
-    @Schema(description = "Максимальная дата начала ивента", required = false)
+    @Schema(description = "Максимальная дата начала события", required = false)
     private String maxBeginDate;
 
-    @Schema(description = "Минимальная дата начала ивента", required = false)
+    @Schema(description = "Минимальная дата начала события", required = false)
     private String minBeginDate;
 
-    @Schema(description = "Минимальная дата окончания ивента", required = false)
+    @Schema(description = "Минимальная дата окончания события", required = false)
     private String maxEndDate;
 
-    @Schema(description = "Минимальная дата окончания ивента", required = false)
+    @Schema(description = "Минимальная дата окончания события", required = false)
     private String minEndDate;
 
 
