@@ -33,6 +33,10 @@ public class EventAnalyticsDto {
         this.eventEndDate = eventEndDate;
     }
 
+    public EventAnalyticsDto(String eventTitle) {
+        this.eventTitle = eventTitle;
+    }
+
     public Long getEventId() {
         return eventId;
     }
