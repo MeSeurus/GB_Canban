@@ -8,6 +8,9 @@ spring:
     username: postgres
     password: postgres
     url: jdbc:postgresql://localhost:5434/postgres
+  artemis:
+    user: 'artemis'
+    password: 'simetraehcapa'
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect

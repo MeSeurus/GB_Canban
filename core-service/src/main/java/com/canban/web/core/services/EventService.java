@@ -1,6 +1,8 @@
 package com.canban.web.core.services;
 
+import com.canban.api.activemqevents.AddUserToEventGetEmailsEvent;
 import com.canban.api.exceptions.ResourceNotFoundException;
+import com.canban.web.core.config.JmsConfig;
 import com.canban.web.core.dto.EventDetailsForSearchRq;
 import com.canban.web.core.dto.EventDetailsRq;
 import com.canban.web.core.entities.Event;
@@ -11,6 +13,7 @@ import com.canban.web.core.specification.EventSpecifications;
 import com.canban.web.core.validators.EventValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +33,8 @@ public class EventService {
     private final EventForAnalyticsService eventForAnalyticsService;
 
     private final EventValidator eventValidator;
+
+    private final JmsTemplate jmsTemplate;
 
     public List<Event> searchAllEvents(String username,
                                        EventDetailsForSearchRq eventDetailsForSearchRq) {
@@ -66,6 +71,7 @@ public class EventService {
                 .users(Set.of(username))
                 .build();
         eventRepository.save(event);
+        jmsTemplate.convertAndSend(JmsConfig.ADD_TO_EVENT, new AddUserToEventGetEmailsEvent(username,event.getUsers()));
         eventForAnalyticsService.createEventForAnalytics(eventAnalyticsMapper.eventToEventForAnalytics(event));
     }
 
@@ -81,6 +87,7 @@ public class EventService {
         users.add(username);
         event.setUsers(users);
         eventRepository.save(event);
+        jmsTemplate.convertAndSend(JmsConfig.ADD_TO_EVENT, new AddUserToEventGetEmailsEvent(username,users));
     }
 
     @Transactional
