@@ -17,9 +17,9 @@ public class AddUserToEventGetEmailsListener {
 
     private final UserService userService;
 
-    @JmsListener(destination = JmsConfig.STATUS_CHANGE)
+    @JmsListener(destination = JmsConfig.ADD_TO_EVENT_GET_EMAILS)
     public void listen(@Payload AddUserToEventGetEmailsEvent addUserToEventGetEmailsEvent) {
         Map<String,String> usersMap = userService.getEmailsByUsernames(addUserToEventGetEmailsEvent.getUsers());
-        userService.sendAddUserToEventSendToMailServiceEvent(addUserToEventGetEmailsEvent.getUsername(),usersMap);
+        userService.sendAddUserToEventSendToMailServiceEvent(addUserToEventGetEmailsEvent.getUsername(),usersMap,addUserToEventGetEmailsEvent.getEventTitle());
     }
 }

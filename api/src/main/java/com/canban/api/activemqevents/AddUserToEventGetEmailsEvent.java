@@ -16,4 +16,5 @@ import java.util.Set;
 public class AddUserToEventGetEmailsEvent {
     String username;
     Set<String> users;
+    String eventTitle;
 }

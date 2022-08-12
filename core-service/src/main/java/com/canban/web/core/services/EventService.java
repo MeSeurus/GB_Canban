@@ -68,10 +68,10 @@ public class EventService {
                 .username(username)
                 .beginDate(eventDetailsRq.getBeginDate())
                 .endDate(eventDetailsRq.getEndDate())
-                .users(Set.of(username))
+                .users(eventDetailsRq.getAddedUsers())
                 .build();
         eventRepository.save(event);
-        jmsTemplate.convertAndSend(JmsConfig.ADD_TO_EVENT, new AddUserToEventGetEmailsEvent(username,event.getUsers()));
+        jmsTemplate.convertAndSend(JmsConfig.ADD_TO_EVENT_GET_EMAILS, new AddUserToEventGetEmailsEvent(username,event.getUsers(),event.getTitle()));
         eventForAnalyticsService.createEventForAnalytics(eventAnalyticsMapper.eventToEventForAnalytics(event));
     }
 
@@ -87,7 +87,7 @@ public class EventService {
         users.add(username);
         event.setUsers(users);
         eventRepository.save(event);
-        jmsTemplate.convertAndSend(JmsConfig.ADD_TO_EVENT, new AddUserToEventGetEmailsEvent(username,users));
+        jmsTemplate.convertAndSend(JmsConfig.ADD_TO_EVENT_GET_EMAILS, new AddUserToEventGetEmailsEvent(username,users,event.getTitle()));
     }
 
     @Transactional

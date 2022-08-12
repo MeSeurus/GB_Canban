@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Schema(description = "Модель деталей события")
 @Data
@@ -26,4 +27,8 @@ public class EventDetailsRq {
     @Schema(description = "Дата окончания события")
     @JsonProperty("end_date")
     private LocalDateTime endDate;
+
+    @Schema(description = "Пользователи, добавленные к событию")
+    @JsonProperty("added_users")
+    private Set<String> addedUsers;
 }

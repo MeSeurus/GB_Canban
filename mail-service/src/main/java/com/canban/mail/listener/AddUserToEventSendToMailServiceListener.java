@@ -23,7 +23,7 @@ public class AddUserToEventSendToMailServiceListener {
 
         for (Map.Entry<String, String> entry : addUserToEventSendToMailServiceEvent.getUsers().entrySet()) {
             //todo передавать ID события. к которому добавили, изменить текст письма в связи с этим.
-            mailSenderService.sendMail(entry.getKey(),"Вас добавили в событие Canban!" , "Уважаемый " + entry.getValue() + "!\n " + addUserToEventSendToMailServiceEvent.getUsername() + "добавил Вас к событию, с чем Вас и поздравляем! :)");
+            mailSenderService.sendMail(entry.getKey(),"Вас добавили в событие Canban!" , " Уважаемый " + entry.getValue() + "!\n " + addUserToEventSendToMailServiceEvent.getUsername() + " добавил Вас к событию " + addUserToEventSendToMailServiceEvent.getEventTitle());
         }
     }
 }

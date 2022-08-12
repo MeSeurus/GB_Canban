@@ -9,7 +9,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -39,7 +38,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT new java.lang.Boolean(COUNT(u) > 0) FROM User u WHERE u.username = :username")
     boolean findExistingUser(String username);
 
-    @Query("SELECT u.username, u.email FROM User u WHERE u.username IN :users")
+    @Query("SELECT u FROM User u WHERE u.username IN :users")
     List<User> usernameAndEmails (Set<String> users);
 
 }

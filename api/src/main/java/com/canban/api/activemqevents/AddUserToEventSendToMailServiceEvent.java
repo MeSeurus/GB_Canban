@@ -10,9 +10,10 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "Событие, которое происходит в момент добавления пользователя или пользователей к событию" +
-        " и передается брокеру сообщений для отправки в auth-service, чтобы сервис отдал в mail-service пользователей и их email")
+@Schema(description = "Событие, которое происходит после извлечения email пользователей из базы" +
+        " и передается брокеру сообщений для отправки в mail-service, чтобы разослать уведомления по почте")
 public class AddUserToEventSendToMailServiceEvent {
     String username;
     Map<String, String> users;
+    String eventTitle;
 }

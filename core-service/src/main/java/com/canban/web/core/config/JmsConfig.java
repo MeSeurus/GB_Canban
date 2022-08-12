@@ -8,7 +8,7 @@ import org.springframework.jms.support.converter.MessageType;
 
 @Configuration
 public class JmsConfig {
-    public static final String ADD_TO_EVENT = "add-to-event";
+    public static final String ADD_TO_EVENT_GET_EMAILS = "add-to-event-get-emails";
     public static final String REMOVE_FROM_EVENT = "status-change";
     public static final String MAKE_TASK_EXECUTOR = "activation";
     public static final String ADD_TO_BOARD = "password-remind";

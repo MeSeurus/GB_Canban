@@ -85,14 +85,13 @@ public class UserService implements UserDetailsService {
 
 
     public Map <String, String> getEmailsByUsernames(Set<String> users){
-        System.out.println(userRepository.usernameAndEmails(users).toString());
         List <User> usersList = userRepository.usernameAndEmails(users);
         Map <String, String> usersMap = usersList.stream().collect(Collectors.toMap(User::getEmail, user -> user.getFirstName() +" "+ user.getLastName()));
         return usersMap;
     }
 
-    public void sendAddUserToEventSendToMailServiceEvent(String username, Map<String, String> users){
-        jmsTemplate.convertAndSend(JmsConfig.ADD_TO_EVENT_SEND_TO_MAIL_SERVICE, new AddUserToEventSendToMailServiceEvent(username,users));
+    public void sendAddUserToEventSendToMailServiceEvent(String username, Map<String, String> users, String eventTitle){
+        jmsTemplate.convertAndSend(JmsConfig.ADD_TO_EVENT_SEND_TO_MAIL_SERVICE, new AddUserToEventSendToMailServiceEvent(username,users,eventTitle));
     }
 
     public Optional<String> getEmailByUsername(String username) {
