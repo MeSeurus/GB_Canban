@@ -1,6 +1,7 @@
 package com.canban.auth.service;
 
 import com.canban.api.activemqevents.ActivationEvent;
+import com.canban.api.activemqevents.AddUserToEventSendToMailServiceEvent;
 import com.canban.auth.config.JmsConfig;
 import com.canban.auth.entity.Role;
 import com.canban.auth.entity.User;
@@ -23,9 +24,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -82,6 +81,18 @@ public class UserService implements UserDetailsService {
     @Transactional
     public void updateStatus(String username, UserStatus userStatus) {
         userRepository.updateStatus(username, userStatus);
+    }
+
+
+    public Map <String, String> getEmailsByUsernames(Set<String> users){
+        System.out.println(userRepository.usernameAndEmails(users).toString());
+        List <User> usersList = userRepository.usernameAndEmails(users);
+        Map <String, String> usersMap = usersList.stream().collect(Collectors.toMap(User::getEmail, user -> user.getFirstName() +" "+ user.getLastName()));
+        return usersMap;
+    }
+
+    public void sendAddUserToEventSendToMailServiceEvent(String username, Map<String, String> users){
+        jmsTemplate.convertAndSend(JmsConfig.ADD_TO_EVENT_SEND_TO_MAIL_SERVICE, new AddUserToEventSendToMailServiceEvent(username,users));
     }
 
     public Optional<String> getEmailByUsername(String username) {

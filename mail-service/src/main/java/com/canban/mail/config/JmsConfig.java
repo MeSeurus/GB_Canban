@@ -10,6 +10,7 @@ import org.springframework.jms.support.converter.MessageType;
 public class JmsConfig {
     public static final String ACTIVATION = "activation";
     public static final String PASSWORD_REMIND = "password-remind";
+    public static final String ADD_TO_EVENT_SEND_TO_MAIL_SERVICE = "add-to-event-send-to-mail-service";
 
     @Bean
     public MessageConverter messageConverter() {

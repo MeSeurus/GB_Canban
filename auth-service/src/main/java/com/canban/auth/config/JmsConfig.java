@@ -11,6 +11,8 @@ public class JmsConfig {
     public static final String STATUS_CHANGE = "status-change";
     public static final String ACTIVATION = "activation";
     public static final String PASSWORD_REMIND = "password-remind";
+    public static final String ADD_TO_EVENT_GET_EMAILS = "add-to-event-get-emails";
+    public static final String ADD_TO_EVENT_SEND_TO_MAIL_SERVICE = "add-to-event-send-to-mail-service";
 
     @Bean
     public MessageConverter messageConverter() {
