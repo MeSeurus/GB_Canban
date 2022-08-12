@@ -26,7 +26,7 @@ public class TaskAnalyticsService {
 
     private final CoreIntegration coreIntegration;
 
-    @Scheduled(cron = "0 0 4 * * *")
+    @Scheduled(cron = "* * 4 * * *")
     @Transactional
     public void askCoreForEventsAnalytics() {
         TasksAnalyticsDtoWithList tasksAnalyticsDtoWithList = coreIntegration.getTasksAnalyticsFromCore();

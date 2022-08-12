@@ -32,20 +32,6 @@ public class KanbanController {
     private final KanbanService kanbanService;
     private final KanbanBoardMapper kanbanBoardMapper;
 
-    /**
-     * Метод для отладки
-     *
-     * @return Все суцществующие List<KanbanBoardDetailsRs>
-     */
-    @GetMapping("/all")
-    public List<KanbanBoardDetailsRs> findAllBoards() {
-        return kanbanService.getAllBoards()
-                .stream()
-                .map(kanbanBoardMapper::entityToDto)
-                .collect(Collectors.toList());
-
-    }
-
     @GetMapping()
     @Operation(
             summary = "Запрос на получение всех канбан-досок по имени пользователя",
