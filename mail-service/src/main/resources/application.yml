@@ -1,0 +1,28 @@
+server:
+  port: 9393
+  servlet:
+    context-path: /canban-mail
+spring:
+  application:
+    name: mail-service
+  artemis:
+    user: 'artemis'
+    password: 'simetraehcapa'
+  mail:
+    host: 'smtp.gmail.com'
+    port: 587
+    username: 'canban.service'
+    password: 'dguvdojrebduzimp'
+    properties:
+      mail:
+        smtp:
+          auth: 'true'
+          starttls:
+            enable: 'true'
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8181/eureka}
+      fetchRegistry: false

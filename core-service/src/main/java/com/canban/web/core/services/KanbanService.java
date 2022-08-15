@@ -3,8 +3,10 @@ package com.canban.web.core.services;
 import com.canban.api.core.BoardToAddRq;
 import com.canban.api.exceptions.ForbiddenException;
 import com.canban.api.exceptions.ResourceNotFoundException;
+import com.canban.web.core.dto.KanbanBoardDetailsRq;
 import com.canban.web.core.entities.KanbanBoard;
 import com.canban.web.core.repositories.KanbanBoardRepository;
+import com.canban.web.core.validators.KanbanValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +16,8 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class KanbanService {
+
+    private final KanbanValidator kanbanValidator;
 
     private final KanbanBoardRepository kanbanBoardRepository;
 
@@ -30,8 +34,9 @@ public class KanbanService {
         return kanbanBoardRepository.findKanbanBoardsByUsernameAdded(username);
     }
 
-    public void createBoard(String username, String kanbanBoardTitle) {
-        kanbanBoardRepository.save(new KanbanBoard(kanbanBoardTitle, username, new HashSet<>(Arrays.asList(username))));
+    public void createBoard(String username, KanbanBoardDetailsRq kanbanBoardDetailsRq) {
+        kanbanValidator.validate(kanbanBoardDetailsRq);
+        kanbanBoardRepository.save(new KanbanBoard(kanbanBoardDetailsRq.getTitle(), username, new HashSet<>(Arrays.asList(username))));
     }
 
     @Transactional
@@ -42,7 +47,7 @@ public class KanbanService {
             throw new ForbiddenException("Только создатель доски может добавлять пользователей");
         }
         kanbanBoard.getUsernameAdded().add(boardToAddRq.getUserToAdd());
-        kanbanBoardRepository.save(kanbanBoard);  // не знаю нужна ли эта строка, может оно и так сохранит
+        kanbanBoardRepository.save(kanbanBoard);
     }
 
 }

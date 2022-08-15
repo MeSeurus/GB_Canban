@@ -2,6 +2,7 @@ package com.canban.web.core.dto;
 
 import com.canban.api.core.Priority;
 import com.canban.api.core.State;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -22,9 +23,11 @@ public class TaskDetailsRq {
     private String userExecutor;
 
     @Schema(description = "Дата начала задачи")
+    @JsonProperty("start_date")
     private LocalDateTime beginDate;
 
     @Schema(description = "Срок выполнения задачи")
+    @JsonProperty("end_date")
     private LocalDateTime endDate;
 
     @Schema(description = "Дата фактического выполнения задачи")

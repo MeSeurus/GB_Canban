@@ -3,6 +3,7 @@ package com.canban.web.core.specification;
 import com.canban.web.core.entities.Event;
 import org.springframework.data.jpa.domain.Specification;
 
+import javax.persistence.criteria.JoinType;
 import java.time.LocalDateTime;
 
 public class EventSpecifications {
@@ -29,6 +30,13 @@ public class EventSpecifications {
 
     public static Specification<Event> beginDateLessOrEqualsThen(LocalDateTime beginDate) {
         return ((root, query, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get("beginDate"), beginDate));
+    }
+
+    public static Specification<Event> userInUsersAdded(String username) {
+        return ((root, query, criteriaBuilder) -> {
+            root.fetch("users", JoinType.LEFT);
+            return criteriaBuilder.isMember(username, root.get("users"));
+        });
     }
 
 }

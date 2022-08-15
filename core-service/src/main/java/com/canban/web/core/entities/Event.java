@@ -16,7 +16,6 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 public class Event extends AbstractEvent {
-
     @Column(name = "username")
     private String username;
 
@@ -25,7 +24,7 @@ public class Event extends AbstractEvent {
             name = "events_users",
             joinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id")
     )
-    @Column(name = "username")
+    @Column(name = "username_added")
     private Set<String> users;
 
     public static EventBuilder builder() {
@@ -47,7 +46,6 @@ public class Event extends AbstractEvent {
         this.beginDate = beginDate;
         this.endDate = endDate;
         this.users = users;
-
     }
 
     public static class EventBuilder {

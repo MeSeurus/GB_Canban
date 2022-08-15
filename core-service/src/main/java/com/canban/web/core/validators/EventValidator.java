@@ -32,7 +32,7 @@ public class EventValidator {
 
         LocalDateTime now = LocalDateTime.now();
         if (now.compareTo(eventDetailsRq.getEndDate()) >= 0) {
-            errors.add("Дата завершения задачи должна быть позже текущего времени.");
+            errors.add("Дата завершения события должна быть позже текущего времени.");
         }
 
         if (!errors.isEmpty()) {
