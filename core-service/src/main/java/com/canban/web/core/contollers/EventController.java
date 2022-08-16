@@ -41,7 +41,7 @@ public class EventController {
                     )
             }
     )
-    @PostMapping()
+    @PostMapping("/search")
     public List<EventDto> searchAllEvents(
             @RequestHeader @Parameter(description = "Имя пользователя создателя", required = true) String username,
             @RequestBody @Parameter(description = "Модель для поиска событий", required = false) EventDetailsForSearchRq eventDetailsForSearchRq) {
@@ -51,7 +51,7 @@ public class EventController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/create")
+    @PostMapping()
     @Operation(
             summary = "Запрос на создание нового события",
             responses = {
@@ -110,7 +110,7 @@ public class EventController {
         eventService.removeUserFromEvent(usernameToRemove, id);
     }
 
-    @PatchMapping("/change/title")
+    @PatchMapping("/title")
     @Operation(
             summary = "Запрос на изменения названия события по id",
             responses = {
@@ -126,7 +126,7 @@ public class EventController {
         eventService.changeTitle(requestBody.getId(), requestBody.getTitle());
     }
 
-    @PatchMapping("/change/content")
+    @PatchMapping("/content")
     @Operation(
             summary = "Запрос на изменения описания события по id",
             responses = {
@@ -142,7 +142,7 @@ public class EventController {
         eventService.changeContent(requestBody.getId(), requestBody.getContent());
     }
 
-    @PatchMapping("/change/begin_date")
+    @PatchMapping("/begin_date")
     @Operation(
             summary = "Запрос на изменения начала события по id",
             responses = {
@@ -158,7 +158,7 @@ public class EventController {
         eventService.changeBeginDate(requestBody.getId(), requestBody.getBeginDate());
     }
 
-    @PatchMapping("/change/end_date")
+    @PatchMapping("/end_date")
     @Operation(
             summary = "Запрос на изменения окончания события по id",
             responses = {
