@@ -40,10 +40,10 @@ public class EventAnalyticsService {
     @Transactional
     public AllStatisticsEventAnalyticsRs search(String username, LocalDateTime timeForSearch) {
         return new AllStatisticsEventAnalyticsRs(
-                eventAnalyticsRepository.searchTheLongestAndTheShortestCompletedEventByUsernameAndByTimePeriod(username, timeForSearch, -1)
+                eventAnalyticsRepository.searchTheLongestCompletedEventByUsernameAndByTimePeriod(username, timeForSearch)
                         .orElseThrow(() -> new ResourceNotFoundException("Выполненные события за данный период времени не найдены"))
                         .getEventTitle(),
-                eventAnalyticsRepository.searchTheLongestAndTheShortestCompletedEventByUsernameAndByTimePeriod(username, timeForSearch, 1)
+                eventAnalyticsRepository.searchTheShortestCompletedEventByUsernameAndByTimePeriod(username, timeForSearch)
                         .orElseThrow(() -> new ResourceNotFoundException("Выполненные события за данный период времени не найдены"))
                         .getEventTitle(),
                 eventAnalyticsRepository.getCountOfCompletedEvents(username, timeForSearch)

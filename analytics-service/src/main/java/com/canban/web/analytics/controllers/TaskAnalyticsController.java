@@ -23,7 +23,7 @@ public class TaskAnalyticsController {
 
     private final TaskAnalyticsService taskAnalyticsService;
 
-    @PostMapping
+    @PostMapping("/search")
     @Operation(
             summary = "Запрос на получение всей аналитики завершенных задач по имени пользователя за определенный срок",
             responses = {
@@ -39,7 +39,7 @@ public class TaskAnalyticsController {
     )
     public AllStatisticsTaskAnalyticsRs searchAllAnalyticsByUsernameAndByDate(
             @RequestHeader @Parameter(description = "Имя пользователя по которому выбирается аналитика", required = true) String username,
-            @RequestBody @Parameter(description = "Дто для выборки аналитики", required = true) DateDto dateDto) {
+            @RequestBody @Parameter(description = "Время для поиска аналитики задач", required = true) DateDto dateDto) {
         return taskAnalyticsService.search(username, dateDto.getStartDate());
     }
 
