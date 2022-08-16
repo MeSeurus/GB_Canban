@@ -6,9 +6,11 @@ import com.canban.web.analytics.dtos.AllStatisticsEventAnalyticsRs;
 import com.canban.web.analytics.entities.EventAnalytics;
 import com.canban.web.analytics.integration.CoreIntegration;
 import com.canban.web.analytics.mappers.EventAnalyticsMapper;
+import com.canban.web.analytics.properties.SchedulerProperties;
 import com.canban.web.analytics.repositories.EventAnalyticsRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +23,12 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@EnableConfigurationProperties(
+        {SchedulerProperties.class}
+)
 public class EventAnalyticsService {
+
+    private final SchedulerProperties schedulerProperties;
 
     private final CoreIntegration coreIntegration;
 
@@ -29,7 +36,7 @@ public class EventAnalyticsService {
 
     private final EventAnalyticsMapper eventAnalyticsMapper;
 
-    @Scheduled(cron = "0 0 4 * * *")
+    @Scheduled(cron = "${interval.cron.eventAnalytics}")
     @Transactional
     public void askCoreForEventsAnalytics() {
         EventsAnalyticsDtoWithList eventsAnalyticsDtoWithList = coreIntegration.getEventsAnalyticsFromCore();

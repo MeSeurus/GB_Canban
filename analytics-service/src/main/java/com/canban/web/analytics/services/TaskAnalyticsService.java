@@ -26,9 +26,10 @@ public class TaskAnalyticsService {
 
     private final CoreIntegration coreIntegration;
 
-    @Scheduled(cron = "* * 4 * * *")
+    @Scheduled(cron = "${interval.cron.taskAnalytics}")
     @Transactional
     public void askCoreForEventsAnalytics() {
+        System.out.println("Hello");
         TasksAnalyticsDtoWithList tasksAnalyticsDtoWithList = coreIntegration.getTasksAnalyticsFromCore();
         taskAnalyticsRepository.saveAll(tasksAnalyticsDtoWithList.getTasksAnalyticsDtoList()
                 .stream().map(taskAnalyticsMapper::dtoToEntity).collect(Collectors.toList()));
