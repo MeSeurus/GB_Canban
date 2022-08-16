@@ -47,7 +47,7 @@ public class TaskController {
                     )
             }
     )
-    @PostMapping
+    @PostMapping("/search")
     public List<TaskDto> searchAllTasksByBoardId(
             @RequestBody @Parameter(description = "Модель для поиска задач", required = true) TaskDetailsForSearchRq taskDetailsForSearchRq
             ) {
@@ -57,7 +57,7 @@ public class TaskController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/create")
+    @PostMapping()
     @Operation(
             summary = "Запрос на создание новой задачи",
             responses = {
@@ -76,7 +76,7 @@ public class TaskController {
         taskService.createTask(username, taskDetailsRq);
     }
 
-    @PatchMapping("/change/title")
+    @PatchMapping("/title")
     @Operation(
             summary = "Запрос на изменения названия задачи по id",
             responses = {
@@ -92,7 +92,7 @@ public class TaskController {
         taskService.changeTitle(requestBody.getId(), requestBody.getContent());
     }
 
-    @PatchMapping("/change/content")
+    @PatchMapping("/content")
     @Operation(
             summary = "Запрос на изменения описания задачи по id",
             responses = {
@@ -108,7 +108,7 @@ public class TaskController {
         taskService.changeContent(requestBody.getId(), requestBody.getContent());
     }
 
-    @PatchMapping("/change/user/executor")
+    @PatchMapping("/user/executor")
     @Operation(
             summary = "Запрос на изменения исполнителя задачи по id",
             responses = {
@@ -129,7 +129,7 @@ public class TaskController {
         taskService.changeExecutorUsername(requestBody.getId(), requestBody.getContent());
     }
 
-    @PatchMapping("/change/date/begin")
+    @PatchMapping("/date/begin")
     @Operation(
             summary = "Запрос на изменения даты начала задачи по id",
             responses = {
@@ -145,7 +145,7 @@ public class TaskController {
         taskService.changeBeginDate(requestBody.getId(), requestBody.getBeginDate());
     }
 
-    @PatchMapping("/change/date/end")
+    @PatchMapping("/date/end")
     @Operation(
             summary = "Запрос на изменения срока исполнения задачи по id",
             responses = {
@@ -161,7 +161,7 @@ public class TaskController {
         taskService.changeEndDate(requestBody.getId(), requestBody.getEndDate());
     }
 
-    @PatchMapping("/change/state")
+    @PatchMapping("/state")
     @Operation(
             summary = "Запрос на изменение статуса задачи по id",
             responses = {
@@ -177,7 +177,7 @@ public class TaskController {
         taskService.changeState(requestBody.getId(), requestBody.getState());
     }
 
-    @PatchMapping("/change/priority")
+    @PatchMapping("/priority")
     @Operation(
             summary = "Запрос на изменение приоритета задачи по id",
             responses = {
@@ -193,7 +193,7 @@ public class TaskController {
         taskService.changePriority(requestBody.getId(), requestBody.getPriority());
     }
 
-    @PatchMapping("/change/date/actual_end")
+    @PatchMapping("/date/actual_end")
     @Operation(
             summary = "Запрос на изменение фактической даты выполнения задачи по id",
             responses = {
