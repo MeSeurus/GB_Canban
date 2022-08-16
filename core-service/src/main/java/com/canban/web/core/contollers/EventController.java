@@ -37,7 +37,7 @@ public class EventController {
             responses = {
                     @ApiResponse(
                             description = "Успешный ответ", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = Page.class))
+                            content = @Content(schema = @Schema(implementation = List.class))
                     )
             }
     )
