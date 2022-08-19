@@ -21,6 +21,7 @@
         <relativePath/>
     </parent>
 
+
     <groupId>com.canban</groupId>
     <artifactId>canban</artifactId>
     <version>0.0.1-SNAPSHOT</version>
