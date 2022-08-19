@@ -25,10 +25,20 @@ public interface TaskAnalyticsRepository extends JpaRepository<TaskAnalytics, Lo
                     "where task_begin_date > :timeForSearch " +
                     "and task_actual_end_date < CURRENT_DATE " +
                     "and task_user_executor = :username " +
-                    "order by :orderType * (task_actual_end_date - task_begin_date) limit 1",
+                    "order by (task_actual_end_date - task_begin_date) desc limit 1",
             nativeQuery = true
     )
-    Optional<TaskAnalytics> searchTheLongestAndTheShortestCompletedTaskByUsernameAndByTimePeriod(String username, LocalDateTime timeForSearch, Integer orderType);
+    Optional<TaskAnalytics> searchTheLongestCompletedTaskByUsernameAndByTimePeriod(String username, LocalDateTime timeForSearch);
+
+    @Query(
+            value = "select * from tasks_analytics " +
+                    "where task_begin_date > :timeForSearch " +
+                    "and task_actual_end_date < CURRENT_DATE " +
+                    "and task_user_executor = :username " +
+                    "order by (task_actual_end_date - task_begin_date) asc limit 1",
+            nativeQuery = true
+    )
+    Optional<TaskAnalytics> searchTheShortestCompletedTaskByUsernameAndByTimePeriod(String username, LocalDateTime timeForSearch);
 
 
 }

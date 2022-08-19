@@ -11,6 +11,11 @@ integrations:
       read: 2000
       write: 2000
 
+interval:
+  cron:
+    eventAnalytics: 0 0 4 * * *
+    taskAnalytics: 0 0 6 * * *
+
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver

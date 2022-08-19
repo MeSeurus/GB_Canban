@@ -26,9 +26,10 @@ public class TaskAnalyticsService {
 
     private final CoreIntegration coreIntegration;
 
-    @Scheduled(cron = "* * 4 * * *")
+    @Scheduled(cron = "${interval.cron.taskAnalytics}")
     @Transactional
     public void askCoreForEventsAnalytics() {
+        System.out.println("Hello");
         TasksAnalyticsDtoWithList tasksAnalyticsDtoWithList = coreIntegration.getTasksAnalyticsFromCore();
         taskAnalyticsRepository.saveAll(tasksAnalyticsDtoWithList.getTasksAnalyticsDtoList()
                 .stream().map(taskAnalyticsMapper::dtoToEntity).collect(Collectors.toList()));
@@ -38,10 +39,10 @@ public class TaskAnalyticsService {
     @Transactional
     public AllStatisticsTaskAnalyticsRs search(String username, LocalDateTime timeForSearch) {
         return new AllStatisticsTaskAnalyticsRs(
-                taskAnalyticsRepository.searchTheLongestAndTheShortestCompletedTaskByUsernameAndByTimePeriod(username, timeForSearch, -1)
+                taskAnalyticsRepository.searchTheLongestCompletedTaskByUsernameAndByTimePeriod(username, timeForSearch)
                         .orElseThrow(() -> new ResourceNotFoundException("Выполненные задачи за данный период времени не найдены"))
                         .getTaskTitle(),
-                taskAnalyticsRepository.searchTheLongestAndTheShortestCompletedTaskByUsernameAndByTimePeriod(username, timeForSearch, 1)
+                taskAnalyticsRepository.searchTheShortestCompletedTaskByUsernameAndByTimePeriod(username, timeForSearch)
                         .orElseThrow(() -> new ResourceNotFoundException("Выполненные задачи за данный период времени не найдены"))
                         .getTaskTitle(),
                 taskAnalyticsRepository.getCountOfCompletedTasks(username, timeForSearch)

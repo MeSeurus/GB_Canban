@@ -26,7 +26,7 @@ public class EventAnalyticsController {
 
     private final EventAnalyticsService eventAnalyticsService;
 
-    @PostMapping
+    @PostMapping("/search")
     @Operation(
             summary = "Запрос на получение аналитики завершенных событий по имени пользователя за определенный срок",
             responses = {
@@ -42,7 +42,7 @@ public class EventAnalyticsController {
     )
     public AllStatisticsEventAnalyticsRs searchAllAnalyticsByUsernameAndByDate(
             @RequestHeader @Parameter(description = "Имя пользователя по которому выбирается аналитика", required = true) String username,
-            @RequestBody @Parameter(description = "Дто для выборки аналитики", required = true) DateDto dateDto) {
+            @RequestBody @Parameter(description = "Время для поиска аналитики событий", required = true) DateDto dateDto) {
         return eventAnalyticsService.search(username, dateDto.getStartDate());
     }
 
