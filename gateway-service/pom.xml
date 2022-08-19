@@ -10,7 +10,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.canban</groupId>
+    <name>gateway-service</name>
+    <description>Canban planner gateway-service</description>
+    <groupId>com.fantastic_five.canban</groupId>
     <artifactId>gateway-service</artifactId>
 
     <properties>
@@ -48,6 +50,7 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <version>3.1.3</version>
         </dependency>
 
         <dependency>
