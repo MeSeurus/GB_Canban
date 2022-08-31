@@ -16,7 +16,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<ServerNotWorkingError> catchResourceNotFoundException(IntegrationException ex) {
         log.error(ex.getMessage(), ex);
-        return new ResponseEntity<>(new ServerNotWorkingError(HttpStatus.SERVICE_UNAVAILABLE.value(), ex.getMessage()), HttpStatus.SERVICE_UNAVAILABLE);
+        return new ResponseEntity<>(new ServerNotWorkingError(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler

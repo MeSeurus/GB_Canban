@@ -77,7 +77,7 @@ public class KanbanController {
                             content = @Content(schema = @Schema(implementation = List.class))
                     ),
                     @ApiResponse(
-                            description = "Ошибка добавления", responseCode = "403",
+                            description = "Ошибка добавления по причине не хватки прав", responseCode = "403",
                             content = @Content(schema = @Schema(implementation = AppError.class))
                     )
             }
